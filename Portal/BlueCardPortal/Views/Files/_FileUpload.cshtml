@@ -1,0 +1,76 @@
+﻿@using BlueCardPortal.Infrastructure.Model.Application
+@model DocumentVM
+
+<form action="@Url.Action("UploadFile", "Files")" id="cdnUploadFile" method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Index)
+    @Html.HiddenFor(x => x.IndexAll)
+    @Html.HiddenFor(x => x.DocumentType)
+    @Html.HiddenFor(x => x.DocumentTypeCode)
+    @Html.HiddenFor(x => x.DocumentCategory)
+    @Html.HiddenFor(x => x.DocumentCategoryCode)
+    @Html.HiddenFor(x => x.ApplicationId)
+    @Html.HiddenFor(x => x.PortalId, new { @class = "is-modal" })
+    @Html.HiddenFor(x => x.IsMandatory)
+    @Html.HiddenFor(x => x.HasTitle)
+    @Html.HiddenFor(x => x.HasMultipleFile)
+    <div class="row">
+        <div class="col-12">
+            @Html.DisplayFor(x => x.DocumentType, "StringNullable")
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.CmisId))
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="text-info col-md-12">Файлът ще бъде подменен от новия прикачен файл.</div>
+            </div>
+        </div>
+    }
+    @if (Model.HasTitle)
+    {
+        <div class="row mt-2">
+            <div class="col-12">
+                @Html.EditorFor(x => x.Title, "StringNullable")
+            </div>
+        </div>
+    }
+    <div class="row mt-2">
+        <div class="col-12">
+            @Html.EditorFor(x => x.IsOriginal, "Boolean")
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <input type="file" name="files" id="files" />
+        </div>
+    </div>
+    @if (Model.MaxFileSize > 0)
+    {
+        <div class="row mt-2">
+            <div class="col-12">
+                <br />
+                <span class="text-muted">Максимално допустимия размер е @Model.MaxFileSize MB</span>
+            </div>
+        </div>
+
+    }
+    <div class="row mt-2">
+        <div class="col-12">
+            &nbsp;
+        </div>
+    </div>
+    <div class="form__footer">
+        <div></div>
+        <input type="submit" class="btn u-btn u-btn--right" value="Прикачи" id="cdnUploadButton" />
+    </div>
+    <div class="row mt-2">
+        <div class="col-12">
+            <span id="uploadProgress"></span>
+        </div>
+    </div>
+
+</form>
+
+<script src="~/js/upload.js" asp-append-version="true"></script>

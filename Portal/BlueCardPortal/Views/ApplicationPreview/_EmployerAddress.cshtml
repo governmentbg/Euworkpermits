@@ -1,0 +1,20 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmployerVM
+<h3 class="section-title">@Localizer["EmployerHeadAddress"]</h3>
+@{
+    await Html.RenderPartialAsync("_AddressFields", Model.Address);
+}
+</div>
+<h3 class="section-title">@Localizer["EmployerContactAddress"]</h3>
+@if (Model.ContactAddressIsSame != YESNO_TYPE.No)
+{
+    @Html.DisplayFor(x => x.ContactAddressIsSame, "DropDown", new { Ddl = ViewBag.AddressIsSame_ddl })
+}
+@if (Model.ContactAddressIsSame == YESNO_TYPE.No)
+{
+    await Html.RenderPartialAsync("_AddressFields", Model.ContactAddress);
+}

@@ -1,0 +1,13 @@
+﻿@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@model ApplicationTypeVM
+<div class="row mb-2">
+    <div class="col-12">
+        @Html.DisplayFor(x => x.ApplicationTypeCode, "Nomenclature", new { NomenclatureType = NomenclatureTypes.APPLICATION_TYPE })
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-12">
+        @Html.DisplayFor(x => x.PermitType, "Nomenclature", new { NomenclatureType = NomenclatureTypes.PERMIT_TYPE })
+    </div>
+</div>

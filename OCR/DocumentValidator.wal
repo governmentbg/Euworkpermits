@@ -1,0 +1,113 @@
+�@defVar --name sResponseJSON --type String
+defVar --name sResultJSON --type String
+defVar --name resultDataTable --type DataTable
+defVar --name nRowIndex --type Numeric
+defVar --name sWPAUsername --type String
+defVar --name sWPAPassword --type SecureString
+defVar --name sDocumentURL --type String
+defVar --name ChromeBrowser --type Browser
+defVar --name nArrayIndex --type Numeric
+defVar --name sDocumentFilePath --type String
+defVar --name sDocumentFileContent --type String
+defVar --name documentPDF --type Pdf
+defVar --name sRPATask --type String
+defVar --name sDocumentFileHeader --type String
+defVar --name sForeignerNameLatin --type String
+defVar --name sForeignerNameCyrillic --type String
+defVar --name sForeignerNameCyrillicRegex --type String
+defVar --name sForeignerNameLatinRegex --type String
+defVar --name bOccurrence --type Boolean
+defVar --name success --type Boolean
+defVar --name response --type String
+defVar --name statusCode --type Numeric
+defVar --name sHeadersDictionary --type StringDictionary --innertype String
+defVar --name in_sApplicationId --type String --parameter 
+defVar --name sTaskRetrieveURL --type String
+defVar --name sTaskValidationResultsURL --type String
+defVar --name sTempFolderPath --type String
+defVar --name sProcessPortalURL --type String
+getVaultItem --name WPA --system  sWPAUsername=userName sWPAPassword=password
+httpRequest --verb "Post" --url "${sTaskRetrieveURL}" --headers ${sHeadersDictionary} --formatter "Json" --data "{\"applicationId\":\"${in_sApplicationId}\"}" sResponseJSON=value
+webStart --name Chrome --type "Chrome" --userprofilepreferences "AutomationOptimized" --downloadpath "C:\\Users\\Admin\\AppData\\Local\\IBM Robotic Process Automation\\downloads" ChromeBrowser=value
+goSub --label Login
+
+executeScript --name JSONToFlatMap --parameters "{\"in_JSONText\":\"${sResponseJSON}\"}" --output "{\"out_JSONDataTable\":\"${resultDataTable}\"}" --comment JSONToFlatMap
+findTableCell --dataTable ${resultDataTable} --value foreignerNameCyrillic --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "First" nRowIndex=row
+getTableCell --dataTable ${resultDataTable} --column 2 --row ${nRowIndex} --comment "Get Foreigner Name Cyrillic" sForeignerNameCyrillic=value
+findTableCell --dataTable ${resultDataTable} --value foreignerNameLatin --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "First" nRowIndex=row
+getTableCell --dataTable ${resultDataTable} --column 2 --row ${nRowIndex} --comment "Get Foreigner Name Latin" sForeignerNameLatin=value
+
+setVar --name "${nArrayIndex}" --value 1
+repeat
+	findTableCell --dataTable ${resultDataTable} --useRegex  --regexPattern "documents.+url" --regexOptions "0" --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "N" --occurrence ${nArrayIndex} nRowIndex=row
+	if --left "${nRowIndex}" --operator "Is_Null" --negate 
+		getTableCell --dataTable ${resultDataTable} --column 2 --row ${nRowIndex} --comment "Get URL" sDocumentURL=value
+		replaceText --texttoparse "${sDocumentURL}" --textpattern "euworkpermits-pdev.egov.bg" --replacement "dev-01:9443" --comment "Format URL (For testing only)" sDocumentURL=value
+		goSub --label DownloadDocumentAndExtractContent
+		
+		findTableCell --dataTable ${resultDataTable} --value "documents[${nArrayIndex}].rpaTask" --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "First" nRowIndex=row
+		getTableCell --dataTable ${resultDataTable} --column 2 --row ${nRowIndex} --comment "Get RPA Task" sRPATask=value
+		goSub --label ValidateDocument
+	endIf
+	incrementVar --number ${nArrayIndex}
+until --left "${nRowIndex}" --operator "Is_Null" --negate 
+
+webClose --name Chrome
+
+filterTable --where "SUBSTRING([Key],1,9) = \'documents\'" --dataTable ${resultDataTable} resultDataTable=value
+addRow --valuesmapping "{\"Key\":\"applicationId\",\"Value\":\"188\"}" --dataTable ${resultDataTable}
+executeScript --name FlatMapToJSON --parameters "{\"in_dCurrentObjectsDataTable\":\"${resultDataTable}\"}" --output "{\"out_sJSON\":\"${sResultJSON}\"}" --comment FlatMapToJSON
+replaceText --texttoparse "${sResultJSON}" --textpattern "\"N/A\"" --replacement "\"\"" sResultJSON=value
+httpRequest --verb "Post" --url "${sTaskValidationResultsURL}" --username "${sWPAUsername}" --password "${sWPAPassword}" --formatter "Json" --source "${sResultJSON}" --comment ReceiveValidationResults
+logMessage --message as --type "Info"
+beginSub --name Login
+webNavigate --url "${sProcessPortalURL}"
+delay --timeout "00:00:01"
+webSet --value "${sWPAUsername}" --selector "Id" --id username
+webSet --value "${sWPAPassword}" --selector "Id" --id password
+webClick --selector "CssSelector" --css "#signInForm > a"
+endSub
+beginSub --name DownloadDocumentAndExtractContent
+webNavigate --url "${sDocumentURL}"
+webWaitDownload --saveto "${sTempFolderPath}" --extension ".pdf" sDocumentFilePath=filename
+pdfOpen --file "${sDocumentFilePath}" documentPDF=value
+pdfText --file ${documentPDF} sDocumentFileContent=value
+if --left "${sDocumentFileContent}" --operator "Is_Null_Or_Empty"
+	recognizeText --source "${documentPDF}" --language "bg-BG" --method "Abbyy" sDocumentFileContent=value
+endIf
+fileDelete --file "${sDocumentFilePath}"
+endSub
+beginSub --name ValidateDocument
+findTableCell --dataTable ${resultDataTable} --value "documents[${nArrayIndex}].validationStatus" --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "First" --comment "Find Validation Status row" nRowIndex=row
+if --left "${sDocumentFileContent}" --operator "Is_Null_Or_Empty" --negate 
+	if --left "${sRPATask}" --operator "Equal_To" --right ValidateApplication3A --comment ValidateApplication3A
+		getSubString --text "${sDocumentFileContent}" --start 1 --length 400 sDocumentFileHeader=value
+		isMatch --text "${sDocumentFileHeader}" --regexPattern "(.*?)Приложение\\s\\s?№\\s\\s?3а\\s\\s?към\\s\\s?чл\\.\\s\\s?60,\\sал\\.\\s\\s?1\\s\\s?ППЗЧРБ" --regexOptions "0" bOccurrence=value
+		if --left "${bOccurrence}" --operator "Is_True"
+			updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"1\"}" --dataTable ${resultDataTable} --comment "Update Status Successful"
+		else
+			updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"2\"}" --dataTable ${resultDataTable} --comment "Update Status Unsuccessful"
+		endIf
+	elseIf --left "${sRPATask}" --operator "Equal_To" --right CheckName --comment CheckName
+		replaceText --texttoparse "${sForeignerNameCyrillic}" --textpattern " " --replacement "\\s" sForeignerNameCyrillicRegex=value
+		replaceText --texttoparse "${sForeignerNameLatin}" --textpattern " " --replacement "\\s" sForeignerNameLatinRegex=value
+		isMatch --text "${sDocumentFileContent}" --regexPattern "(.*?)${sForeignerNameCyrillicRegex}" --regexOptions "0" bOccurrence=value
+		if --left "${bOccurrence}" --operator "Is_True"
+			updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"1\"}" --dataTable ${resultDataTable} --comment "Update Status Successful"
+		else
+			isMatch --text "${sDocumentFileContent}" --regexPattern "(.*?)${sForeignerNameLatinRegex}" --regexOptions "0" bOccurrence=value
+			if --left "${bOccurrence}" --operator "Is_True"
+				updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"1\"}" --dataTable ${resultDataTable} --comment "Update Status Successful"
+			else
+				updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"2\"}" --dataTable ${resultDataTable} --comment "Update Status Unsuccessful"
+			endIf
+		endIf
+	else
+		logMessage --message "Unknown task" --type "Error"
+	endIf
+else
+	updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"0\"}" --dataTable ${resultDataTable} --comment "Update Status can not be validated"
+	findTableCell --dataTable ${resultDataTable} --value "documents[${nArrayIndex}].validationMessage" --search "Columns" --index 1 --direction "Top2BottomLeft2Right" --occurrencetype "First" --comment "Find Validation message row" nRowIndex=row
+	updateRow --index ${nRowIndex} --valuesmapping "{\"Value\":\"Документът е празен\"}" --dataTable ${resultDataTable} --comment "Update Validation message"
+endIf
+endSub*	23.0.13.0

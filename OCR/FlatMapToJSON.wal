@@ -1,0 +1,102 @@
+
+	©˜.Ç⁄,4G§_˛eÏﬂÇ„Á4defVar --name sKey --type String
+defVar --name sValue --type String
+defVar --name out_sJSON --type String --output 
+defVar --name dsJSONText --type String
+defVar --name dsCurrentObjectGroup --type String
+defVar --name sCurrentArray --type String
+defVar --name nLenght --type Numeric
+defVar --name sContextJSONTextStack --type Stack --innertype String
+defVar --name sContextCurrentObjectsDataTableStack --type Stack --innertype DataTable
+defVar --name CurrentGroupedObjectsDataTable --type DataTable
+defVar --name in_dCurrentObjectsDataTable --type DataTable --parameter 
+defVar --name nRow --type Numeric
+defVar --name sJSONSubtext --type String
+defVar --name dCurrentObjectGroupDataTable --type DataTable
+defVar --name dnGroupRow --type Numeric
+defVar --name nGroupRowStack --type Stack --innertype Numeric
+defVar --name nObjectRow --type Numeric
+defVar --name nOccurence --type Numeric
+defVar --name sContextCurrentObjectGroupDataTableStack --type Stack --innertype DataTable
+defVar --name currentObjectDatTableDummy --type DataTable
+defVar --name sCommaIndex --type Numeric
+defVar --name currentObjectGroupDataTableDummy --type DataTable
+defVar --name currentGroupedObjectsDataTableDummy --type DataTable
+addColumn --dataTable ${CurrentGroupedObjectsDataTable} --columnname Key --type String
+addColumn --dataTable ${CurrentGroupedObjectsDataTable} --columnname Value --type String
+addColumn --dataTable ${dCurrentObjectGroupDataTable} --columnname Group --type String
+goSub --label BuildJSON
+setVar --name "${out_sJSON}" --value "${dsJSONText}"
+beginSub --name BuildJSON
+setVar --name "${dsJSONText}" --value "{"
+deleteRows --where "1 = 1" --dataTable ${dCurrentObjectGroupDataTable}
+deleteRows --where "1 = 1" --dataTable ${CurrentGroupedObjectsDataTable}
+for --variable ${nRow} --from 1 --to ${in_dCurrentObjectsDataTable.Rows} --step 1
+	mapTableRow --dataTable ${in_dCurrentObjectsDataTable} --row ${nRow} --mappings "[{\"Name\":\"Key\",\"Number\":null,\"Output\":\"${sKey}\"},{\"Name\":\"Value\",\"Number\":null,\"Output\":\"${sValue}\"}]" --comment "Get Key and Value"
+	
+	if --left "${sKey}" --operator "Contains" --right "." --negate  --comment "If is last branch"
+		concatTexts --text "${dsJSONText}" --value "\"${sKey}\":\"${sValue}\"," dsJSONText=value
+	else
+		getRegex --text "${sKey}" --regexPattern "(?<value>.+?)\\." --regexOptions "0" --groupname value --getbyindex  --occurrenceindex 1 --comment "Get first object" dsCurrentObjectGroup=value
+		findTableCell --dataTable ${dCurrentObjectGroupDataTable} --value "${dsCurrentObjectGroup}" --search "AllCells" --direction "Left2RightTop2Bottom" --occurrencetype "First" nOccurence=count
+		if --left "${nOccurence}" --operator "Equal_To" --right 0 --comment "If datatable does not contain group"
+			addRow --valuesmapping "{\"Group\":\"${dsCurrentObjectGroup}\"}" --dataTable ${dCurrentObjectGroupDataTable}
+		endIf
+	endIf
+next
+for --variable ${dnGroupRow} --from 1 --to ${dCurrentObjectGroupDataTable.Rows} --step 1
+	mapTableRow --dataTable ${dCurrentObjectGroupDataTable} --row ${dnGroupRow} --mappings "[{\"Name\":\"Group\",\"Number\":null,\"Output\":\"${dsCurrentObjectGroup}\"}]" --comment "Get Group"
+	if --left "${dsCurrentObjectGroup}" --operator "Contains" --right "[1]" --comment "If object is start of an array"
+		getRegex --text "${dsCurrentObjectGroup}" --regexPattern "(?<value>.*?)\\[" --regexOptions "0" --groupname value --getbyindex  --occurrenceindex 1 sCurrentArray=value
+		concatTexts --text "${dsJSONText}" --value "\"${sCurrentArray}\":[]," dsJSONText=value
+	endIf
+	if --left "${dsCurrentObjectGroup}" --operator "Contains" --right "[" --comment "If object part of array"
+		goSub --label GetSubObjects
+		goSub --label BuildJSONAndKeepContext
+		evaluate --expression "${dsJSONText.Length}-2" nLenght=value
+		getSubString --text "${dsJSONText}" --start 1 --length ${nLenght} dsJSONText=value
+		if --left "${dsJSONText}" --operator "Ends_With" --right "["
+			concatTexts --text "${dsJSONText}" --value "${sJSONSubtext}]," dsJSONText=value
+		else
+			concatTexts --text "${dsJSONText}," --value "${sJSONSubtext}]," dsJSONText=value
+		endIf
+	else
+		goSub --label GetSubObjects
+		concatTexts --text "${dsJSONText}" --value "\"${dsCurrentObjectGroup}\":" dsJSONText=value
+		goSub --label BuildJSONAndKeepContext
+		concatTexts --text "${dsJSONText}" --value "${sJSONSubtext}," dsJSONText=value
+	endIf
+next
+evaluate --expression "${dsJSONText.Length}-1" nLenght=value
+getSubString --text "${dsJSONText}" --start 1 --length ${nLenght} dsJSONText=value
+concatTexts --text "${dsJSONText}" --value "}" dsJSONText=value
+endSub
+beginSub --name BuildJSONAndKeepContext
+add --collection "${sContextJSONTextStack}" --value "${dsJSONText}"
+add --collection "${nGroupRowStack}" --value "${dnGroupRow}"
+copyTable --dataTable ${in_dCurrentObjectsDataTable} currentObjectDatTableDummy=value
+add --collection "${sContextCurrentObjectsDataTableStack}" --value "${currentObjectDatTableDummy}"
+copyTable --dataTable ${dCurrentObjectGroupDataTable} currentObjectGroupDataTableDummy=value
+add --collection "${sContextCurrentObjectGroupDataTableStack}" --value "${currentObjectGroupDataTableDummy}"
+copyTable --dataTable ${CurrentGroupedObjectsDataTable} currentGroupedObjectsDataTableDummy=value
+
+goSub --label BuildJSON --assignments "{\"in_dCurrentObjectsDataTable\":\"${currentGroupedObjectsDataTableDummy}\",\"dCurrentObjectGroupDataTable\":\"${dCurrentObjectGroupDataTable}\"}"
+
+setVar --name "${sJSONSubtext}" --value "${dsJSONText}"
+pop --collection "${sContextJSONTextStack}" dsJSONText=value
+pop --collection "${sContextCurrentObjectsDataTableStack}" in_dCurrentObjectsDataTable=value
+pop --collection "${sContextCurrentObjectGroupDataTableStack}" dCurrentObjectGroupDataTable=value
+pop --collection "${nGroupRowStack}" dnGroupRow=value
+deleteRows --where "1 = 1" --dataTable ${CurrentGroupedObjectsDataTable}
+endSub
+beginSub --name GetSubObjects
+for --variable ${nObjectRow} --from 1 --to ${in_dCurrentObjectsDataTable.Rows} --step 1
+	mapTableRow --dataTable ${in_dCurrentObjectsDataTable} --row ${nObjectRow} --mappings "[{\"Name\":\"Key\",\"Number\":null,\"Output\":\"${sKey}\"},{\"Name\":\"Value\",\"Number\":null,\"Output\":\"${sValue}\"}]" --comment "Get Key and Value"
+	if --left "${sKey}" --operator "Begins_With" --right "${dsCurrentObjectGroup}"
+		parseText --text "${sKey}" --query "." --startindex 1 sCommaIndex=value
+		evaluate --expression "${sCommaIndex}+1" sCommaIndex=value
+		getSubString --text "${sKey}" --start ${sCommaIndex} sKey=value
+		addRow --valuesmapping "{\"Key\":\"${sKey}\",\"Value\":\"${sValue}\"}" --dataTable ${CurrentGroupedObjectsDataTable}
+	endIf
+next
+endSub"	JÅQ◊]MNìa·∂©q¬*	23.0.13.0

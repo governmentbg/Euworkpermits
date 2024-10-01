@@ -1,0 +1,28 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@model PersonIdDocumentVM
+<div>
+    <div class="row mb-2">
+        <div class="col-5">
+            @Html.DisplayFor(x => x.Type, "DropDown", new { Ddl = ViewBag.PersonIdDocument_ddl })
+        </div>
+        <div class="col-2">
+            @Html.DisplayFor(x => x.Series, "StringNullable")
+        </div>
+        <div class="col-5">
+            @Html.DisplayFor(x => x.Identifier, "StringNullable")
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.DisplayFor(x => x.IssueDate, "DateTime")
+        </div>
+        <div class="col-4">
+            @Html.DisplayFor(x => x.ExpirationDate, "DateTime")
+        </div>
+        <div class="col">
+            @Html.DisplayFor(x => x.IssuedBy, "StringNullable")
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,33 @@
+﻿@using BlueCardPortal.Infrastructure.Contracts
+@using Microsoft.AspNetCore.Identity
+@using static EAuthIntegration.Models.EAuthIntegrationDefaults
+@inject IViewLocalizer Localizer
+@inject IUserContext UserContext
+
+@if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <li class="nav-item">
+        <form method="post" action="@Urls.LogOut">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="nav-link action-button">
+                <img class="icon-left" src="~/images/log-out.svg" />
+                @Localizer["Logout"]
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link action-button" href="#">
+            @UserContext.Name
+            <img class="icon-right" src="~/images/user.svg" />
+        </a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link action-button" asp-controller="Account" asp-action="Login">
+            <img class="icon-left" src="~/images/log-in.svg" />
+            @Localizer["Login"]
+        </a>
+    </li>
+}

@@ -1,0 +1,26 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@model ApplicantVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var displayForeigner = Model.ApplicantType == ENTITY_TYPE.Foreigner ? string.Empty : "display:none";
+    var displayPerson = (Model.ApplicantType == ENTITY_TYPE.AuthorizedPerson || Model.ApplicantType == ENTITY_TYPE.Representative) ? string.Empty : "display:none";
+}
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.DisplayFor(x => x.ApplicantType, "DropDown", new { Ddl = ViewBag.ApplicantType_ddl })
+    </div>
+    <div class="col-6 applicant-person-container" style="@displayPerson">
+        @Html.DisplayFor(x => x.Egn, "StringNullable")
+    </div>
+    <div class="col-6" style="@displayForeigner">
+        @Html.DisplayFor(x => x.Lnch, "StringNullable")
+    </div>
+</div>
+<div style="@displayPerson">
+    @await Html.PartialAsync("_ApplicantPerson", Model.Person)
+</div>
+<div style="@displayForeigner">
+    @await Html.PartialAsync("_Foreigner", Model.Foreigner, new ViewDataDictionary(ViewData) { { "HideID", true } })
+</div>

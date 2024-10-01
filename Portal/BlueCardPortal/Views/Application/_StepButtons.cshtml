@@ -1,0 +1,8 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+<div class="form__footer">
+    <button type="button" class="btn u-btn u-btn--close" aria-label="Изтрий" onclick="ApplicationClose()"></button>
+    <button type="button" class="btn u-btn u-btn--save" aria-label="Запази" onclick="SetStatusDraft()"></button>
+    <button type="button" class="btn u-btn u-bg--c2 u-btn--arrow btn-prev-step" onclick="SetPrevStep()" style="display:none">@Localizer["Back"]</button>
+    <button type="button" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow btn-next-step" onclick="SetNextStep()">@Localizer["Confirmation"]</button>
+</div>

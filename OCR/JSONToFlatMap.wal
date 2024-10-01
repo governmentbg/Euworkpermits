@@ -1,0 +1,103 @@
+
+	`ÚÿπëªC≤‘PI5e‚.defVar --name dColumn --type Numeric
+defVar --name columnName --type String
+defVar --name currentParameter --type String
+defVar --name dCurrentParameterDataTable --type DataTable
+defVar --name dCurrentParameterDataTableColumns --type Numeric
+defVar --name contextDataTable --type Stack --innertype DataTable
+defVar --name contextDataTableColumns --type Stack --innertype Numeric
+defVar --name contextCurrentColumn --type Stack --innertype Numeric
+defVar --name prefixesList --type List --innertype String
+defVar --name prefix --type String
+defVar --name key --type String
+defVar --name dCurrentParameterDataTableRows --type Numeric
+defVar --name isJSON --type Boolean
+defVar --name dRow --type Numeric
+defVar --name contextDataTableRows --type Stack --innertype Numeric
+defVar --name contextCurrentRow --type Stack --innertype Numeric
+defVar --name dLastPrefix --type String
+defVar --name contextLastPrefix --type Stack --innertype String
+defVar --name attributeDataTable --type DataTable
+defVar --name attributeDataTableRows --type Numeric
+defVar --name attributeDataTableColumns --type Numeric
+defVar --name in_JSONText --type String --parameter 
+defVar --name sNullValue --type String --value "N/A"
+defVar --name dummy --type DataTable
+defVar --name out_JSONDataTable --type DataTable --output 
+jsonToTable --json "${in_JSONText}" --jsonPath "$" dCurrentParameterDataTable=value dCurrentParameterDataTableRows=rows dCurrentParameterDataTableColumns=columns
+addColumn --dataTable ${out_JSONDataTable} --columnname Key --type String
+addColumn --dataTable ${out_JSONDataTable} --columnname Value --type String
+goSub --label ExtractData
+beginSub --name ExtractData
+for --variable ${dRow} --from 1 --to ${dCurrentParameterDataTableRows} --step 1
+	case --switches "CaseSwitchesAll"
+		when --left "${prefixesList.Count}" --operator "Equal_To" --right 0 --negate 
+		when --left "${dCurrentParameterDataTableRows}" --operator "Greater_Than" --right 1
+	then
+		removeAt --index "${prefixesList.Count}" --collection "${prefixesList}"
+		add --collection "${prefixesList}" --value "${dLastPrefix}[${dRow}]"
+	endCase
+	for --variable ${dColumn} --from 1 --to ${dCurrentParameterDataTableColumns} --step 1
+		getColumnName --dataTable ${dCurrentParameterDataTable} --index ${dColumn} columnName=value
+		//executeScript --name "D:\\RPA ServiceCentrix\\Projects\\Blue_Card\\UppercaseFirstLetter.wal" --parameters "{\"in_out_text\":\"${columnName}\"}" --output "{\"in_out_text\":\"${columnName}\"}" --comment UppercaseFirstLetter
+		mapTableRow --dataTable ${dCurrentParameterDataTable} --row ${dRow} --mappings "[{\"Name\":null,\"Number\":\"${dColumn}\",\"Output\":\"${currentParameter}\"}]"
+		
+		goSub --label CreatePrefix
+		if --left "${currentParameter}" --operator "Is_Null_Or_Empty"
+			addRow --valuesmapping "{\"Key\":\"${key}\",\"Value\":\"${sNullValue}\"}" --dataTable ${out_JSONDataTable}
+		endIf
+		case --switches "CaseSwitchesAll"
+			when --left "${currentParameter}" --operator "Is_Null_Or_Empty" --negate 
+			when --left "${columnName}" --operator "Equal_To" --right "@metadata" --negate 
+		then
+			jsonToTable --handleError  --json "${currentParameter}" --jsonPath "$" isJSON=success
+			if --left "${isJSON}" --operator "Is_True" --negate 
+				goSub --label FormatParameter
+				addRow --valuesmapping "{\"Key\":\"${key}\",\"Value\":\"${currentParameter}\"}" --dataTable ${out_JSONDataTable}
+			else
+				add --collection "${prefixesList}" --value "${columnName}"
+				setVar --name "${dLastPrefix}" --value "${columnName}"
+				
+				jsonToTable --handleError  --json "${currentParameter}" --jsonPath "$" isJSON=success attributeDataTable=value attributeDataTableRows=rows attributeDataTableColumns=columns
+				goSub --label ExtractDataAndKeepContext --assignments "{\"attributeDataTable\":\"${attributeDataTable}\",\"attributeDataTableColumns\":\"${attributeDataTableColumns}\",\"attributeDataTableRows\":\"${attributeDataTableRows}\"}"
+				
+				removeAt --index "${prefixesList.Count}" --collection "${prefixesList}"
+			endIf
+		endCase
+	next
+next
+endSub
+beginSub --name CreatePrefix
+if --left "${prefixesList.Count}" --operator "Equal_To" --right 0
+	setVar --name "${key}" --value "${columnName}"
+else
+	joinText --list ${prefixesList} --delimiter "Custom" --customDelimiter "." prefix=value
+	concatTexts --text "${prefix}." --value "${columnName}" key=value
+endIf
+endSub
+beginSub --name FormatParameter
+if --left "${currentParameter}" --operator "Equal_To" --right True
+	setVar --name "${currentParameter}" --value –î–ê
+elseIf --left "${currentParameter}" --operator "Equal_To" --right False
+	setVar --name "${currentParameter}" --value –ù–ï
+endIf
+endSub
+beginSub --name ExtractDataAndKeepContext
+copyTable --dataTable ${dCurrentParameterDataTable} dummy=value
+add --collection "${contextDataTable}" --value "${dummy}"
+add --collection "${contextDataTableColumns}" --value "${dCurrentParameterDataTableColumns}"
+add --collection "${contextDataTableRows}" --value "${dCurrentParameterDataTableRows}"
+add --collection "${contextCurrentColumn}" --value "${dColumn}"
+add --collection "${contextCurrentRow}" --value "${dRow}"
+add --collection "${contextLastPrefix}" --value "${dLastPrefix}"
+
+goSub --label ExtractData --assignments "{\"dCurrentParameterDataTable\":\"${attributeDataTable}\",\"dCurrentParameterDataTableColumns\":\"${attributeDataTableColumns}\",\"dCurrentParameterDataTableRows\":\"${attributeDataTableRows}\"}"
+
+pop --collection "${contextDataTable}" dCurrentParameterDataTable=value
+pop --collection "${contextDataTableColumns}" dCurrentParameterDataTableColumns=value
+pop --collection "${contextDataTableRows}" dCurrentParameterDataTableRows=value
+pop --collection "${contextCurrentColumn}" dColumn=value
+pop --collection "${contextCurrentRow}" dRow=value
+pop --collection "${contextLastPrefix}"
+peek --collection "${contextLastPrefix}" --handleerror  dLastPrefix=value
+endSub"	 gi•÷ÏGíùí—7AÂü*	23.0.13.0

@@ -1,0 +1,52 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmployerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var applicantType = ViewData["ApplicantType"]?.ToString();
+    var applicantRole = ViewData["ApplicantRole"]?.ToString();
+    var ignoreValidation = (applicantType != ENTITY_TYPE.AuthorizedPerson && applicantType != ENTITY_TYPE.Representative) || (applicantRole != "2");
+    var display = ignoreValidation ? "display:none" : string.Empty;
+}
+<div class="employer-container" style="@display">
+    <div class="firm-body">
+        <div class="row mb-2">
+            <div class="col-6">
+                <div class="width-100-minus-btn120">
+                    @Html.EditorFor(x => x.Identifier, "StringNullable")
+                </div>
+                <div class="employer-btn">
+                    <button type="button" class="btn u-btn u-bg--c3" onclick="GetEmployer(this)">@Localizer["GetEmployer"]</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                @Html.EditorFor(x => x.Name, "StringNullable")
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                @Html.EditorFor(x => x.LegalForm, "DropDown", new { Ddl = ViewBag.LegalForm_ddl })
+            </div>
+        </div>
+    </div>
+    <div class="firm-body">
+        @{
+            await Html.RenderPartialAsync("_EmployerAddress", Model, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } });
+        }
+    </div>
+    <div class="firm-body">
+        <h3 class="section-title">@Localizer["Contacts"]</h3>
+        @{
+            ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");
+            @await Html.PartialAsync("_Contacts", Model.Contacts, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+        }
+    </div>
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>

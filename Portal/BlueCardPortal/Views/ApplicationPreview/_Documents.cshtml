@@ -1,0 +1,16 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@model DocumentsVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var htmlFieldPrefixP = htmlFieldPrefix.CombineTemplatePrefix("Documents"); ;
+ }
+<div class="mt-3">
+    @for (int i = 0; i < Model.Documents.Count; i++)
+    {
+        Model.Documents[i].Index = i;
+        ViewData.TemplateInfo.HtmlFieldPrefix = $"{htmlFieldPrefixP}[{i}]";
+        await Html.RenderPartialAsync("_Document", Model.Documents[i]);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>

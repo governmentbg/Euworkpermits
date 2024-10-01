@@ -1,0 +1,193 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-BlueCardPortal-db7cea65-a942-4d6f-9529-223f5ace4c48</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
+    <PackageReference Include="IdStampItAuthentication" Version="6.0.1" />
+    <PackageReference Include="IO.EAuthIntegration" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="8.0.5" />
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.5.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="Npgsql" Version="8.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Npgsql.Json.NET" Version="8.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlueCardPortal.Core\BlueCardPortal.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\images\add-dark.svg" />
+    <None Include="wwwroot\css\images\add-file-dark.svg" />
+    <None Include="wwwroot\css\images\add.svg" />
+    <None Include="wwwroot\css\images\arrow-left-purple.svg" />
+    <None Include="wwwroot\css\images\arrow-right-white.svg" />
+    <None Include="wwwroot\css\images\arrow-white-left.svg" />
+    <None Include="wwwroot\css\images\briefcase.svg" />
+    <None Include="wwwroot\css\images\calendar-input.svg" />
+    <None Include="wwwroot\css\images\cc-Type=maestro_State=hover.svg" />
+    <None Include="wwwroot\css\images\cc-Type=maestro_State=normal.svg" />
+    <None Include="wwwroot\css\images\cc-Type=mastercard_State=hover.svg" />
+    <None Include="wwwroot\css\images\cc-Type=mastercard_State=normal.svg" />
+    <None Include="wwwroot\css\images\cc-Type=visa_electron_State=hover.svg" />
+    <None Include="wwwroot\css\images\cc-Type=visa_electron_State=normal.svg" />
+    <None Include="wwwroot\css\images\cc-Type=visa_State=hover.svg" />
+    <None Include="wwwroot\css\images\cc-Type=visa_State=normal.svg" />
+    <None Include="wwwroot\css\images\check-white.svg" />
+    <None Include="wwwroot\css\images\chevron-down.svg" />
+    <None Include="wwwroot\css\images\close-btn-red.svg" />
+    <None Include="wwwroot\css\images\close.svg" />
+    <None Include="wwwroot\css\images\confirm-users.svg" />
+    <None Include="wwwroot\css\images\confirm.svg" />
+    <None Include="wwwroot\css\images\creditcard.svg" />
+    <None Include="wwwroot\css\images\delete.svg" />
+    <None Include="wwwroot\css\images\document-success.svg" />
+    <None Include="wwwroot\css\images\download.svg" />
+    <None Include="wwwroot\css\images\draganddrop.svg" />
+    <None Include="wwwroot\css\images\empty-state.svg" />
+    <None Include="wwwroot\css\images\en0green.svg" />
+    <None Include="wwwroot\css\images\favorite-active.svg" />
+    <None Include="wwwroot\css\images\favorite.svg" />
+    <None Include="wwwroot\css\images\file.svg" />
+    <None Include="wwwroot\css\images\filter-circle.svg" />
+    <None Include="wwwroot\css\images\grid.svg" />
+    <None Include="wwwroot\css\images\insurance-no.svg" />
+    <None Include="wwwroot\css\images\insurance-yes.svg" />
+    <None Include="wwwroot\css\images\list.svg" />
+    <None Include="wwwroot\css\images\log-in.svg" />
+    <None Include="wwwroot\css\images\log-out.svg" />
+    <None Include="wwwroot\css\images\login-btn.svg" />
+    <None Include="wwwroot\css\images\login-logo.svg" />
+    <None Include="wwwroot\css\images\logo-light.svg" />
+    <None Include="wwwroot\css\images\mail-new.svg" />
+    <None Include="wwwroot\css\images\mail-open.svg" />
+    <None Include="wwwroot\css\images\map-pin.svg" />
+    <None Include="wwwroot\css\images\nextstep.svg" />
+    <None Include="wwwroot\css\images\open-doc-white.svg" />
+    <None Include="wwwroot\css\images\open-doc.svg" />
+    <None Include="wwwroot\css\images\pagearrows-first-State=active_Type=navigation-2.svg" />
+    <None Include="wwwroot\css\images\pagearrows-last-State=active_Type=navigation-2-left.svg" />
+    <None Include="wwwroot\css\images\pagearrows-last-State=active_Type=navigation-2-right.svg" />
+    <None Include="wwwroot\css\images\pagerarrows-State=active_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrows-State=hover_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrows-State=inactive_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrows-State=normal_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrowsright-State=active_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrowsright-State=hover_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrowsright-State=inactive_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pagerarrowsright-State=normal_Type=navigation.svg" />
+    <None Include="wwwroot\css\images\pause.svg" />
+    <None Include="wwwroot\css\images\pdf.svg" />
+    <None Include="wwwroot\css\images\pen-green.svg" />
+    <None Include="wwwroot\css\images\plus-circle.svg" />
+    <None Include="wwwroot\css\images\queries-panel.svg" />
+    <None Include="wwwroot\css\images\queries.svg" />
+    <None Include="wwwroot\css\images\query-hover.svg" />
+    <None Include="wwwroot\css\images\query.svg" />
+    <None Include="wwwroot\css\images\receives-notifications.svg" />
+    <None Include="wwwroot\css\images\reset-purple.svg" />
+    <None Include="wwwroot\css\images\role-administrator.svg" />
+    <None Include="wwwroot\css\images\role-court-admin.svg" />
+    <None Include="wwwroot\css\images\role-legal-advisor.svg" />
+    <None Include="wwwroot\css\images\role-person.svg" />
+    <None Include="wwwroot\css\images\role-representative.svg" />
+    <None Include="wwwroot\css\images\select-Direction=down.svg" />
+    <None Include="wwwroot\css\images\select-Direction=up.svg" />
+    <None Include="wwwroot\css\images\send-doc.svg" />
+    <None Include="wwwroot\css\images\State=active_Type=navigation-2.svg" />
+    <None Include="wwwroot\css\images\State=active_Type=navigation-2_Direction=right.svg" />
+    <None Include="wwwroot\css\images\State=hover_Type=navigation-2.svg" />
+    <None Include="wwwroot\css\images\State=hover_Type=navigation-2_Direction=right.svg" />
+    <None Include="wwwroot\css\images\State=inactive_Type=navigation-2.svg" />
+    <None Include="wwwroot\css\images\State=inactive_Type=navigation-2_Direction=right.svg" />
+    <None Include="wwwroot\css\images\State=normal_Type=navigation-2.svg" />
+    <None Include="wwwroot\css\images\State=normal_Type=navigation-2_Direction=right.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\SharedResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\_LoginPartial.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_LoginPartial.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\ApplicationPreview\_EmployerAddress.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Application\_Employment.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Application\_ForeignerSmallEdit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Report\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SharedResource.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SharedResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.en.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_LoginPartial.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_LoginPartial.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Certificates\localhost.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Certificates\medexp.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,33 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["ReportOnStatus"];
+}
+@using BlueCardPortal.Infrastructure.Model.ApplicationList
+@model ApplicationFilterVM;
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-4">
+        <a class="u-btn u-btn--search u-bg--c5" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas" aria-controls="searchOffcanvas">
+            @Localizer["SearchApplication"]
+         </a>
+    </div>
+</div>
+
+<div id="dvMain" data-url="@Url.Action("ListApplicationOnForeigner", "Report")"></div>
+<div class="details offcanvas offcanvas-end" tabindex="-1" id="searchOffcanvas" aria-labelledby="searchOffcanvasLabel">
+    @{
+        await Html.RenderPartialAsync("_ApplicationOnForeignerFilter", Model);
+    }
+</div>
+@section Styles {
+    <link href="~/css/gridview.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/gridview.columns.js"></script>
+    <script src="~/js/gridview.js"></script>
+    <script src="~/js/application-index-all.js"></script>
+    <script src="~/js/application-onforeigner-index.js"></script>
+}

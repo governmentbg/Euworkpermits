@@ -1,0 +1,20 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ApplicantPersonVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.DisplayFor(x => x.Name, "StringNullable")
+    </div>
+    <div class="col-6">
+        @Html.DisplayFor(x => x.ApplicantRole, "DropDown", new { Ddl = ViewBag.ApplicantRole_ddl })
+    </div>
+</div>
+<h3 class="section-title">@Localizer["ApplicantPersonAddress"]</h3>
+@await Html.PartialAsync("_Address", Model.Address)
+<h3 class="section-title">@Localizer["Contacts"]</h3>
+@await Html.PartialAsync("_Contacts", Model.Contacts)

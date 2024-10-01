@@ -1,0 +1,53 @@
+﻿@using BlueCardPortal.Infrastructure.Model.ApplicationList
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ApplicationFilterVM;
+
+/*
+-ЛНЧ
+-Дата на раждане
+-Национална идентичност
+-Наименование на чужденец
+-От дата
+-До дата
+*/
+<div class="details__body offcanvas-body">
+    <div class="form-container">
+        <button type="button" class="btn u-btn u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas">@Localizer["CloseFilter"]</button>
+        <h3 class="section-title">@Localizer["SearchApplicationTitle"]</h3>
+        <form id="formApplicationFilter" class="search-form" action="POST">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group col-6 mb-2">
+                    @Html.EditorFor(x => x.LNCH, "StringNullable")
+                </div>
+                <div class="form-group col-md-6 mb-2">
+                    @Html.EditorFor(x => x.BirthDate, "DateTimeNull")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    @Html.EditorFor(x => x.Country, "DropDown", new { Ddl = ViewBag.Countries_ddl })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12 mb-2">
+                    @Html.EditorFor(x => x.ForeignerName, "StringNullable")
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-2">
+                    @Html.EditorFor(x => x.FromDate, "DateTimeNull")
+                </div>
+                <div class="form-group col-md-6 mb-2">
+                    @Html.EditorFor(x => x.ToDate, "DateTimeNull")
+                </div>
+            </div>
+
+            <button type="button" class="btn u-btn  u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas" onclick="clearApplicationFilter()">@Localizer["ClearFilter"]</button>
+            <br />
+            <button type="button" class="btn u-btn  u-btn--light u-btn--search ms-auto w-100" data-bs-dismiss="offcanvas" onclick="searchApplication()">Търсене</button>
+        </form>
+
+    </div>
+</div>

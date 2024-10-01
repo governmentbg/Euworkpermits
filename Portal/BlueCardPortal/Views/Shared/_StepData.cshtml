@@ -1,0 +1,27 @@
+﻿@using BlueCardPortal.Infrastructure.Model
+@model StepItemVM
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = Model.HtmlPrefix;
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var show = Model.IsCurrent ? "show" : string.Empty;
+    var id = $"form{Model.HtmlPrefix}";
+}
+<div id="@Model.CollapseName"
+     class="step-data-container collapse @show"
+     aria-labelledby="headingOne"
+     data-bs-parent="#stepsContainer">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="form-title">@Model.Label</h2>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.ViewName))
+    {
+        <form id="@id" method="post" action="@Url.Action($"Save{Model.HtmlPrefix}", "Application")">
+            @await Html.PartialAsync(Model.ViewName, Model.Data)
+        </form>
+    }
+</div>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+}

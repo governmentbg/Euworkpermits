@@ -1,0 +1,8 @@
+﻿@using BlueCardPortal.Infrastructure.Model
+@model List<StepItemVM>
+<div class="accordion" id="accordionPreview">
+    @foreach (var item in Model)
+    {
+        @await Html.PartialAsync("_PreviewItem", item)
+    }
+</div>

@@ -1,0 +1,30 @@
+﻿@using BlueCardPortal.Infrastructure.Model.ApplicationList
+@model ApplicationFilterVM
+<div class="row">
+    <div class="form-group col-md-6 mb-2">
+        @Html.EditorFor(x => x.FromDate, "DateTimeNull")
+    </div>
+    <div class="form-group col-md-6 mb-2">
+        @Html.EditorFor(x => x.ToDate, "DateTimeNull")
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12 mb-2">
+        @Html.EditorFor(x => x.ForeignerName, "StringNullable")
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-12 mb-2">
+        @Html.EditorFor(x => x.ApplicationNumber, "StringNullable")
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mb-2">
+        @Html.EditorFor(x => x.Status, "DropDown", new { Ddl = ViewBag.Status_ddl })
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mb-2">
+        @Html.EditorFor(x => x.PermitType, "DropDown", new { Ddl = ViewBag.PermitType_ddl })
+    </div>
+</div>

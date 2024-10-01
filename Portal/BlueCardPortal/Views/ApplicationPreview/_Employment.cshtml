@@ -1,0 +1,37 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@model EmploymentVM
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.DurationOfEmploymentFrom, "DateTime")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.DurationOfEmploymentMonth, "Int32Nullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.Type, new { Ddl = ViewBag.EmploymentType_ddl })
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.Position, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.Qualification, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.EmploymentReason, "StringNullable")
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.EducationType, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.Speciality, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.SpecialityCode, "Nomenclature", new { NomenclatureType = NomenclatureTypes.NKPD_CODE})
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@model PersonIdDocumentVM
+<div class="item-template person-document">
+    <div class="row mb-2">
+        <div class="col-5">
+            @Html.EditorFor(x => x.Type, "DropDown", new { Ddl = ViewBag.PersonIdDocument_ddl })
+        </div>
+        <div class="col-2">
+            @Html.EditorFor(x => x.Series, "StringNullable")
+        </div>
+        <div class="col-5">
+            <div class="width-100-minus-btn">
+                @Html.EditorFor(x => x.Identifier, "StringNullable")
+            </div>
+            @{
+                await Html.RenderPartialAsync("_RemoveItem");
+            }
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.EditorFor(x => x.IssueDate, "DateTimeNull")
+        </div>
+        <div class="col-4">
+            @Html.EditorFor(x => x.ExpirationDate, "DateTimeNull")
+        </div>
+        <div class="col">
+            @Html.EditorFor(x => x.IssuedBy, "StringNullable")
+        </div>
+    </div>
+</div>
+

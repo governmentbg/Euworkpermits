@@ -1,0 +1,17 @@
+﻿@using BlueCardPortal.Extensions
+@model string?
+@{
+    var reqClass = string.Empty;// ViewData.ModelMetadata.GetIOReqClass();
+    var val = Model?.Decode();
+    var add_class = ((string?)ViewData["class"] ?? "");
+    var NoLabel = ((bool?)ViewData["NoLabel"] ?? false);
+    var onchange = (string)(ViewData["onchange"] ?? String.Empty);
+}
+<div class="form-group">
+    @if (!NoLabel)
+    {
+        <label asp-for="@Model" class="form-label @reqClass"></label>
+    }
+    @Html.TextBox("", val, new { @class = $"form-control {add_class}", onchange = $"{onchange}" })
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

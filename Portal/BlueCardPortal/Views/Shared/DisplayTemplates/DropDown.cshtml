@@ -1,0 +1,15 @@
+﻿@using BlueCardPortal.Core.Extensions
+@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Extensions
+@model string?
+@{
+    var ddl = Utils.GetDropDownDdl(ViewData).SetSelected(Model);
+    var val = ddl.Where(x => x.Value == Model).Select(x => x.Text).FirstOrDefault();
+    var add_class = ((string?)ViewData["class"] ?? "");
+}
+<div class="form-group">
+    <label asp-for="@Model" class="form-label"></label>
+    <p class="@add_class">
+        @val
+    </p>
+</div>

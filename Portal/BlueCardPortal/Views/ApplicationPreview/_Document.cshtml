@@ -1,0 +1,38 @@
+﻿@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@{
+    var container_css = string.IsNullOrEmpty(Model.CmisId) ? "list-documents-body" : "list-documents-body-uploaded";
+    var uploadDisplay = string.IsNullOrEmpty(Model.CmisId) ? string.Empty : "display:none";
+    var previewDisplay = string.IsNullOrEmpty(Model.CmisId) ? "display:none" : string.Empty;
+    var isOriginal = Model.IsOriginal ? Localizer["IsOriginal"].ToString(): string.Empty;
+}
+@model DocumentVM
+
+<div class="row mb-2 document-container @container_css">
+    @Html.HiddenFor(x => x.CmisId)
+    @Html.HiddenFor(x => x.FileName)
+
+    <div class="col-1">
+        @if (Model.IsMandatory)
+        {
+            <img src="~/images/required-file.svg" />
+        }
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.DocumentType, "StringNullable", new { @class = "document-title" })
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.FileName, "StringNullable", new { @class = "document-file-name" })
+    </div>
+    <div class="col-1">
+        @Html.DisplayFor(x => isOriginal, "StringNullable")
+    </div>
+    <div class="col-2 p-2 d-flex justify-content-end">
+        <div class="document-btn-container">
+            <button style="@previewDisplay" type="button" class="btn u-btn u-btn--view m-2" aria-label="Преглед" onclick="previewFile(this)"></button>
+        </div>
+    </div>
+
+</div>

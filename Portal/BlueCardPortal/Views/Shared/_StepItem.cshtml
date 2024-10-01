@@ -1,0 +1,20 @@
+﻿@using BlueCardPortal.Infrastructure.Model
+@{
+    var disabled = false && Model.IsDisabled ? "disabled" : string.Empty;
+    //var done = Model.IsCurrent ? "disabled" : string.Empty;
+}
+@model StepItemVM
+<div class="step-item" style="@Model.IsHiddenStyle()" id="@(Model.CollapseName)item" name="@(Model.CollapseName)item">
+    <button class="step-button text-center"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#@Model.CollapseName"
+            aria-expanded="@Model.IsCurrent.ToString().ToLower()"
+            aria-controls="@Model.CollapseName"
+            data-number="@Model.Number"
+            data-step-id="@Model.Id"
+            onclick="StepItemClick(this)"
+            @disabled>
+        @Model.Number
+    </button>
+</div>

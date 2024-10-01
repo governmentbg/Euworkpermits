@@ -1,0 +1,76 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ForeignerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var displayLnch = Model.TypeIdentifier == FOREIGNER_TYPE_IDENTIFIER.InBg ? string.Empty : "display:none";
+    var displayExternal = Model.TypeIdentifier == FOREIGNER_TYPE_IDENTIFIER.External ? string.Empty : "display:none";
+    var hideID = (bool?)ViewData["HideID"] ?? false;
+}
+@if (!hideID)
+{
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.DisplayFor(x => x.TypeIdentifier, "DropDown", new { Ddl = ViewBag.ForeignerTypeIdentifier_ddl })
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-6" style="@displayLnch">
+            @Html.DisplayFor(x => x.Identifier, "StringNullable")
+        </div>
+    </div>
+}
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.EntryDate, "DateTimeNull")
+    </div>    
+    <div class="col-4">
+        @Html.DisplayFor(x => x.EntryPoint, "DropDown", new { Ddl = ViewBag.EntryPoint_ddl })
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.DisplayFor(x => x.Name, "StringNullable")
+    </div>
+    <div class="col-6">
+        @Html.DisplayFor(x => x.NameCyrilic, "StringNullable")
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-3">
+        @Html.DisplayFor(x => x.Nationality, "DropDown", new { Ddl = ViewBag.Countries_ddl })
+    </div>
+    <div class="col-3">
+        @Html.DisplayFor(x => x.CityОfBirth, "StringNullable")
+    </div>
+    <div class="col-2">
+        @Html.DisplayFor(x => x.BirthDate, "DateTime")
+    </div>
+    <div class="col-2">
+        @Html.DisplayFor(x => x.Gender, "DropDown", new { Ddl = ViewBag.Gender_ddl })
+    </div>
+    <div class="col-2">
+        @Html.DisplayFor(x => x.MaritalStatus, "DropDown", new { Ddl = ViewBag.MaritalStatus_ddl })
+    </div>
+
+</div>
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.VisaType, "DropDown", new { Ddl = ViewBag.VisaType_ddl })
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.VisaSerialNumber, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.VisaExpirationDate, "DateTime")
+    </div>
+</div>
+<h3 class="section-title">@Localizer["PersonIdDocuments"]</h3>
+ @await Html.PartialAsync("_PersonIdDocuments", Model.PersonIdDocuments)
+<h3 class="section-title">@Localizer["ForeignerAddresses"]</h3>
+@await Html.PartialAsync("_Addresses", Model.Addresses)
+<h3 class="section-title">@Localizer["Contacts"]</h3>
+@await Html.PartialAsync("_Contacts", Model.Contacts)

@@ -1,0 +1,39 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ApplicantPersonVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var applicantType = ViewData["ApplicantType"]?.ToString();
+    var ignoreValidation = (applicantType != ENTITY_TYPE.AuthorizedPerson && applicantType != ENTITY_TYPE.Representative);
+    var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+}
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.EditorFor(x => x.Name, "StringNullable")
+    </div>
+    <div class="col-6">
+        @Html.EditorFor(x => x.ApplicantRole, "RadioButtonList", new { @class = ignoreCss, Ddl = ViewBag.ApplicantRole_ddl, onchange = "ApplicantRoleChangeRadio(this)" })
+    </div>
+</div>
+<div>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Employer");
+    @await Html.PartialAsync("_ApplicantEmployer", Model.Employer, new ViewDataDictionary(ViewData) {{ "ApplicantRole", Model.ApplicantRole }})
+}
+</div>
+<h3 class="section-title">@Localizer["ApplicantPersonAddress"]</h3>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
+    @await Html.PartialAsync("_Address", Model.Address, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+}
+<h3 class="section-title">@Localizer["Contacts"]</h3>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");
+    @await Html.PartialAsync("_Contacts", Model.Contacts, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+}
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+}

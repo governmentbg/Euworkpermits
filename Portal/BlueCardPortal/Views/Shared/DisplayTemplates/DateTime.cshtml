@@ -1,0 +1,14 @@
+﻿@model DateTime?
+@{
+    var val = "";
+    if (Model.HasValue)
+    {
+        val = Model.Value.ToString("dd.MM.yyyy");
+    }
+}
+<div class="form-group">
+    <label asp-for="@Model" class="form-label"></label>
+    <p class="">
+        @val
+    </p>
+</div>

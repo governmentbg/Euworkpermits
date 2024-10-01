@@ -1,0 +1,28 @@
+﻿@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Infrastructure.Model.Application
+@{
+    var currentHtmlPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var indexPath = Utils.GetIndexPath(currentHtmlPrefix);
+}
+@model ContactVM
+<div class="row mb-2 contact-container item-template">
+    <input type="hidden" name="@indexPath" value="@Model.Index" />
+    <div class="col-4">
+        @Html.EditorFor(x => x.Type, "DropDown", new { Ddl = ViewBag.ContactType_ddl})
+    </div>
+    <div class="col-5">
+        @Html.EditorFor(x => x.Description, "StringNullable")
+    </div>
+    <div class="col-3">
+        @Html.EditorFor(x => x.IsPreferedContract, "RadioButtonList", new { 
+            Ddl = ViewBag.Favorite_ddl, 
+            @class = "contact-is-prefered", 
+            container_css = "width-100-minus-btn", 
+            label = "&nbsp;",
+            onchange = "IsPreferedContract(this)"
+        })
+        @{
+            await Html.RenderPartialAsync("_RemoveItem");
+        }
+    </div>
+</div>

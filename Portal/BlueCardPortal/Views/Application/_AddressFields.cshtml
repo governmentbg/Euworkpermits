@@ -1,0 +1,43 @@
+﻿@using BlueCardPortal.Core.Contracts
+@using BlueCardPortal.Infrastructure.Model.Application
+@inject INomenclatureService nomenclatureService;
+@model AddressVM
+@{
+    var region_ddl = (List<SelectListItem>)ViewBag.Region_ddl;
+    var region = region_ddl.Where(x => x.Value == Model.Region).Select(x => x.Text).FirstOrDefault();
+    var city_ddl = await nomenclatureService.GetRegionCities(region ?? string.Empty);
+}
+<div class="row mb-2">
+    <div class="col-3">
+        @Html.EditorFor(x => x.Street, "StringNullable")
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.StreetNo, "StringNullable", new { onchange = "addressStreetNoChange(this)" })
+    </div>
+    <div class="col-3">
+        @Html.EditorFor(x => x.Quarter, "StringNullable")
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.BuildingNo, "StringNullable", new { onchange = "addressBuildingNoChange(this)" })
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.Entrance, "StringNullable")
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.Floor, "StringNullable")
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.Apartment, "StringNullable")
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-5">
+        @Html.EditorFor(x => x.Region, "DropDown", new { @class = "select2-drop-down", onchange = "RegionChange(this)" })
+    </div>
+    <div class="col-5">
+        @Html.EditorFor(x => x.City, "DropDown", new { city_ddl = city_ddl, @class = "select2-drop-down address-city" })
+    </div>
+    <div class="col">
+        @Html.EditorFor(x => x.PostalCode, "Int32Nullable")
+    </div>
+</div>

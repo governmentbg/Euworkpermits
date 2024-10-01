@@ -1,0 +1,39 @@
+﻿@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ApplicationVM
+@{
+    ViewData["Title"] = Localizer["Applications"];
+}
+
+<div class="accordion steps-container" id="stepsContainer">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ApplicationId)
+    <div class="row">
+        <div class="col-12">
+            <div class="steps">
+                <progress id="progress" value="0" max="100"></progress>
+                @foreach (var item in Model.ApplicationItems)
+                {
+                    @await Html.PartialAsync("_StepItem", item)
+                }
+            </div>
+        </div>
+    </div>
+    @foreach (var item in Model.ApplicationItems)
+    {
+        @await Html.PartialAsync("_StepData", item)
+    }
+    <div class="row mb-2">
+        <div class="col-12">
+            @await Html.PartialAsync("_StepButtons")
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/js/steps.js" asp-append-version="true"></script>
+    <script src="~/js/application.js" asp-append-version="true"></script>
+    <script src="~/js/application-index-all.js" asp-append-version="true"></script>
+    <script src="~/js/bc-validation.js" asp-append-version="true"></script>
+}

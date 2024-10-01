@@ -1,0 +1,24 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model PersonIdDocumentListVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var dataIndex = Model.Items.Count;
+    var ignoreValidation = (bool?)ViewData["IgnoreValidation"] ?? false;
+    var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+}
+<div class="dynamic-form-container person-documents" data-index="@dataIndex" data-prefix="@htmlFieldPrefix">
+    @for (int i = 0; i < Model.Items.Count; i++)
+    {
+        Model.Items[i].Index = i;
+        ViewData.TemplateInfo.HtmlFieldPrefix = $"{htmlFieldPrefix}.Items[{i}]";
+        await Html.RenderPartialAsync("_PersonIdDocument", Model.Items[i]);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+    @Html.EditorFor(x => x.Validation, "HiddenValidation", new { @class = ignoreCss })
+    <div class="d-flex justify-content-center align-items-center">
+        <button type="button" class="btn u-btn u-btn--add add-item add-width" data-url="@Url.Action("AddPersonIdDocument")" data-beforebtn="true">@Localizer["AddPersonIdDocument"]</button>
+    </div>
+</div>
