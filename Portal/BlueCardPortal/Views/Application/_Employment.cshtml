@@ -1,0 +1,62 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmploymentVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var display = Model.AddressIsSame != YESNO_TYPE.No ? "display:none" : string.Empty;
+}
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.EditorFor(x => x.DurationOfEmploymentFrom, "DateTime")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.DurationOfEmploymentMonth, "Int32Nullable")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.Type, "RadioButtonList", new { Ddl = ViewBag.EmploymentType_ddl })
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.EditorFor(x => x.Position, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.Qualification, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.EmploymentReason, "StringNullable")
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-4">
+        @Html.EditorFor(x => x.EducationType, "DropDown", new { Ddl = ViewBag.EducationType_ddl })
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.Speciality, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.SpecialityCode, "DropDown", new { Ddl = ViewBag.SpecialityCode_ddl })
+    </div>
+</div>
+<h3 class="section-title">@Localizer["AddressIsSameTitle"]</h3>
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.EditorFor(x => x.AddressIsSame, "RadioButtonList", new
+            {
+                Ddl = ViewBag.AddressIsSame_ddl,
+                onchange = "AddressIsSameChangeRadio(this)"
+            })
+    </div>
+</div>
+<div class="address-container address-can-be-same" style="@display">
+    @{
+        @Html.HiddenFor(x => x.Address.Kind)
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
+        await Html.RenderPartialAsync("_AddressFields", Model.Address);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
+

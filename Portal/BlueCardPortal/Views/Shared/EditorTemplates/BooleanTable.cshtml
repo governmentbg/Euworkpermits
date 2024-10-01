@@ -1,0 +1,11 @@
+﻿@model bool
+@{
+    var onchange = (string)(ViewData["onchange"] ?? String.Empty);
+}
+<div class="form-group">
+    <label asp-for="@Model" class="form-label">
+        @Html.DisplayNameFor(model => model)
+    </label>
+    <input asp-for="@Model" class="form-check-input" onchange="@onchange" />
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

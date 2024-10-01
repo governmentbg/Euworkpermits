@@ -1,0 +1,112 @@
+﻿@using BlueCardPortal.Models
+@using Microsoft.AspNetCore.Identity
+@using static EAuthIntegration.Models.EAuthIntegrationDefaults
+
+@model LoginViewModel
+@{
+    Layout = String.Empty;
+    ViewBag.Title = "Вход в системата";
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/colors.css" rel="stylesheet" />
+    <link href="~/css/buttons.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<body class="login-picture-body">
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="login-page__info col-xl-6">
+                    <div class="login-box-wrapper">
+                        <header id="header" class="row">
+                            <div class="col-12">
+                                <div class="login-logo">
+                                    <img src="~/images/logo.svg" alt="Blue Card Logo" />
+                                </div>
+                                <div class="title">
+                                    Платформа за издаване на
+                                </div>
+                                <div class="brand">
+                                    разрешения за работа
+                                </div>
+
+                            </div>
+                        </header>
+                        <main class="login-page__main row">
+                            <div class="button-info-group">
+                                <a href="@Urls.LogIn" class="btn-main-icon"><i class="user-add-inverted"></i><span class="btn-label-right">Вход с еАвтентикация</span></a>
+                                <div class="info">
+                                    Методът за идентификация се предоставя от Министерството на електронното управление и може да изисква предварителна регистрация
+                                </div>
+                            </div>
+                        </main>
+                        <footer class="login-page__footer">
+                            <div class="row">
+                                <div class="col-md-6 text-center">
+                                    <div class="section-footer-v">
+                                        <div class="top-row">
+                                            <div class="support">
+                                                <div class="support-title">Помощ и поддръжка</div>
+                                                <div class="data">
+                                                    <div class="data-item">
+                                                        <div class="support-label">Телефон</div>
+                                                        <div class="support-info">02 9876543</div>
+                                                    </div>
+                                                    <div class="data-item">
+                                                        <div class="support-label">Електронна поща</div>
+                                                        <div class="support-info">support@egov.bg</div>
+                                                    </div>
+                                                    <div class="data-item">
+                                                        <div class="support-label">Други</div>
+                                                        <div class="horizontal-menu">
+                                                            <div class="support-menu-item">Правила</div>
+                                                            <div class="support-menu-item">За системата</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="about">
+                                            <div class="divider"></div>
+                                            <div class="frame">
+                                                <div class="frame-2">
+                                                    <p class="copyright">© Министерство на електронното управление. Всички права запазени.</p>
+                                                    <p class="about-info">
+                                                        <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">Политика за поверителност</span></a>
+                                                        <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                                                        <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">Политика за достъпност</span></a>
+                                                        <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                                                        <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">Обратна връзка</span></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+</body>
+</html>

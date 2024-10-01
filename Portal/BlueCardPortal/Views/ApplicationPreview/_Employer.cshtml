@@ -1,0 +1,40 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmployerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+<div class="employer-container">
+    <div class="row mb-2">
+        <div class="col-6">
+            @Html.DisplayFor(x => x.Identifier, "StringNullable")
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12">
+            @Html.DisplayFor(x => x.Name, "StringNullable")
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12">
+            @Html.DisplayFor(x => x.LegalForm, "Nomenclature", new { NomenclatureType = NomenclatureTypes.LEGAL_FORM_TYPE })
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6">
+            @Html.DisplayFor(x => x.EmployeeCount, "Int32Nullable")
+        </div>
+        <div class="col-6">
+            @Html.DisplayFor(x => x.ForeignEmployeeCount, "Int32Nullable")
+        </div>
+    </div>
+    <h3 class="section-title">@Localizer["EmployerAddresses"]</h3>
+    @{
+        await Html.RenderPartialAsync("_EmployerAddress", Model);
+    }
+    <h3 class="section-title">@Localizer["Contacts"]</h3>
+    @await Html.PartialAsync("_Contacts", Model.Contacts)
+</div>

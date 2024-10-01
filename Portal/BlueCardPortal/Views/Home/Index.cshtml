@@ -1,0 +1,39 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["Applications"];
+}
+
+<div class="row cp-row">
+    <div class="col-lg-4">
+        <a href="@Url.Action("Index", "Application")">
+            <div class="cp-cell workspace-item">
+                <div class="img-container application-list-img"></div>
+                <h3 class="page-title__cp">@Localizer["Applications"]</h3>
+                <p class="page-title__cp--desc">@Localizer["ApplicationSendList"]</p>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-4">
+        <a href="@Url.Action("IndexDraft", "Application")">
+            <div class="cp-cell workspace-item">
+                <div class="img-container play-circle"></div>
+                <h3 class="page-title__cp">@Localizer["ApplicationDraftListTItle"]</h3>
+                <p class="page-title__cp--desc">@Localizer["ApplicationDraftList"]</p>
+            </div>
+        </a>
+    </div>
+     <div class="col-lg-4">
+        <a href="@Url.Action("Index", "Report")">
+            <div class="cp-cell workspace-item">
+                <div class="img-container queries-home"></div>
+                <h3 class="page-title__cp">@Localizer["Report"]</h3>
+                <p class="page-title__cp--desc">@Localizer["ReportText"]</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/css/home.css" rel="stylesheet" />
+}

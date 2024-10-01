@@ -1,0 +1,19 @@
+﻿@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@model ApplicationTypeVM
+@{
+   var displayPermit = Model.ApplicationTypeCode == APPLICATION_TYPE.Permanent ? string.Empty : "display:none";
+}
+
+<p class="text-danger">Важно: В момента може да подавате само заявления за Краткосрочна заетост до 90 дни - Приложение №5</p>
+
+<div class="row mb-2">
+    <div class="col-12">
+        @Html.EditorFor(x => x.ApplicationTypeCode, "RadioButtonList", new { Ddl = ViewBag.ApplicationType_ddl, onchange = "ApplicationTypeChangeRadio(this)" })
+    </div>
+</div>
+<div class="row mb-2 permit-type-container" style="@displayPermit">
+    <div class="col-12">
+        @Html.EditorFor(x => x.PermitType, "RadioButton", new { Ddl = ViewBag.PermitType_ddl })
+    </div>
+</div>

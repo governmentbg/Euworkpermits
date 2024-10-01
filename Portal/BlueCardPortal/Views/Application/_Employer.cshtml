@@ -1,0 +1,51 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmployerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var display = Model.ContactAddressIsSame != YESNO_TYPE.No ? "display:none" : string.Empty;
+}
+<div class="employer-container">
+    <div class="row mb-2">
+        <div class="col-6">
+            <div>
+                <div class="width-100-minus-btn120">
+                    @Html.EditorFor(x => x.Identifier, "StringNullable")
+                </div>
+                <div class="employer-btn">
+                    <button type="button" class="btn u-btn u-bg--c3" onclick="GetEmployer(this)">@Localizer["GetEmployer"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12">
+            @Html.EditorFor(x => x.Name, "StringNullable")
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-12">
+            @Html.EditorFor(x => x.LegalForm, "DropDown", new { Ddl = ViewBag.LegalForm_ddl })
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6">
+            @Html.EditorFor(x => x.EmployeeCount, "Int32Nullable")
+        </div>
+        <div class="col-6">
+            @Html.EditorFor(x => x.ForeignEmployeeCount, "Int32Nullable")
+        </div>
+    </div>
+    @{
+        await Html.RenderPartialAsync("_EmployerAddress", Model);
+    }
+    <h3 class="section-title">@Localizer["Contacts"]</h3>
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");
+        @await Html.PartialAsync("_Contacts", Model.Contacts)
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>

@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Жалби";
+}
+@section Styles {
+    <link href="~/css/gridview.css" rel="stylesheet" />
+    <link href="~/css/theme.css" rel="stylesheet" />
+}
+<div class="row">&nbsp;</div>
+<div id="dvMain" data-url="@Url.Action("ListComplaint", "Report")"></div>
+@section Scripts {
+    <script src="~/js/gridview.columns.js"></script>
+    <script src="~/js/gridview.js"></script>
+    <script src="~/js/complaint-index.js"></script>
+}

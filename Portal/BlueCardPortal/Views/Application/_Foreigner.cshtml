@@ -1,0 +1,93 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ForeignerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var displayLnch = Model.TypeIdentifier == FOREIGNER_TYPE_IDENTIFIER.InBg ? string.Empty : "display:none";
+    var displayExternal = Model.TypeIdentifier == FOREIGNER_TYPE_IDENTIFIER.External ? string.Empty : "display:none";
+    var hideID = (bool?)ViewData["HideID"] ?? false;
+    var applicantType = ViewData["ApplicantType"]?.ToString();
+    if (!hideID && string.IsNullOrEmpty(applicantType))
+        applicantType = ENTITY_TYPE.Foreigner;
+    var ignoreValidation = applicantType != ENTITY_TYPE.Foreigner;
+    var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+}
+@if (!hideID)
+{
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.EditorFor(x => x.TypeIdentifier, "RadioButtonList", new { @class = ignoreCss, Ddl = ViewBag.ForeignerTypeIdentifier_ddl, onchange = "ForeignerTypeIdentifierChangeRadio(this)" })
+        </div>
+        <div class="col-2">
+        </div>
+        <div class="col-6 type-identifier-lnch" style="@displayLnch">
+            @Html.EditorFor(x => x.Identifier, "StringNullable")
+        </div>
+    </div>
+}
+<div class="row mb-2 type-identifier-lnch" style="@displayLnch">
+    <div class="col-4">
+        @Html.EditorFor(x => x.EntryDate, "DateTimeNull")
+    </div>    
+    <div class="col-8">
+        @Html.EditorFor(x => x.EntryPoint, "DropDown", new { Ddl = ViewBag.EntryPoint_ddl })
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.EditorFor(x => x.Name, "StringNullable")
+    </div>
+    <div class="col-6">
+        @Html.EditorFor(x => x.NameCyrilic, "StringNullable")
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-3">
+        @Html.EditorFor(x => x.Nationality, "DropDown", new { @class = "select2-drop-down", Ddl = ViewBag.Countries_ddl })
+    </div>
+    <div class="col-3">
+        @Html.EditorFor(x => x.CityОfBirth, "StringNullable")
+    </div>
+    <div class="col-2">
+        @Html.EditorFor(x => x.BirthDate, "DateTime")
+    </div>
+    <div class="col-2">
+        @Html.EditorFor(x => x.Gender, "DropDown", new { Ddl = ViewBag.Gender_ddl })
+    </div>
+    <div class="col-2">
+        @Html.EditorFor(x => x.MaritalStatus, "DropDown", new { Ddl = ViewBag.MaritalStatus_ddl })
+    </div>
+
+</div>
+<div class="row mb-2 type-identifier-lnch" style="@displayLnch">
+    <div class="col-4">
+        @Html.EditorFor(x => x.VisaType, "DropDown", new { Ddl = ViewBag.VisaType_ddl })
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.VisaSerialNumber, "StringNullable")
+    </div>
+    <div class="col-4">
+        @Html.EditorFor(x => x.VisaExpirationDate, "DateTimeNull")
+    </div>
+</div>
+<h3 class="section-title">@Localizer["PersonIdDocuments"]</h3>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("PersonIdDocuments");
+    @await Html.PartialAsync("_PersonIdDocuments", Model.PersonIdDocuments, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+}
+<h3 class="section-title">@Localizer["ForeignerAddresses"]</h3>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Addresses");
+    @await Html.PartialAsync("_Addresses", Model.Addresses, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+}
+<h3 class="section-title">@Localizer["Contacts"]</h3>
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");
+    @await Html.PartialAsync("_Contacts", Model.Contacts, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+}
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+}

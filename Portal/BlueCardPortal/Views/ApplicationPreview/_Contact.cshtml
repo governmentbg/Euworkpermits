@@ -1,0 +1,21 @@
+﻿@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ContactVM
+@{
+    var favorite = string.IsNullOrEmpty(Model.IsPreferedContract) ? Localizer["Favorite"].ToString() : string.Empty;
+}
+
+<div class="row mb-2 contact-container item-template">
+    <div class="col-4">
+        @Html.DisplayFor(x => x.Type, "Nomenclature", new { NomenclatureType = NomenclatureTypes.CONTACT_INFO_TYPE })
+    </div>
+    <div class="col-5">
+        @Html.DisplayFor(x => x.Description, "StringNullable")
+    </div>
+    <div class="col-3">
+        @Html.DisplayFor(x => favorite, "StringNullable")
+    </div>
+</div>

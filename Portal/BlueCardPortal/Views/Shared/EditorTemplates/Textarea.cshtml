@@ -1,0 +1,12 @@
+﻿@model string
+@{
+    var reqClass = string.Empty; //ViewData.ModelMetadata.GetIOReqClass();
+    var val = Model;
+    //    var val = Model.Decode();
+}
+<div class="form-group">
+    <label asp-for="@Model" class="control-label @reqClass"></label>
+    @Html.TextArea("", val, new { @class = "form-control", rows = "6" })
+    @*<textarea asp-for="@Model" class="form-control" rows="6"></textarea>*@
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

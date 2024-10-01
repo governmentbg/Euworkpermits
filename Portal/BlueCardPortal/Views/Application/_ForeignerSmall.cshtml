@@ -1,0 +1,54 @@
+﻿@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@{
+    var currentHtmlPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var indexPath = Utils.GetIndexPath(currentHtmlPrefix);
+}
+@model ForeignerSmallVM
+<div class="mb-2 foreigner-small-container">
+    <div class="width-100-minus-btn">
+        <div class="row foreigner-small-data-container">
+            <input type="hidden" name="@indexPath" value="@Model.Index" />
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.Name)
+            @Html.HiddenFor(x => x.NameCyrilic)
+            @Html.HiddenFor(x => x.BirthDate)
+            @Html.HiddenFor(x => x.PassportNumber)
+            @Html.HiddenFor(x => x.Nationality)
+            @Html.HiddenFor(x => x.NationalityCode)
+            @Html.HiddenFor(x => x.Position)
+            @Html.HiddenFor(x => x.DurationOfEmploymentFrom)
+            @Html.HiddenFor(x => x.DurationOfEmploymentTo)
+            <div class="col-2">
+                @Html.DisplayFor(x => x.Name, "StringNullable", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col-2">
+                @Html.DisplayFor(x => x.NameCyrilic, "StringNullable", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.BirthDate, "DateTime", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.PassportNumber, "StringNullable", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.Nationality, "StringNullable", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.Position, "StringNullable", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.DurationOfEmploymentFrom, "DateTime", new { @class = "foreigner-small-item" })
+            </div>
+            <div class="col">
+                @Html.DisplayFor(x => x.DurationOfEmploymentTo, "DateTime", new { @class = "foreigner-small-item" })
+            </div>
+        </div>
+    </div>
+    <div class="float-end">
+        <button type="button" class="btn u-btn u-btn--delete" aria-label="Изтрий" onclick="PerformRemoveForeignerSmall(this)"></button>
+        <button type="button" class="btn u-btn u-btn--user-edit" aria-label="Редактирай" onclick="PerformEditForeignerSmall(this)"></button>
+    </div>
+</div>

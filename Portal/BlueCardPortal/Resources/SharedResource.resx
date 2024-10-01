@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddAddress" xml:space="preserve">
+    <value>Нов адрес</value>
+  </data>
+  <data name="AddContact" xml:space="preserve">
+    <value>Нов контакт</value>
+  </data>
+  <data name="AddForeignerSmall" xml:space="preserve">
+    <value>Добави данни за чужденец</value>
+  </data>
+  <data name="AddPersonIdDocument" xml:space="preserve">
+    <value>Нов документ</value>
+  </data>
+  <data name="AddressIsSame" xml:space="preserve">
+    <value>Съвпада с адреса на седалището на работодателя</value>
+  </data>
+  <data name="AddressIsSameTitle" xml:space="preserve">
+    <value>Адрес на месторабота</value>
+  </data>
+  <data name="AddressKind" xml:space="preserve">
+    <value>Вид адрес</value>
+  </data>
+  <data name="Apartment" xml:space="preserve">
+    <value>Апартамент</value>
+  </data>
+  <data name="ApplicantEgn" xml:space="preserve">
+    <value>ЕГН на заявителя</value>
+  </data>
+  <data name="ApplicantName" xml:space="preserve">
+    <value>Име на заявителя</value>
+  </data>
+  <data name="ApplicantPersonAddress" xml:space="preserve">
+    <value>Адрес за кореспонденция на заявител</value>
+  </data>
+  <data name="ApplicantRole" xml:space="preserve">
+    <value>Роля на заявителя</value>
+  </data>
+  <data name="ApplicantRole1" xml:space="preserve">
+    <value>Физическо лице</value>
+  </data>
+  <data name="ApplicantRole2" xml:space="preserve">
+    <value>Служител на юридическо лице</value>
+  </data>
+  <data name="ApplicantType" xml:space="preserve">
+    <value>Вид заявител</value>
+  </data>
+  <data name="ApplicationAdditionalInfo" xml:space="preserve">
+    <value>Допълнителна информация, свързана със заявлението</value>
+  </data>
+  <data name="ApplicationFilterFromDate" xml:space="preserve">
+    <value>От дата</value>
+  </data>
+  <data name="ApplicationFilterToDate" xml:space="preserve">
+    <value>до дата</value>
+  </data>
+  <data name="ApplicationNumber" xml:space="preserve">
+    <value>Номер на заявление</value>
+  </data>
+  <data name="ApplicationType" xml:space="preserve">
+    <value>Заявление</value>
+  </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Прикачи</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="BCAddressErrorMessage" xml:space="preserve">
+    <value>Задължително да бъде попълнена следната комбинация : Улица и Номер ИЛИ Жилищен квартал и Сграда номер</value>
+  </data>
+  <data name="BCAddressListErrorMessage" xml:space="preserve">
+    <value>Въведете поне един адрес</value>
+  </data>
+  <data name="BCAttributeErrorMessage" xml:space="preserve">
+    <value>Въведете</value>
+  </data>
+  <data name="BCPersonIdDocumentListErrorMessage" xml:space="preserve">
+    <value>Въведете поне един личен документ на чужденеца</value>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Дата на раждане</value>
+  </data>
+  <data name="BuildingNo" xml:space="preserve">
+    <value>Сграда №</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Град</value>
+  </data>
+  <data name="CityОfBirth" xml:space="preserve">
+    <value>Място на раждане</value>
+  </data>
+  <data name="ComplaintInfo" xml:space="preserve">
+    <value>Обоснование</value>
+  </data>
+  <data name="Confirmation" xml:space="preserve">
+    <value>Потвърждение</value>
+  </data>
+  <data name="ContactDescription" xml:space="preserve">
+    <value>Контакт</value>
+  </data>
+  <data name="ContactListErrorMessage" xml:space="preserve">
+    <value>Въведете информация за контакт</value>
+  </data>
+  <data name="ContactListPreferedErrorMessage" xml:space="preserve">
+    <value>Въведете предпочитан контакт</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Данни за контакт</value>
+  </data>
+  <data name="ContactType" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Държава</value>
+  </data>
+  <data name="DocumentType" xml:space="preserve">
+    <value>Тип на документа</value>
+  </data>
+  <data name="DurationOfEmploymentFrom" xml:space="preserve">
+    <value>Начална дата</value>
+  </data>
+  <data name="DurationOfEmploymentMonth" xml:space="preserve">
+    <value>Продължителност (месеци)</value>
+  </data>
+  <data name="EducationTypeVM" xml:space="preserve">
+    <value>Степен на образование</value>
+  </data>
+  <data name="EmployeeCount" xml:space="preserve">
+    <value>Брой служители</value>
+  </data>
+  <data name="EmployerAddresses" xml:space="preserve">
+    <value>Адрес на работодателя</value>
+  </data>
+  <data name="EmployerIdentifier" xml:space="preserve">
+    <value>ЕИК</value>
+  </data>
+  <data name="EmployerName" xml:space="preserve">
+    <value>Наименование на юридическото лице</value>
+  </data>
+  <data name="EmploymentPosition" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
+  <data name="EmploymentReason" xml:space="preserve">
+    <value>Цел на наемане</value>
+  </data>
+  <data name="EmploymentType" xml:space="preserve">
+    <value>Продължаване на договор</value>
+  </data>
+  <data name="Entrance" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="EntryDate" xml:space="preserve">
+    <value>Дата на влизане в страната</value>
+  </data>
+  <data name="EntryPoint" xml:space="preserve">
+    <value>Входна точка на влизане в страната</value>
+  </data>
+  <data name="ErrorEmailMessage" xml:space="preserve">
+    <value>Въведете валиден адрес на електронна поща</value>
+  </data>
+  <data name="ErrorPhoneMessage" xml:space="preserve">
+    <value>Въведете валиден телефон</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Дата на валидност</value>
+  </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>Предпочитан</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Име на файл</value>
+  </data>
+  <data name="Floor" xml:space="preserve">
+    <value>Етаж</value>
+  </data>
+  <data name="ForeignEmployeeCount" xml:space="preserve">
+    <value>Брой чуждестранни служители</value>
+  </data>
+  <data name="ForeignerAddresses" xml:space="preserve">
+    <value>Адрес в Република България</value>
+  </data>
+  <data name="ForeignerFid" xml:space="preserve">
+    <value>ЛНЧ на чуждестранното лице</value>
+  </data>
+  <data name="ForeignerIdentifier" xml:space="preserve">
+    <value>Идентификатор на чужденец</value>
+  </data>
+  <data name="ForeignerName" xml:space="preserve">
+    <value>Име на латиница</value>
+  </data>
+  <data name="ForeignerNameCyrilic" xml:space="preserve">
+    <value>Име на кирилица</value>
+  </data>
+  <data name="ForeignerNameCyrilicRegularExpression" xml:space="preserve">
+    <value>Въведете име на кирилица</value>
+  </data>
+  <data name="ForeignerNameFilter" xml:space="preserve">
+    <value>Име чужденец</value>
+  </data>
+  <data name="ForeignerNameRegularExpression" xml:space="preserve">
+    <value>Въведете име на латиница</value>
+  </data>
+  <data name="ForeignerSmallListErrorMessage" xml:space="preserve">
+    <value>Въведете поне един чужденец</value>
+  </data>
+  <data name="ForeignerTypeIdentifier" xml:space="preserve">
+    <value>Пребивава ли лицето в България към момента</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Пол</value>
+  </data>
+  <data name="GetEmployer" xml:space="preserve">
+    <value>Проверка</value>
+  </data>
+  <data name="IsOriginal" xml:space="preserve">
+    <value>Оригинал</value>
+  </data>
+  <data name="IssueDate" xml:space="preserve">
+    <value>Дата на издаване</value>
+  </data>
+  <data name="IssuedBy" xml:space="preserve">
+    <value>Издател</value>
+  </data>
+  <data name="LegalForm" xml:space="preserve">
+    <value>Правна форма</value>
+  </data>
+  <data name="MaritalStatus" xml:space="preserve">
+    <value>Семеен стаус</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Гражданство</value>
+  </data>
+  <data name="NO" xml:space="preserve">
+    <value>НЕ</value>
+  </data>
+  <data name="PassportNumber" xml:space="preserve">
+    <value>№ на задгр. паспорт</value>
+  </data>
+  <data name="PermitType" xml:space="preserve">
+    <value>Разрешение</value>
+  </data>
+  <data name="PermitTypeFilter" xml:space="preserve">
+    <value>Вид разрешително</value>
+  </data>
+  <data name="PersonIdDocumentIdentifier" xml:space="preserve">
+    <value>Номер на документ</value>
+  </data>
+  <data name="PersonIdDocuments" xml:space="preserve">
+    <value>Документи за идентификация</value>
+  </data>
+  <data name="PersonIdDocumentSeries" xml:space="preserve">
+    <value>Серия</value>
+  </data>
+  <data name="PersonIdDocumentType" xml:space="preserve">
+    <value>Тип на документ</value>
+  </data>
+  <data name="PersonIdDocumentVM" xml:space="preserve">
+    <value>Документи за идентификация на чужденец</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Пощенски код</value>
+  </data>
+  <data name="QualificationVM" xml:space="preserve">
+    <value>Квалификация</value>
+  </data>
+  <data name="Quarter" xml:space="preserve">
+    <value>Квартал / жк</value>
+  </data>
+  <data name="RangeErrorMessage" xml:space="preserve">
+    <value>Въведете {0} в диапазона от {1} до {2}</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Област</value>
+  </data>
+  <data name="RejectionInfo" xml:space="preserve">
+    <value>Причина</value>
+  </data>
+  <data name="RequiredErrorMessage" xml:space="preserve">
+    <value>Полето {0} е задължително</value>
+    <comment>The {0} field is required</comment>
+  </data>
+  <data name="SearchApplicationTitle" xml:space="preserve">
+    <value>Търсене на заявления</value>
+  </data>
+  <data name="SmallDurationOfEmploymentFrom" xml:space="preserve">
+    <value>Заетост от дата</value>
+  </data>
+  <data name="SmallDurationOfEmploymentTo" xml:space="preserve">
+    <value>Заетост до дата</value>
+  </data>
+  <data name="SmallEmploymentPosition" xml:space="preserve">
+    <value>Длъжност / работа</value>
+  </data>
+  <data name="SpecialityCodeVM" xml:space="preserve">
+    <value>Професия по НКПД</value>
+  </data>
+  <data name="SpecialityVM" xml:space="preserve">
+    <value>Специалност</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Улица / булевард / площад</value>
+  </data>
+  <data name="StreetNo" xml:space="preserve">
+    <value>Номер</value>
+  </data>
+  <data name="VisaExpirationDate" xml:space="preserve">
+    <value>Дата на валидност на визата</value>
+  </data>
+  <data name="VisaSerialNumber" xml:space="preserve">
+    <value>Номер на виза</value>
+  </data>
+  <data name="VisaType" xml:space="preserve">
+    <value>Виза</value>
+  </data>
+  <data name="YES" xml:space="preserve">
+    <value>ДА</value>
+  </data>
+  <data name="EmployerHeadAddress" xml:space="preserve">
+    <value>Седалище и адрес на управление</value>
+  </data>
+  <data name="EmployerContactAddress" xml:space="preserve">
+    <value>Адрес за кореспонденция</value>
+  </data>
+  <data name="ContactAddressIsSame" xml:space="preserve">
+    <value>Съвпада с адреса на седалището на работодателя</value>
+  </data>
+  <data name="EmployeeRangeErrorMessage" xml:space="preserve">
+    <value>Въведете {0}</value>
+  </data>
+  <data name="EmployeeCountErrorMessage" xml:space="preserve">
+    <value>Брой чуждестранни служители не може да бъде по-голям от Брой служители</value>
+  </data>
+  <data name="BCIdentifierErrorMessageEIK" xml:space="preserve">
+    <value>Въведете валиден ЕИК</value>
+  </data>
+  <data name="BCIdentifierErrorMessageEGN" xml:space="preserve">
+    <value>Въведете валиден ЕГН</value>
+  </data>
+  <data name="BCIdentifierErrorMessageLNCH" xml:space="preserve">
+    <value>Въведете валиден ЛНЧ</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добави</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Запис</value>
+  </data>
+  <data name="SmallDurationOfEmploymentPeriod" xml:space="preserve">
+    <value>Заетост от дата до дата</value>
+  </data>
+  <data name="DocumentTypeOther" xml:space="preserve">
+    <value>Други</value>
+  </data>
+  <data name="DocumentTitle" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="ReportTitle" xml:space="preserve">
+    <value>Справки</value>
+  </data>
+  <data name="Applications" xml:space="preserve">
+    <value>Заявления</value>
+  </data>
+  <data name="ApplicationSendList" xml:space="preserve">
+    <value>Списък подадени заявления</value>
+  </data>
+  <data name="ApplicationDraftList" xml:space="preserve">
+    <value>Списък с чернови заявления</value>
+  </data>
+  <data name="ApplicationDraftListTItle" xml:space="preserve">
+    <value>Неподадени Заявления</value>
+  </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>Жалби</value>
+  </data>
+  <data name="ComplaintSendList" xml:space="preserve">
+    <value>Списък подадени жалби</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Справки</value>
+  </data>
+  <data name="ReportText" xml:space="preserve">
+    <value>Генериране и извличане на справки по предварително зададени критерии</value>
+  </data>
+  <data name="ReportOnStatus" xml:space="preserve">
+    <value>Справка по статус на заявление</value>
+  </data>
+  <data name="ReportOnStatusText" xml:space="preserve">
+    <value>Генериране и извличане на справки подадени заявления по статус</value>
+  </data>
+  <data name="ReportOnForeigner" xml:space="preserve">
+    <value>Справка по чужденец</value>
+  </data>
+  <data name="ReportOnForeignerText" xml:space="preserve">
+    <value>Генериране и извличане на справки подадени заявления по данни на чужденец</value>
+  </data>
+  <data name="SearchApplication" xml:space="preserve">
+    <value>Търсене на заявление</value>
+  </data>
+  <data name="CloseFilter" xml:space="preserve">
+    <value>Затвори</value>
+  </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Изчисти филтъра</value>
+  </data>
+  <data name="CountryFilter" xml:space="preserve">
+    <value>Национална идентичност</value>
+  </data>
+  <data name="LNCHFilter" xml:space="preserve">
+    <value>ЛНЧ</value>
+  </data>
+  <data name="BirthDateFilter" xml:space="preserve">
+    <value>Дата на раждане</value>
+  </data>
+  <data name="ErrorNoFIle" xml:space="preserve">
+    <value>Изберете файл от локалното Ви устройство!</value>
+  </data>
+  <data name="ErrorFileMaxSIze" xml:space="preserve">
+    <value>Файлът е с по-голям размер от допустимият</value>
+  </data>
+  <data name="BCDocumentsErrorMessage" xml:space="preserve">
+    <value>Прикачете задължителните документи!</value>
+  </data>
+  <data name="BCRangeDateErrorMessage" xml:space="preserve">
+    <value>Въведете валидна дата</value>
+  </data>
+</root>

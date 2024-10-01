@@ -1,0 +1,9 @@
+﻿@using BlueCardPortal.Extensions
+@model string?
+@{
+    var add_class = ((string?)ViewData["class"] ?? "");
+}
+<div class="form-group">
+    @Html.HiddenFor(m => m, new { @class = $"form-control bc-radio-button {add_class} list-validation" })
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

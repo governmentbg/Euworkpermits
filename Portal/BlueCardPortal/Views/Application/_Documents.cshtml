@@ -1,0 +1,53 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@model DocumentsVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var htmlFieldPrefixP = htmlFieldPrefix.CombineTemplatePrefix("Documents"); ;
+    var dataIndex = Model.Documents.Count;
+    int index = 0;
+    var foreignerIds = Model.Documents.Where(x => x.ForeignerSmallId != null).Select(x => x.ForeignerSmallId).Distinct().OrderBy(x => x).ToList();
+}
+<div class="dynamic-form-container documents-container accordion" data-index="@dataIndex" id="accordionDocuments">
+    @Html.HiddenFor(x => x.PermitType, new { @class = "document-permit-type" })
+    @Html.HiddenFor(x => x.ApplicantType, new { @class = "document-aplicant-type" })
+    @foreach (var document in Model.Documents.Where(x => x.ForeignerSmallId == null))
+    {
+        document.Index = index;
+        ViewData.TemplateInfo.HtmlFieldPrefix = $"{htmlFieldPrefixP}[{index}]";
+        await Html.RenderPartialAsync("_Document", Model.Documents[index]);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+        index++;
+    }
+    @foreach (var foreignerId in foreignerIds)
+    {
+        var target = $"docOn{foreignerId}";
+        var doc = Model.Documents.Where(x => x.ForeignerSmallId == foreignerId).FirstOrDefault();
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#@target"
+                        aria-expanded="false"
+                        aria-controls="@target">
+                    @doc.ForeignerLabel
+                </button>
+            </h2>
+            <div id="@target" class="accordion-collapse collapse" data-bs-parent="#accordionDocuments">
+                <div class="accordion-body">
+                    @foreach (var document in Model.Documents.Where(x => x.ForeignerSmallId == foreignerId))
+                    {
+                        document.Index = index;
+                        ViewData.TemplateInfo.HtmlFieldPrefix = $"{htmlFieldPrefixP}[{index}]";
+                        await Html.RenderPartialAsync("_Document", Model.Documents[index]);
+                        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+                        index++;
+                    }
+                </div>
+            </div>
+        </div>
+
+    }
+    @Html.EditorFor(x => x.Validation, "HiddenValidation")
+</div>

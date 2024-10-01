@@ -1,0 +1,26 @@
+﻿@model DateTime
+@{
+    var containerClass = ViewData["container_class"] ?? "form-group";
+    var value = "";
+    if (Model.Year > 1900)
+    {
+        value = Model.ToString("dd.MM.yyyy");
+    }
+}
+<div class="@containerClass">
+    @if (ViewData["label"] != null)
+    {
+        <label class="form-label">@ViewData["label"]</label>
+    }
+    else
+    {
+        <label asp-for="@Model" class="form-label"></label>
+    }
+    <div class="input-group date">
+        @Html.TextBox("", value, new { @class = "form-control date-picker", data_value = value, autocomplete = "false" })
+        <div class="input-group-append">
+            <span class="input-group-text date-icon"><i class="far fa-calendar-alt"></i></span>
+        </div>
+    </div>
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

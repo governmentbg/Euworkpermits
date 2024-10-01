@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model string
+@{
+    var ddl = (List<SelectListItem>)(ViewData["Ddl"] ?? new List<SelectListItem>());
+    var onchange = (string)(ViewData["onchange"] ?? String.Empty);
+    var class_css = (string)(ViewData["class"] ?? String.Empty);
+    var container_css = (string)(ViewData["container_css"] ?? String.Empty);
+    var path = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var pathName = path.Replace(".", "_");
+    var label = (string)(ViewData["label"] ?? String.Empty);
+}
+
+<div class="form-group @container_css">
+    <label asp-for="@Model" class="form-label">
+        @if (!string.IsNullOrEmpty(label))
+        {
+            @Html.Raw(label)
+        }
+    </label>
+    <ul class="ul-radio-button">
+        @foreach (var item in ddl)
+        {
+            string checkedValue = item.Value == Model?.ToString() ? "checked" : "";
+            string id = $"{path}_{item.Value}";
+            var disabled = item.Disabled ? "disabled" : null;
+            <li class="col-form-label">
+                @if (item.Disabled) {
+                    @Html.RadioButtonFor(model => model, item.Value, new
+                    {
+                        id,
+                        @class = $"form-check-input bc-radio-button {class_css}",
+                        @onchange = $"{onchange}",
+                        @checked = $"{checkedValue}",
+                        @disabled = "disabled",
+                        })
+                } 
+                else
+                {
+                    @Html.RadioButtonFor(model => model, item.Value, new
+                        {
+                            id,
+                            @class = $"form-check-input bc-radio-button {class_css}",
+                            @onchange = $"{onchange}",
+                            @checked = $"{checkedValue}",
+                        })
+                }
+                <label for="@id"> @item.Text</label>
+
+            </li>
+        }
+    </ul>
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>
+

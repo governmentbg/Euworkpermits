@@ -1,0 +1,23 @@
+﻿@using BlueCardPortal.Infrastructure.Model
+@model StepItemVM
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button 
+            class="accordion-button collapsed" 
+            type="button" 
+            data-bs-toggle="collapse"
+            data-bs-target="#@Model.CollapseName"
+            aria-expanded="false"
+            aria-controls="@Model.CollapseName">
+            @Model.Label
+        </button>
+    </h2>
+    <div id="@Model.CollapseName" class="accordion-collapse collapse" data-bs-parent="#accordionPreview">
+        <div class="accordion-body">
+            @if (!string.IsNullOrEmpty(Model.ViewName))
+            {
+                @await Html.PartialAsync(Model.ViewName, Model.Data)
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model EmployerVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var display = Model.ContactAddressIsSame != YESNO_TYPE.No ? "display:none" : string.Empty;
+    var ignoreValidation = (bool?)ViewData["IgnoreValidation"] ?? false;
+    var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+}
+<h3 class="section-title">@Localizer["EmployerHeadAddress"]</h3>
+<div class="address-container head-address">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
+        await Html.RenderPartialAsync("_AddressFields", Model.Address);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
+<h3 class="section-title">@Localizer["EmployerContactAddress"]</h3>
+<div class="row mb-2">
+    <div class="col-6">
+        @Html.EditorFor(x => x.ContactAddressIsSame, "RadioButtonList", new
+            {
+                Ddl = ViewBag.AddressIsSame_ddl,
+                onchange = "AddressIsSameChangeRadio(this)",
+                @class = ignoreCss
+            })
+    </div>
+</div>
+<div class="address-container address-can-be-same" style="@display">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("ContactAddress");
+        await Html.RenderPartialAsync("_AddressFields", Model.ContactAddress);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>

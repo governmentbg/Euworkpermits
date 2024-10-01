@@ -1,0 +1,62 @@
+﻿@using BlueCardPortal.Core.Helper
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@{
+    var currentHtmlPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var indexPath = Utils.GetIndexPath(currentHtmlPrefix);
+    var container_css = string.IsNullOrEmpty(Model.CmisId) ? "list-documents-body" : "list-documents-body-uploaded";
+    var uploadDisplay = string.IsNullOrEmpty(Model.CmisId) ? string.Empty : "display:none";
+    var previewDisplay = string.IsNullOrEmpty(Model.CmisId) ? "display:none" : string.Empty;
+}
+@model DocumentVM
+<div class="row mb-2 document-container @container_css">
+    <input type="hidden" name="@indexPath" value="@Model.Index" />
+    @Html.HiddenFor(x => x.Index)
+    @Html.HiddenFor(x => x.PortalId)
+    @Html.HiddenFor(x => x.IsMandatory)
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.CmisId)
+    @Html.HiddenFor(x => x.IsMandatory)
+    @Html.HiddenFor(x => x.DocumentTypeCode)
+    @Html.HiddenFor(x => x.DocumentType)
+    @Html.HiddenFor(x => x.DocumentCategoryCode)
+    @Html.HiddenFor(x => x.DocumentCategory)
+    @Html.HiddenFor(x => x.FileUrl)
+    @Html.HiddenFor(x => x.FileName)
+    @Html.HiddenFor(x => x.HasMultipleFile)
+    @Html.HiddenFor(x => x.HasTitle)
+    @Html.HiddenFor(x => x.Title)
+    @Html.HiddenFor(x => x.MimeType)
+    <div class="col-1">
+        @if (Model.IsMandatory)
+        {
+            <img src="~/images/required-file.svg" />
+        }
+    </div>
+    <div class="col-4">
+        <div class="row">
+            <div class="col-12">
+                @Html.DisplayFor(x => x.DocumentTypeWithTitle, "StringNullable", new { @class = "document-title" })
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        @Html.DisplayFor(x => x.FileName, "StringNullable", new { @class = "document-file-name" })
+    </div>
+    <div class="col-1">
+        @Html.EditorFor(x => x.IsOriginal, "BooleanTable")
+    </div>
+    <div class="col-2 p-2 d-flex justify-content-end">
+        <div class="document-btn-container">
+            <button style="@uploadDisplay" type="button"
+                    class="btn u-btn u-bg--c3 u-btn--right u-btn--attach"
+                    onclick="AppUploadFile(this)"
+                    data-urlview="@Url.Action("UploadFileView", "Files")">
+                @Localizer["Attach"]
+            </button>
+            <button style="@previewDisplay" type="button" class="btn u-btn u-btn--close m-2" aria-label="Изтрий" onclick="removeFile(this)"></button>
+            <button style="@previewDisplay" type="button" class="btn u-btn u-btn--view m-2" aria-label="Преглед" onclick="previewFile(this)"></button>
+        </div>
+    </div>
+</div>

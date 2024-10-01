@@ -1,0 +1,7 @@
+﻿@using BlueCardPortal.Infrastructure.Constants
+
+<input type="hidden" id="ServerErrorMessage" value="@TempData[MessageConstant.ErrorMessage]?.ToString()" />
+<input type="hidden" id="ServerWarningMessage" value="@TempData[MessageConstant.WarningMessage]?.ToString()" />
+<input type="hidden" id="ServerSuccessMessage" value="@TempData[MessageConstant.SuccessMessage]?.ToString()" />
+
+<script src="~/js/userMessages.js" asp-append-version="true"></script>

@@ -1,0 +1,30 @@
+﻿@using BlueCardPortal.Core.Helper
+@model string
+@{
+    var ddl = Utils.GetDropDownDdl(ViewData);
+    var onchange = (string)(ViewData["onchange"] ?? String.Empty);
+    var class_css = (string)(ViewData["class"] ?? String.Empty);
+}
+<div class="form-group">
+    <p class="form-label">@Html.DisplayNameFor(model => model)</p>
+    <div class="form-radio--check">
+        @foreach (var item in ddl)
+        {
+            string checkedValue = item.Value == Model?.ToString() ? "checked" : "";
+            string id = $"{ViewData.TemplateInfo.HtmlFieldPrefix}_{item.Value}";
+            <div class="form-check">
+                <label for="@id" class="form-check-label">
+                    @Html.RadioButtonFor(model => model, item.Value, new {
+                        id,
+                        @class = $"form-check-input {class_css}",
+                        @onchange = $"{onchange}",
+                        @checked = $"{checkedValue}"
+                    })
+                    @item.Text
+                </label>
+            </div>
+        }
+        <span asp-validation-for="@Model" class="text-danger"></span>
+    </div>
+</div>
+

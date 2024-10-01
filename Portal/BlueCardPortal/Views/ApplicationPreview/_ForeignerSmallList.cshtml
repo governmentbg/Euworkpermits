@@ -1,0 +1,12 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ForeignerSmallListVM
+<div>
+    @for (int i = 0; i < Model.Items.Count; i++)
+    {
+        Model.Items[i].Index = i;
+        await Html.RenderPartialAsync("_ForeignerSmall", Model.Items[i]);
+    }
+</div>

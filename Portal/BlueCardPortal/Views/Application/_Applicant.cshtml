@@ -1,0 +1,52 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Contracts
+@using BlueCardPortal.Infrastructure.Model.Application
+@using EAuthIntegration.Models
+@inject IUserContext userContext
+@model ApplicantVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var displayForeigner = Model.ApplicantType == ENTITY_TYPE.Foreigner ? string.Empty : "display:none";
+    var displayPerson = (Model.ApplicantType == ENTITY_TYPE.AuthorizedPerson || Model.ApplicantType == ENTITY_TYPE.Representative) ? string.Empty : "display:none";
+    var applicantType_ddl = (List<SelectListItem>)ViewBag.ApplicantType_ddl;
+    // if (userContext.PidType == EAuthIntegrationDefaults.IdentifierTypes.Egn)
+    // {
+    //     var lnchType = applicantType_ddl.Where(x => x.Value == ENTITY_TYPE.Foreigner).FirstOrDefault();
+    //     if (lnchType != null)
+    //     {
+    //         lnchType.Disabled = true;
+    //     }
+    // }
+}
+<div class="row mb-2 applicant-container">
+    <div class="col-6">
+        @Html.EditorFor(x => x.ApplicantType, "RadioButtonList", new { Ddl = applicantType_ddl, onchange = "ApplicantTypeChangeRadio(this)" })
+    </div>
+    <div class="col-6 applicant-person-container" style="@displayPerson">
+        @Html.EditorFor(x => x.Egn, "StringNullable")
+    </div>
+    <div class="col-6 applicant-foreigner-container" style="@displayForeigner">
+        @Html.EditorFor(x => x.Lnch, "StringNullable")
+    </div>
+</div>
+<div class="applicant-person-container" style="@displayPerson">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix.CombineTemplatePrefix("Person");
+        @await Html.PartialAsync("_ApplicantPerson", Model.Person, new ViewDataDictionary(ViewData) { { "ApplicantType", Model.ApplicantType } })
+        ;
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
+<div class="applicant-foreigner-container" style="@displayForeigner">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix.CombineTemplatePrefix("Foreigner");
+        @await Html.PartialAsync("_Foreigner", Model.Foreigner, new ViewDataDictionary(ViewData) { { "HideID", true }, { "ApplicantType", Model.ApplicantType } })
+        ;
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
+
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+}

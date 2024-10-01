@@ -1,0 +1,33 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Model.Complaint
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer Localizer
+@model ApplicationUpdateVM
+@{
+    var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    ViewData["Title"] = "Жалби";
+}
+<form id="frmComplaintEdit" name="frmComplaintEdit" method="post" action="@Url.Action("SaveApplicationUpdate", "Application")">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ApplicationNumber)
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix.CombineTemplatePrefix("Applicant");
+        @await Html.PartialAsync("_Applicant", Model.Applicant)
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix.CombineTemplatePrefix("Documents");
+        @await Html.PartialAsync("_Documents", Model.Documents)
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+    <div class="form__footer">
+        <button type="button" class="btn u-btn u-btn--close" aria-label="Изтрий" onclick="ApplicationClose()"></button>
+        <button type="submit" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow btn-next-step" >@Localizer["Confirmation"]</button>
+    </div>
+</form>
+@section scripts
+{
+    <script src="~/js/application.js" asp-append-version="true"></script>
+    <script src="~/js/bc-validation.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,15 @@
+﻿@using BlueCardPortal.Core.Contracts
+@using BlueCardPortal.Extensions
+@inject INomenclatureService nomenclatureService;
+@model string?
+@{
+    var nomenclatureType = ((string?)ViewData["NomenclatureType"] ?? "");
+    var val = await nomenclatureService.GetNomenclatureText(nomenclatureType, Model);
+    var add_class = ((string?)ViewData["class"] ?? "");
+}
+<div class="form-group">
+    <label asp-for="@Model" class="form-label"></label>
+    <p class="@add_class">
+        @val
+    </p>
+</div>
