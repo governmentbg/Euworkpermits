@@ -2,6 +2,7 @@ using BlueCardPortal.Infrastructure.Constants;
 using BlueCardPortal.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static EAuthIntegration.Models.EAuthIntegrationDefaults;
 
 namespace BlueCardPortal.Controllers
 {
@@ -53,5 +54,7 @@ namespace BlueCardPortal.Controllers
 
             return LocalRedirect("/");
         }
+        
+        
     }
 }

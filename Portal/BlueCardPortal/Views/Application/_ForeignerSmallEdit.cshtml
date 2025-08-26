@@ -2,9 +2,9 @@
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
 @model ForeignerSmallVM
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
-    string action = Model.IsEdit ? Localizer["Save"] : Localizer["Add"];
+    string? action = Model.IsEdit ? Localizer["Save"]?.Value : Localizer["Add"]?.Value;
 }
 
 <form action="@Url.Action("ForeignerSmallEdit", "Application")" id="ForeignerSmallEdit" method="post" enctype="multipart/form-data">
@@ -21,30 +21,24 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col">
+        <div class="col-4">
             @Html.EditorFor(x => x.BirthDate, "DateTimeNull", new { @class = "foreigner-small-item" })
         </div>
         <div class="col-4">
             @Html.EditorFor(x => x.PassportNumber, "StringNullable")
         </div>
-    </div>
-    <div class="row mb-2">
-        <div class="col-4">
-        </div>
         <div class="col-4">
             @Html.EditorFor(x => x.NationalityCode, "DropDown", new { @class = "select2-drop-down", Ddl = ViewBag.Countries_ddl })
         </div>
-        <div class="col">
-            @Html.EditorFor(x => x.Position, "StringNullable", new { @class = "foreigner-small-item" })
-        </div>
     </div>
     <div class="row mb-2">
         <div class="col-4">
+            @Html.EditorFor(x => x.Position, "StringNullable", new { @class = "foreigner-small-item" })
         </div>
-        <div class="col">
+        <div class="col-4">
             @Html.EditorFor(x => x.DurationOfEmploymentFrom, "DateTimeNull")
         </div>
-        <div class="col">
+        <div class="col-4">
             @Html.EditorFor(x => x.DurationOfEmploymentTo, "DateTimeNull")
         </div>
     </div>

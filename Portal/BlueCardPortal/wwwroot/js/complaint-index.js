@@ -10,7 +10,7 @@ function initGridView(){
         grid_title: 'Жалби',
         url: loadUrl,
         data: function () {
-            return {};
+            return GetComplaintFilter();
         },
         columns: {
             rowClick: null,
@@ -28,28 +28,30 @@ function initGridView(){
                     cssClass: 'col-md-2'
                 },
                 {
+                    name: 'status',
+                    title: 'Статус на жалба',
+                    cssClass: 'col-md-2'
+                },
+                {
                     name: 'applicationNumber',
                     title: 'Към заявление',
                     cssClass: 'col-md-2'
                 },
                 {
-                    name: 'complaintName',
-                    title: 'Име на подател',
-                    cssClass: 'col-md-3'
+                    name: 'foreignerName',
+                    title: 'Име на чужденец',
+                    cssClass: 'col-md-2'
                 },
                 {
-                    name: 'status',
-                    title: 'Статус',
-                    cssClass: 'col-md-3'
-                },
-                {
-                    name: 'statusDate',
-                    title: 'От дата',
+                    name: 'foreignerBirthDate',
+                    title: 'Дата на раждане',
                     cssClass: 'col-md-2',
-                    render: function (el) {
-                        return JsonBGdate(el);
-                    }
                 },
+                {
+                    name: 'foreignerLNCH',
+                    title: 'ЛНЧ',
+                    cssClass: 'col-md-2',
+                } 
 
             ]
         }
@@ -59,3 +61,23 @@ function initGridView(){
 $(() => {
     initGridView();
 })
+
+
+
+function clearComplaintFilter() {
+    $('#ComplaintNumber').val('');
+    $('#FromDate').val('');
+    $('#ToDate').val('');
+    searchApplication();
+}
+
+function GetComplaintFilter() {
+    return {
+        ComplaintNumber: $('#ComplaintNumber').val(),
+        FromDate: $('#FromDate').val(),
+        ToDate: $('#ToDate').val(),
+    };
+}
+function searchComplaint() {
+    gridViewLoadData('#dvMain')
+}

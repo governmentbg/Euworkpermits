@@ -117,7 +117,8 @@ namespace BlueCardPortal.Core.Extensions
 
             var parameter = Expression.Parameter(source.ElementType, "x");
             Expression matchExpression = Expression.PropertyOrField(parameter, selector.Member.Name); ;
-            var pattern = Expression.Constant($"%{query}%");
+            Expression<Func<string>> GetQuery = () => $"%{query}%";
+            var pattern = GetQuery.Body;
             Type dbFunctionType;
 
             if (function == "Like")

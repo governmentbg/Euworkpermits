@@ -94,5 +94,7 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// </summary>
         [Display(Name = "Apartment")]
         public string? Apartment { get; set; }
+
+        public bool IsCompanyAddress { get; set; }
     }
 }

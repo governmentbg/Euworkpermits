@@ -1,0 +1,22 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@{
+    ViewData["Title"] = @Localizer["AccessabilityPolicy"];
+    ViewData["MainClass"] = "page-content";
+}
+<h1 class="page-title">@ViewData["Title"]</h1>
+<br>
+<ul class="doc-template__list">
+    <li>
+        <a target="_blank" href="/documents/politika-za-dostapnost.pdf" data-type="pdf" class="doc-template">
+            @Localizer["AccessabilityPolicy"]
+        </a>
+    </li>
+    <li>
+        <a target="_blank" href="/documents/deklaracia-za-dostypnost.pdf" data-type="pdf" class="doc-template">
+            @Localizer["AccessabilityDeclaration"]
+        </a>
+    </li>
+</ul>
+
+

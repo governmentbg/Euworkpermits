@@ -1,6 +1,6 @@
 ﻿// Dummy class to group shared resources
 
-namespace Localization;
+namespace BlueCardPortal;
 
 public class SharedResource
 {

@@ -1,7 +1,7 @@
 async function showApplicationModal(applicationId) {
     const responce = await fetch('/ApplicationPreview/GetApplicationRemote?' + new URLSearchParams({ applicationId }));
     const view = await responce.text();
-    ShowModalDialog("Заявление", view, false, true);
+    ShowModalDialog(`Заявление ${applicationId}`, view, false, true);
 }
 
 function clearApplicationFilter() {
@@ -64,8 +64,4 @@ async function previewFile(control) {
         console.error(e);
     }
     $("body").css("cursor", "default");
-}
-
-function ApplicationClose() {
-    window.location.href = "/Home/Index"
 }

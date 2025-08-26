@@ -29,10 +29,10 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// Контакт
         /// </summary>
         [Display(Name = "ContactDescription")]
-        [Required(ErrorMessage = "RequiredErrorMessage")]
-        [BCContactEmail(RegEx = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", ErrorMessage = "ErrorEmailMessage")]
+//        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [BCContactEmail(RegEx = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,16}$", ErrorMessage = "ErrorEmailMessage")]
         [BCContactPhone(RegEx= "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", ErrorMessage = "ErrorPhoneMessage")]
-        public string Description { get; set; } = default!;
+        public string? Description { get; set; } 
 
         /// <summary>
         /// Предпочитан контакт

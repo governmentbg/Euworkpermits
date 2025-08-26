@@ -1,0 +1,22 @@
+﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@model EmployerVM
+@{
+    var isSame = @Localizer["AplicantEmployerContactAddressIsSame"]?.Value;
+}
+<h3 class="section-title">@Localizer["EmployerHeadAddress"]</h3>
+@{
+    await Html.RenderPartialAsync("_AddressFields", Model.Address);
+}
+<h3 class="section-title">@Localizer["EmployerContactAddress"]</h3>
+@if (Model.ContactAddressIsSame != YESNO_TYPE.No)
+{
+    @Html.DisplayFor(x => isSame, "PreviewLabel")
+}
+@if (Model.ContactAddressIsSame == YESNO_TYPE.No)
+{
+    await Html.RenderPartialAsync("_AddressFields", Model.ContactAddress);
+}

@@ -26,5 +26,10 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         [Display(Name = "PermitType")]
         [Required(ErrorMessage = "RequiredErrorMessage")]
         public string PermitType { get; set; } = default!;
+
+        /// <summary>
+        /// Разрешение при стартиране на улугата
+        /// </summary>
+        public string? PermitTypeInit { get; set; }
     }
 }

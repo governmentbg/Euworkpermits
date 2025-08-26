@@ -22,6 +22,9 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         [Required(ErrorMessage = "RequiredErrorMessage")]
         public string ApplicantType { get; set; } = default!;
 
+        [Display(Name = "ApplicantUicType")]
+        public string? UicType { get; set; }
+
         /// <summary>
         /// ЕГН
         /// </summary>
@@ -45,5 +48,11 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// Данни за заявител чужденец
         /// </summary>
         public ForeignerVM Foreigner { get; set; } = new ForeignerVM{IsApplicant = true, TypeIdentifier = FOREIGNER_TYPE_IDENTIFIER.InBg };
+
+        public string ApplicantName()
+        {
+            return (ApplicantType == ENTITY_TYPE.Foreigner ? Foreigner?.NameCyrilic : Person.Name) ?? string.Empty;
+        }
+
     }
 }

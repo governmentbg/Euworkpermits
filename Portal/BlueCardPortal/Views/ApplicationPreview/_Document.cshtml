@@ -1,12 +1,12 @@
 ﻿@using BlueCardPortal.Core.Helper
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
     var container_css = string.IsNullOrEmpty(Model.CmisId) ? "list-documents-body" : "list-documents-body-uploaded";
     var uploadDisplay = string.IsNullOrEmpty(Model.CmisId) ? string.Empty : "display:none";
     var previewDisplay = string.IsNullOrEmpty(Model.CmisId) ? "display:none" : string.Empty;
-    var isOriginal = Model.IsOriginal ? Localizer["IsOriginal"].ToString(): string.Empty;
+    var isOriginal = Model.IsOriginal ? Localizer["IsOriginal"]?.Value: string.Empty;
 }
 @model DocumentVM
 
@@ -24,7 +24,7 @@
         @Html.DisplayFor(x => x.DocumentType, "StringNullable", new { @class = "document-title" })
     </div>
     <div class="col-4">
-        @Html.DisplayFor(x => x.FileName, "StringNullable", new { @class = "document-file-name" })
+        @Html.DisplayFor(x => x.FileNameLabel, "StringNullable", new { @class = "document-file-name" })
     </div>
     <div class="col-1">
         @Html.DisplayFor(x => isOriginal, "StringNullable")

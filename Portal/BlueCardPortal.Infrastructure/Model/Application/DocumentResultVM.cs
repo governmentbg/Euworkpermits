@@ -77,5 +77,7 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         public string DocumentTypeCode { get; set; } = default!;
 
         public string ? View { get; set; }
+
+        public string? FileHash { get; set; }
     }
 }

@@ -30,7 +30,7 @@ async function post_async(url, data) {
             url: url,
             data: data,
             headers: {
-                "X-CSRF-TOKEN": getRequestVerificationToken() 
+                "X-CSRF-TOKEN": getRequestVerificationToken()
             },
             success: function (result) {
                 resolve(result);
@@ -70,7 +70,7 @@ async function post_string_async(url, data) {
             async: true,
             cache: false,
             url: url,
-            data:  {
+            data: {
                 json: JSON.stringify(data)
             },
             headers: {
@@ -169,7 +169,7 @@ function initDynamicForms(addCallback) {
         } else {
             $(html).hide().appendTo(container).slideDown();
         }
-            
+
         let form = container.parents('form:first');
         form.removeData("validator")    // Added by jQuery Validation
             .removeData("unobtrusiveValidation");   // Added by jQuery Unobtrusive Validation
@@ -213,8 +213,12 @@ function initDynamicForms(addCallback) {
     });
 }
 
+
 function InitDatePicker() {
-    tempusDominus.extend(tempusDominus.plugins.customDateFormat);
+    //tempusDominus.extend(tempusDominus.plugins.customDateFormat);
+    tempusDominus.loadLocale(tempusDominus.locales.bg);
+     //globally
+    tempusDominus.locale(tempusDominus.locales.bg.name);
     $(".date-picker").each(function (i, element) {
         if ($(element).data('loaded')) {
             return;
@@ -223,12 +227,9 @@ function InitDatePicker() {
         if ($(element).data("value").length > 0) {
             selectedValue = $(element).data("value");
         }
-        tempusDominus.loadLocale(tempusDominus.locales.bg);
-        //globally
-        tempusDominus.locale(tempusDominus.locales.bg.name);
         let currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const _picker = new tempusDominus.TempusDominus(element, {
-            defaultDate: selectedValue,
+            defaultDate:  selectedValue,
             display: {
                 viewMode: "calendar",
                 components: {
@@ -251,11 +252,55 @@ function InitDatePicker() {
                     today: 'fa-solid fa-calendar-check',
                     clear: 'fa-solid fa-trash',
                     close: 'fa-solid fa-xmark'
-                }
-            },
+                }, 
+            }
         });
+        _picker.dates.setFromInput(selectedValue);
 
+        $(element).data('loaded', 'loaded')
     });
+    $(".month-picker").each(function (i, element) {
+        if ($(element).data('loaded')) {
+            return;
+        }
+        let selectedValue = undefined;
+        if ($(element).data("value").length > 0) {
+            selectedValue = $(element).data("value");
+        }
+        const _picker = new tempusDominus.TempusDominus(element, {
+            defaultDate: selectedValue,
+            display: {
+                viewMode: "months",
+                components: {
+                    decades: false,
+                    year: true,
+                    month: true,
+                    date: false,
+                    hours: false,
+                    minutes: false,
+                    seconds: false
+                },
+                icons: {
+                    type: 'icons',
+                    time: 'fa-solid fa-clock',
+                    date: 'fa-solid fa-calendar',
+                    up: 'fa-solid fa-arrow-up',
+                    down: 'fa-solid fa-arrow-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa-solid fa-calendar-check',
+                    clear: 'fa-solid fa-trash',
+                    close: 'fa-solid fa-xmark'
+                },
+            },
+            localization: {
+                locale: 'bg-BG',
+                format: 'MM.yyyy',
+            }
+        });
+        $(element).data('loaded', 'loaded');
+    });
+    
 }
 
 
@@ -284,7 +329,7 @@ function getFormData($form) {
 }
 
 async function get_drop_down_async(url, data, dropdown, selected) {
-    const items = await get_async(url, data)
+    const items = await get_fetch_json_async(url, data)
     fill_drop_down(items, dropdown, selected)
 }
 function fill_drop_down(items, dropdown, selected) {
@@ -303,7 +348,7 @@ function fill_drop_down(items, dropdown, selected) {
 async function downloadFile(url, request) {
     let fileName = 'report.xlsx';
     $('#ajaxLoader').hide();
-   // $('#ajaxLoader').show();
+    // $('#ajaxLoader').show();
     try {
         const res = await fetch(
             url,
@@ -356,24 +401,6 @@ async function post_fetch_async(url, request) {
         console.error(e);
     }
 }
-async function post_fetch_string_async(url, request) {
-    try {
-        const res = await fetch(
-            url,
-            {
-                method: "POST",
-                body: JSON.stringify(request),
-                headers: {
-                    'Cache-Control': 'no-cache',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-TOKEN": getRequestVerificationToken()
-                }
-            });
-        return await res.text();
-    } catch (e) {
-        console.error(e);
-    }
-}
 
 function getRequestVerificationToken() {
     return document.getElementsByName("__RequestVerificationToken")[0].value;
@@ -397,7 +424,27 @@ function JsonBGdate(value) {
         return new Intl.DateTimeFormat('bg-BG').format(date);
     }
     catch (e) {
-        console.log(value);   
+        console.log(value);
+        return '';
+    }
+}
+
+function JsonBGDateTime(value) {
+    if (!value) {
+        return '';
+    }
+    try {
+        let date = Date.parse(value);
+        return new Intl.DateTimeFormat('bg-BG', {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        }).format(date);
+    }
+    catch (e) {
+        console.log(value);
         return '';
     }
 }
@@ -410,16 +457,69 @@ function logValidationError(form) {
 }
 
 async function ResolveIsOkResponce(responce) {
+    let result = await ResolveResponceJson(responce)
+    if (result.state == "OK") {
+        return true;
+    } else {
+        messageHelper.ShowErrorMessage(result.message)
+    }
+}
+
+async function get_fetch_json_async(url, data) {
+    const responce = await fetch(url + "?" + new URLSearchParams(data));
+    return ResolveResponceJson(responce);
+}
+
+async function get_fetch_string_async(url, data) {
+    const responce = await fetch(url + "?" + new URLSearchParams(data));
+    return ResolveResponceString(responce)
+}
+async function post_fetch_string_async(url, data) {
+    const responce = await fetch(url,
+        {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": getRequestVerificationToken()
+            }
+        });
+    return ResolveResponceString(responce)
+}
+async function post_fetch_json_async(url, data) {
+    const responce = await fetch(url,
+        {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": getRequestVerificationToken()
+            }
+        });
+    return ResolveResponceJson(responce);
+}
+
+async function ResolveResponceString(responce) {
+    if (responce.redirected) {
+        await Swal.fire(
+            "Изтекла е потребителската сесия",
+            '',
+            'error'
+        )
+        window.location.href = window.location.href
+        return null;
+    }
+    let text = await responce.text();
+    return text;
+}
+async function ResolveResponceJson(responce) {
     let text = "Възникна непредвидена грешка";
     const contentType = responce.headers.get('content-type');
     if (responce.status == 200 && contentType.startsWith('application/json;')) {
         try {
-            const result = await responce.json();
-            if (result.state == "OK") {
-                return true;
-            } else {
-                messageHelper.ShowErrorMessage(result.message)
-            }
+            return await responce.json();
         }
         catch (e) {
             messageHelper.ShowErrorMessage(text);
@@ -444,4 +544,10 @@ async function ResolveIsOkResponce(responce) {
         }
 
     }
+}
+function StartButtonAction(btn) {
+    $(btn).prop('disabled', true);
+}
+function EndButtonAction(btn) {
+    $(btn).prop('disabled', false);
 }

@@ -2,36 +2,59 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @model EmploymentVM
-<div class="row mb-2">
-    <div class="col-4">
-        @Html.DisplayFor(x => x.DurationOfEmploymentFrom, "DateTime")
+@{
+    var isTemporary = (bool?)ViewData["IsTemporary"] ?? false;
+    var permitType = ViewData["PermitType"]?.ToString();
+}
+@if (!isTemporary)
+{
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.DisplayFor(x => x.DurationOfEmploymentMonth, "Int32Nullable")
+        </div>
+        <div class="col-4">
+            @Html.DisplayFor(x => x.Type, "DropDown", new { Ddl = ViewBag.EmploymentType_ddl })
+        </div>
+        @if (permitType == PERMIT_TYPE.BlueCard || permitType == PERMIT_TYPE.SeasonalWorkerPermit)
+        {
+            <div class="col-4">
+                @Html.DisplayFor(x => x.EmployerChange, "DropDown", new { Ddl = ViewBag.EmployerChange_ddl })
+            </div>
+        }
     </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.DurationOfEmploymentMonth, "Int32Nullable")
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.DisplayFor(x => x.Position, "StringNullable")
+        </div>
+        <div class="col-4">
+            @Html.DisplayFor(x => x.Qualification, "StringNullable")
+        </div>
+        <div class="col-4">
+            @Html.DisplayFor(x => x.EducationType, "DropDown", new { Ddl = ViewBag.EducationType_ddl })
+        </div>
     </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.Type, new { Ddl = ViewBag.EmploymentType_ddl })
+    <div class="row mb-2">
+        <div class="col-4">
+            @Html.DisplayFor(x => x.Speciality, "StringNullable")
+        </div>
+        <div class="col-4">
+            @Html.DisplayFor(x => x.SpecialityCode, "Nomenclature", new { NomenclatureType = NomenclatureTypes.NKPD_CODE })
+        </div>
     </div>
-</div>
-<div class="row mb-2">
-    <div class="col-4">
-        @Html.DisplayFor(x => x.Position, "StringNullable")
-    </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.Qualification, "StringNullable")
-    </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.EmploymentReason, "StringNullable")
-    </div>
-</div>
-<div class="row mb-2">
-    <div class="col-4">
-        @Html.DisplayFor(x => x.EducationType, "StringNullable")
-    </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.Speciality, "StringNullable")
-    </div>
-    <div class="col-4">
-        @Html.DisplayFor(x => x.SpecialityCode, "Nomenclature", new { NomenclatureType = NomenclatureTypes.NKPD_CODE})
-    </div>
-</div>
+}
+@if (Model.AddressIsSame != YESNO_TYPE.No)
+{
+    @Html.DisplayFor(x => x.AddressIsSame, "DropDown", new { Ddl = ViewBag.AddressIsSame_ddl })
+}
+@if (Model.AddressIsSame == YESNO_TYPE.No)
+{
+    await Html.RenderPartialAsync("_AddressFields", Model.Address);
+    @if (isTemporary)
+    {
+        <div class="row mb-2">
+            <div class="col-4">
+                @Html.DisplayFor(x => x.AddressObject, "StringNullable")
+            </div>
+        </div>
+    }
+}

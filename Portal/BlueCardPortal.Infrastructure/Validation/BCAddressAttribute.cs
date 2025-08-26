@@ -22,6 +22,13 @@ namespace BlueCardPortal.Infrastructure.Validation
                 return ValidationResult.Success;
             if (!string.IsNullOrEmpty(address.Quarter) && !string.IsNullOrEmpty(address.BuildingNo))
                 return ValidationResult.Success;
+            if (address.IsCompanyAddress)
+            {
+                if (!string.IsNullOrEmpty(address.Street))
+                    return ValidationResult.Success;
+                if (!string.IsNullOrEmpty(address.Quarter))
+                    return ValidationResult.Success;
+            }
             return new ValidationResult(ErrorMessage);
         }
     }

@@ -1,6 +1,6 @@
 ﻿@using BlueCardPortal.Infrastructure.Model.ApplicationList
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicationFilterVM;
 <div class="details__body offcanvas-body">
     <div class="form-container">
@@ -24,6 +24,11 @@
             <div class="row">
                 <div class="form-group col-12 mb-2">
                     @Html.EditorFor(x => x.ApplicationNumber, "StringNullable")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    @Html.EditorFor(x => x.Status, "DropDown", new { Ddl = ViewBag.Status_ddl })
                 </div>
             </div>
             <button type="button" class="btn u-btn  u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas" onclick="clearApplicationFilter()">@Localizer["ClearFilter"]</button>

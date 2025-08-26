@@ -1,0 +1,25 @@
+﻿@using BlueCardPortal.Core.Helper
+@model string[]
+@{
+    var ddl = Utils.GetDropDownDdl(ViewData);
+    var onchange = (string)(ViewData["onchange"] ?? String.Empty);
+    var class_css = (string)(ViewData["class"] ?? String.Empty);
+    if (Model != null)
+    {
+        foreach (var item in ddl)
+        {
+            item.Selected = Model.Any(x => x == item.Value);
+        }
+    }
+}
+
+<div class="form-group">
+    <label asp-for="@Model" class="form-label"></label>
+    @Html.ListBoxFor(model => model, ddl, new {
+        @class = $"form-control form-select  select2-drop-down {class_css}",
+        onchange = $"{onchange}",
+        placeholder = "Изберете",
+        multiple = true
+    })
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

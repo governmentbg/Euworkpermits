@@ -1,5 +1,6 @@
 ﻿using BlueCardPortal.Infrastructure.Contracts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -14,11 +15,14 @@ namespace BlueCardPortal.Infrastructure.Data.Models.UserContext
     {
         private readonly ClaimsPrincipal User;
         private readonly HttpContext httpContext;
-
-        public UserContext(IHttpContextAccessor _ca)
+        private readonly IStringLocalizer localizer;
+        public UserContext(
+            IHttpContextAccessor _ca,
+            IStringLocalizer _localizer)
         {
             httpContext = _ca?.HttpContext ?? throw new ArgumentException("HttpContext unavailable");
             User = _ca.HttpContext.User;
+            localizer = _localizer;
         }
 
         /// <summary>
@@ -157,6 +161,11 @@ namespace BlueCardPortal.Infrastructure.Data.Models.UserContext
         /// Проверка дали потребителят е аутентикиран
         /// </summary>
         public bool IsAuthenticated => User.Identity?.IsAuthenticated ?? false;
+        public string LoginLabel()
+        {
+            var pidType = localizer[PidType].ToString();
+            return $"{pidType}: {Pid}" + (string.IsNullOrEmpty(Eik) ? string.Empty : $" {localizer["EIK"]} : {Eik}");
+        }
     }
 }
 

@@ -1,0 +1,27 @@
+﻿@using BlueCardPortal.Infrastructure.Model.Common
+@model FeedBackVM;
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+<form action="@Url.Action("FeedBack", "Home")" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="row form-group  mb-2">
+        <div class="col-lg-4">
+            @Html.EditorFor(x => x.TypeId, "DropDownLong")
+        </div>
+        <div class="col-lg-4">
+            @Html.EditorFor(x => x.Name, "StringNullable")
+        </div>
+        <div class="col-lg-4">
+            @Html.EditorFor(x => x.Email, "StringNullable")
+        </div>
+    </div>
+    <div class="row form-group mb-2">
+        <div class="col-12">
+            @Html.EditorFor(x => x.Message, "Textarea")
+        </div>
+    </div>
+    <div class="form__footer text-right">
+        <button type="button" class="btn u-btn u-btn--close" data-toggle="tooltip" ["ButtonDeleteHint"]" aria-label="@Localizer["ButtonDeleteHint"]" onclick="GoHomeIndex()"></button>
+        <button type="submit" class="btn u-btn u-btn--right">@Localizer["Save"]</button>
+    </div>
+</form>

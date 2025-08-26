@@ -1,5 +1,7 @@
 ﻿using BlueCardPortal.Infrastructure.Constants;
 using BlueCardPortal.Infrastructure.Converters;
+using BlueCardPortal.Infrastructure.Integrations.BlueCardCore.Contracts;
+using BlueCardPortal.Infrastructure.Model.SelfDenial;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -128,6 +130,17 @@ namespace BlueCardPortal.Infrastructure.Integrations.BlueCardCore
 
             cache = _cache;
             logger = _logger;
+        }
+
+        public string SerializeForSignature(ServiceApplication application)
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(application, CreateSerializerSettings());
+            return json;
+        }
+        public string SerializeForSignatureUpdate(object model)
+        {
+            var json = System.Text.Json.JsonSerializer.Serialize(model, CreateSerializerSettings());
+            return json;
         }
     }
 }

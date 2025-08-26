@@ -1,7 +1,7 @@
 ﻿@using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model PersonIdDocumentListVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;

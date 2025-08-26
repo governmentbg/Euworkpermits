@@ -1,8 +1,15 @@
-﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+﻿@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@model ApplicationVM
+@{
+    var disabled = Model.Status == ApplicationStatus.Send ? "disabled" : string.Empty; 
+}
+
 <div class="form__footer">
-    <button type="button" class="btn u-btn u-btn--close" aria-label="Изтрий" onclick="ApplicationClose()"></button>
-    <button type="button" class="btn u-btn u-btn--save" aria-label="Запази" onclick="SetStatusDraft()"></button>
-    <button type="button" class="btn u-btn u-bg--c2 u-btn--arrow btn-prev-step" onclick="SetPrevStep()" style="display:none">@Localizer["Back"]</button>
-    <button type="button" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow btn-next-step" onclick="SetNextStep()">@Localizer["Confirmation"]</button>
+    <button type="button" class="btn u-btn u-btn--close" data-toggle="tooltip" title="@Localizer["ButtonDeleteHint"]" aria-label="@Localizer["ButtonDeleteHint"]" onclick="ApplicationClose(this)"></button>
+    <button type="button" class="btn u-btn u-btn--save" data-toggle="tooltip" title="@Localizer["ButtonDraftHint"]" aria-label="@Localizer["ButtonDraftHint"]" onclick="SetStatusDraft(this)" @disabled></button>
+    <button type="button" class="btn u-btn u-bg--c2 u-btn--arrow btn-prev-step" onclick="SetPrevStep(this)" style="display:none">@Localizer["Back"]</button>
+    <button type="button" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow btn-next-step" onclick="SetNextStep(this)" @disabled>@Localizer["Confirmation"]</button>
 </div>

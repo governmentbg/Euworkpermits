@@ -6,28 +6,15 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
-    <li class="nav-item">
-        <form method="post" action="@Urls.LogOut">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="nav-link action-button">
-                <img class="icon-left" src="~/images/log-out.svg" />
-                @Localizer["Logout"]
-            </button>
-        </form>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link action-button" href="#">
-            @UserContext.Name
-            <img class="icon-right" src="~/images/user.svg" />
-        </a>
-    </li>
+    <form id="formLogOut" method="post" action="@Urls.LogOut" style="display:none">
+        @Html.AntiForgeryToken()
+    </form>
+    <a href="#" onclick="LogOut()" class="page-header__btn exit">
+        @Localizer["Logout"]
+    </a>
+        <div class="page-header__btn profile">@UserContext.Name <br> @UserContext.LoginLabel()</div>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link action-button" asp-controller="Account" asp-action="Login">
-            <img class="icon-left" src="~/images/log-in.svg" />
-            @Localizer["Login"]
-        </a>
-    </li>
+    <a asp-controller="Account" asp-action="Login" class="page-header__btn login">@Localizer["Login"]</a>
 }

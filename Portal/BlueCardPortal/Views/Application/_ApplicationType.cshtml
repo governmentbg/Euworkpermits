@@ -1,19 +1,49 @@
-﻿@using BlueCardPortal.Infrastructure.Constants
+﻿@using BlueCardPortal.Core.Contracts
+@using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
+@using Microsoft.Extensions.Localization
+@inject INomenclatureService nomenclatureService
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+
 @model ApplicationTypeVM
 @{
-   var displayPermit = Model.ApplicationTypeCode == APPLICATION_TYPE.Permanent ? string.Empty : "display:none";
+    var IsStartPermanent = nomenclatureService.IsStartPermanent();
+    var displayPermit = Model.ApplicationTypeCode == APPLICATION_TYPE.Permanent ? string.Empty : "display:none";
+    var displayMessage = IsStartPermanent ? "display:none" : string.Empty;
+    var IsStartPermanentVal = IsStartPermanent ? YESNO_TYPE.Yes : YESNO_TYPE.No;
+    var applicationType_ddl = (List<SelectListItem>)ViewBag.ApplicationType_ddl;
+    var permitType_ddl = (List<SelectListItem>)ViewBag.PermitType_ddl;
+    if (!string.IsNullOrEmpty(Model.PermitTypeInit))
+    {
+        applicationType_ddl = applicationType_ddl.Select(x => new SelectListItem
+                {
+                    Value = x.Value,
+                    Text = x.Text,
+                    Disabled = (x.Value != Model.ApplicationTypeCode)
+                })
+                .ToList();
+        permitType_ddl = permitType_ddl.Select(x => new SelectListItem
+                {
+                    Value = x.Value,
+                    Text = x.Text,
+                    Disabled = (x.Value != Model.PermitTypeInit)
+                })
+                .ToList();
+    }
 }
 
-<p class="text-danger">Важно: В момента може да подавате само заявления за Краткосрочна заетост до 90 дни - Приложение №5</p>
+<input id="IsStartPermanent" type="hidden" value="@IsStartPermanentVal"></input>
+
+<p  style="@displayMessage" class="text-danger" id="PermanentMessage">Важно: Mоже да подавате само услуга Краткосрочна заетост до 90 дни - Приложение №5</p>
 
 <div class="row mb-2">
     <div class="col-12">
-        @Html.EditorFor(x => x.ApplicationTypeCode, "RadioButtonList", new { Ddl = ViewBag.ApplicationType_ddl, onchange = "ApplicationTypeChangeRadio(this)" })
+        @Html.EditorFor(x => x.ApplicationTypeCode, "RadioButtonList", new { Ddl = applicationType_ddl, onchange = "ApplicationTypeChangeRadio(this)" })
     </div>
 </div>
 <div class="row mb-2 permit-type-container" style="@displayPermit">
     <div class="col-12">
-        @Html.EditorFor(x => x.PermitType, "RadioButton", new { Ddl = ViewBag.PermitType_ddl })
+        @Html.EditorFor(x => x.PermitType, "RadioButton", new { Ddl = permitType_ddl })
     </div>
 </div>
+@Html.HiddenFor(x => x.PermitTypeInit)

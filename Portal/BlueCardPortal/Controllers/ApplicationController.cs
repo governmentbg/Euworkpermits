@@ -2,6 +2,7 @@
 using BlueCardPortal.Core.Extensions;
 using BlueCardPortal.Extensions;
 using BlueCardPortal.Infrastructure.Constants;
+using BlueCardPortal.Infrastructure.Data.Models.UserContext;
 using BlueCardPortal.Infrastructure.Model;
 using BlueCardPortal.Infrastructure.Model.Application;
 using BlueCardPortal.Infrastructure.Model.ApplicationList;
@@ -17,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Security.AccessControl;
 using System.Web;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -50,14 +52,26 @@ namespace BlueCardPortal.Controllers
             return new JsonResult(model);
         }
        
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(string? permitType)
         {
-            return RedirectToAction(nameof(Edit), new { applicationId = Guid.NewGuid() });
+            var applicationId = Guid.NewGuid();
+            if (!string.IsNullOrEmpty(permitType))
+            {
+                var application = await applicationService.GetApplication(applicationId);
+                var appType = application.GetApplicationType()!;
+                appType.PermitTypeInit = permitType;
+                appType.PermitType = permitType;
+                appType.ApplicationTypeCode = permitType == PERMIT_TYPE.Temporary ? APPLICATION_TYPE.Temporary : APPLICATION_TYPE.Permanent;
+                await applicationService.SaveApplicationType(applicationId, appType);
+            }
+            return RedirectToAction(nameof(Edit), new { applicationId  });
         }
         public async Task<IActionResult> Edit(Guid applicationId)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
             var application = await applicationService.GetApplication(applicationId);
+            await nomenclatureService.SetViewBagApplication(ViewBag, application.GetApplicationTypeCode());
+            application.GetEmployer()?.SetIsCompanyAddress(true);
+            application.GetApplicant()?.Person?.Employer?.SetIsCompanyAddress(true);
             return View(nameof(Edit), application);
         }
         public async Task<IActionResult> AddAddress(int index, string prefix)
@@ -134,11 +148,15 @@ namespace BlueCardPortal.Controllers
         {
             return SaveResult("OK", message);
         }
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveApplicationType(Guid applicationId, [Bind(Prefix = "ApplicationType")] ApplicationTypeVM model)
         {
             if (model.ApplicationTypeCode == APPLICATION_TYPE.Temporary)
             {
                 RemoveErrorForNotUsed("ApplicationType.PermitType");
+                model.PermitType = PERMIT_TYPE.Temporary;
+
             }
 
             if (!ModelState.IsValid)
@@ -148,6 +166,9 @@ namespace BlueCardPortal.Controllers
             await applicationService.SaveApplicationType(applicationId, model);
             return SaveOk();
         }
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
+
         public async Task<JsonResult> SaveApplicant(Guid applicationId, [Bind(Prefix = "Applicant")] ApplicantVM model)
         {
             RemoveApplicantValidation(model);
@@ -186,7 +207,14 @@ namespace BlueCardPortal.Controllers
             {
                 model.Person.Address.Kind = ADDRESSE_TYPE.Correspondence;
                 RemoveErrorForNotUsed("Applicant.Person.Address.Kind");
-                RemoveErrorForNotUsed("Applicant.Lnch");
+                if (model.UicType == "EGN")
+                {
+                    RemoveErrorForNotUsed("Applicant.Lnch");
+                }
+                if (model.UicType == "LNCH")
+                {
+                    RemoveErrorForNotUsed("Applicant.Egn");
+                }
                 RemoveErrorForNotUsed("Applicant.Foreigner");
                 if (model.Person.ApplicantRole != ApplicationRole.Representative)
                 {
@@ -199,10 +227,16 @@ namespace BlueCardPortal.Controllers
                     {
                         RemoveErrorForNotUsed("Applicant.Person.Employer.ContactAddress");
                     }
+                    if (model.Person.ApplicantContactAddressIsSame != YESNO_TYPE.No)
+                    {
+                        RemoveErrorForNotUsed("Applicant.Person.Address");
+                    }
                 }
             }
         }
 
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveForeigner(Guid applicationId, [Bind(Prefix = "Foreigner")] ForeignerVM model)
         {
             if (model.TypeIdentifier == FOREIGNER_TYPE_IDENTIFIER.External)
@@ -222,6 +256,8 @@ namespace BlueCardPortal.Controllers
             return SaveOk();
         }
 
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveForeignerSmallList(Guid applicationId, [Bind(Prefix = "ForeignerSmallList")] ForeignerSmallListVM model)
         {
             if (!ModelState.IsValid)
@@ -232,8 +268,17 @@ namespace BlueCardPortal.Controllers
             return SaveOk();
         }
 
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveEmployer(Guid applicationId, [Bind(Prefix = "Employer")] EmployerVM model)
         {
+            var application = await applicationService.GetApplication(applicationId);
+            var appType = application.GetApplicationType();
+            if (appType?.ApplicationTypeCode == APPLICATION_TYPE.Temporary)
+            {
+                RemoveErrorForNotUsed("Employer.EmployeeCount");
+                RemoveErrorForNotUsed("Employer.ForeignEmployeeCount");
+            }
             if (model.ContactAddressIsSame != YESNO_TYPE.No)
             {
                 RemoveErrorForNotUsed("Employer.ContactAddress");
@@ -246,13 +291,30 @@ namespace BlueCardPortal.Controllers
             await applicationService.SaveEmployer(applicationId, model);
             return SaveOk();
         }
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveEmployment(Guid applicationId, [Bind(Prefix = "Employment")] EmploymentVM model)
         {
             if (model.AddressIsSame == YESNO_TYPE.Yes)
             {
                 RemoveErrorForNotUsed("Employment.Address");
             }
+            var application = await applicationService.GetApplication(applicationId);
+            var appType = application.GetApplicationType();
+            if (appType?.ApplicationTypeCode == APPLICATION_TYPE.Temporary)
+            {
+                var errors = ModelState.Where(x => x.Value.Errors.Count > 0)
+                                    .Select(x => new { x.Key, x.Value.Errors })
+                                    .ToList();
 
+                foreach (var error in errors)
+                {
+                    if (!error.Key.StartsWith("Employment.Address"))
+                    {
+                        ModelState.Remove(error.Key);
+                    }
+                }
+            }
             if (!ModelState.IsValid)
             {
                 return SaveErrorValidation();
@@ -265,6 +327,9 @@ namespace BlueCardPortal.Controllers
             await applicationService.SaveApplicationInfo(applicationId, model);
             return SaveOk();
         }
+
+        [HttpPost]
+        [RequestFormLimits(ValueCountLimit = 99999999)]
         public async Task<JsonResult> SaveDocuments(Guid applicationId, [Bind(Prefix = "Documents")] DocumentsVM model)
         {
             await applicationService.SaveDocuments(applicationId, model);
@@ -288,11 +353,25 @@ namespace BlueCardPortal.Controllers
         public async Task<IActionResult> AddForeigner(Guid applicationId)
         {
             ViewData.TemplateInfo.HtmlFieldPrefix = "Foreigner";
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
             var model = await applicationService.GetApplication(applicationId);
             var foreigner = model.GetApplicant()?.Foreigner;
             foreigner = foreigner ?? new ForeignerVM();
             return PartialView("_Foreigner", foreigner);
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddEmployer(Guid applicationId)
+        {
+            ViewData.TemplateInfo.HtmlFieldPrefix = "Employer";
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+            var model = await applicationService.GetApplication(applicationId);
+            var employer = model.GetEmployer();
+            if (string.IsNullOrEmpty(employer?.Identifier))
+               employer = model.GetApplicant()?.Person?.Employer;
+            employer = employer ?? new EmployerVM();
+            return PartialView("_Employer", employer);
         }
 
         [HttpGet]
@@ -309,19 +388,28 @@ namespace BlueCardPortal.Controllers
             return SaveOk();
         }
 
+        [HttpGet]
+        public async Task<JsonResult> SetStatusNone(Guid applicationId)
+        {
+            await applicationService.SetStatusNone(applicationId);
+            return SaveOk();
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetEmployer(string uic, string prefix)
         {
             var employer = await applicationService.GetEmployer(uic);
             ViewData.TemplateInfo.HtmlFieldPrefix = prefix;
-            await nomenclatureService.SetViewBagApplication(ViewBag);
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+
             if (prefix == "Applicant.Person.Employer")
             {
                 ViewData["ApplicantRole"] = "2";
                 ViewData["ApplicantType"] = ENTITY_TYPE.AuthorizedPerson;
+                employer.SetIsCompanyAddress(true);
                 return PartialView("_ApplicantEmployer", employer);
             }
+            employer.SetIsCompanyAddress(true);
             return PartialView("_Employer", employer);
         }
         public async Task<IActionResult> AddForeignerSmall(int index)
@@ -356,10 +444,8 @@ namespace BlueCardPortal.Controllers
        
         public async Task<IActionResult> AddComplaint(string applicationNumber)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
-            var model = new ComplaintVM{
-                ApplicationNumber = applicationNumber
-            };
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+            var model = applicationService.InitNewComplaint(applicationNumber);
             return View("EditComplaint", model);
         }
         public async Task<IActionResult> SaveComplaint(ComplaintVM model)
@@ -367,28 +453,24 @@ namespace BlueCardPortal.Controllers
             RemoveApplicantValidation(model.Applicant);
             if (!ModelState.IsValid)
             {
-                await nomenclatureService.SetViewBagApplication(ViewBag);
+                await nomenclatureService.SetViewBagApplication(ViewBag, null);
                 return View("EditComplaint", model);
             }
             (var result, var message) = await applicationService.SaveComplaint(model);
             if (result)
             {
-                SetSuccessMessage(message);
+                SetSuccessMessage(message, true);
                 return RedirectToAction("Index", "Home");
             }
-            await nomenclatureService.SetViewBagApplication(ViewBag);
-            SetErrorMessage(message);
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+            SetErrorMessage(message, true);
             return View("EditComplaint", model);
         }
 
         public async Task<IActionResult> ApplicationUpdate(string applicationNumber)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
-            var model = new ApplicationUpdateVM
-            {
-                ApplicationNumber = applicationNumber
-            };
-            model.Documents.Documents.Add(applicationService.CreateOtherDocument(model.Id));
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+            var model = applicationService.InitNewApplicationUpdate(applicationNumber);
             return View("ApplicationUpdate", model);
         }
         public async Task<IActionResult> SaveApplicationUpdate(ApplicationUpdateVM model)
@@ -397,7 +479,7 @@ namespace BlueCardPortal.Controllers
             RemoveDocumentValidation(model.Documents);
             if (!ModelState.IsValid)
             {
-                await nomenclatureService.SetViewBagApplication(ViewBag);
+                await nomenclatureService.SetViewBagApplication(ViewBag, null);
                 return View("ApplicationUpdate", model);
             }
             (var result, var message) = await applicationService.SaveApplicationUpdate(model);
@@ -406,18 +488,15 @@ namespace BlueCardPortal.Controllers
                 SetSuccessMessage(message);
                 return RedirectToAction("Index", "Home");
             }
-            await nomenclatureService.SetViewBagApplication(ViewBag);
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
             SetErrorMessage(message);
             return View("ApplicationUpdate", model);
         }
 
         public async Task<IActionResult> AddSelfDenial(string applicationNumber)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
-            var model = new SelfDenialVM
-            {
-                ApplicationNumber = applicationNumber
-            };
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
+            var model = applicationService.InitNewSelfDenial(applicationNumber);
             return View("EditSelfDenial", model);
         }
 
@@ -426,7 +505,7 @@ namespace BlueCardPortal.Controllers
             RemoveApplicantValidation(model.Applicant);
             if (!ModelState.IsValid)
             {
-                await nomenclatureService.SetViewBagApplication(ViewBag);
+                await nomenclatureService.SetViewBagApplication(ViewBag, null);
                 return View("EditSelfDenial", model);
             }
             (var result, var message) = await applicationService.SaveSelfDenial(model);
@@ -435,7 +514,7 @@ namespace BlueCardPortal.Controllers
                 SetSuccessMessage(message);
                 return RedirectToAction("Index", "Home");
             }
-            await nomenclatureService.SetViewBagApplication(ViewBag);
+            await nomenclatureService.SetViewBagApplication(ViewBag, null);
             SetErrorMessage(message);
             return View("EditSelfDenial", model);
         }

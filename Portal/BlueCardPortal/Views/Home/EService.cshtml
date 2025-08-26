@@ -1,0 +1,27 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@{
+    ViewData["Title"] = Localizer["EService"];
+    ViewData["GuestMenuItem"] = "EService";
+}
+<div class="page-title__header"><h1 class="page-title">@Localizer["EService"]</h1></div>
+<nav class="dashboard mt-4" aria-label="dashboard navigation">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="@Url.Action("Add", "Application")" class="dashboard-card">
+                <div class="dashboard-card__icon dashboard-card__icon--type1">
+                </div>
+                <h2 class="dashboard-card__title">@Localizer["Applications"]</h2>
+                <p class="dasboard-card__description">@Localizer["ApplicationsText"]</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Application")" class="dashboard-card">
+                <div class="dashboard-card__icon dashboard-card__icon--type2">
+                </div>
+                <h2 class="dashboard-card__title">@Localizer["Complaints"]</h2>
+                <p class="dasboard-card__description">@Localizer["ComplaintsText"]</p>
+            </a>
+        </div>
+    </div>
+</nav>

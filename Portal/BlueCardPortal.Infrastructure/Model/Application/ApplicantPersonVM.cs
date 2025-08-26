@@ -17,13 +17,24 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// Служител на юридическо лице
         /// </summary>
         [Display(Name = "ApplicantRole")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
         public string ApplicantRole { get; set; } = default!;
 
         /// <summary>
         /// Име на заявител
         /// </summary>
         [Display(Name = "ApplicantName")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
         public string Name { get; set; } = default!;
+
+
+        /// <summary>
+        /// Съвпада с адреса за контакт на работодателя
+        /// </summary>
+        [Display(Name = "ApplicantContactAddressIsSame")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+
+        public string ApplicantContactAddressIsSame { get; set; } = default!;
 
         /// <summary>
         /// Адрес за кореспонденция на заявител
@@ -40,6 +51,9 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// Служител на юридическо лице
         /// </summary>
         public EmployerVM Employer { get; set; } = new();
+
+
+        
 
     }
 }

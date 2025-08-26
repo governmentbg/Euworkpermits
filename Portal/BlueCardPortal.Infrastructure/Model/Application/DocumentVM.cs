@@ -63,14 +63,14 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         {
             get
             {
-                return DocumentType + (DocumentTypeCode == Constants.DocumentType.Other ? $": {Title}" : string.Empty);
+                return DocumentType + (DocumentTypeCode == Constants.DocumentType.Other && !string.IsNullOrEmpty(Title) ? $": {Title}" : string.Empty);
             }
         }
 
         /// <summary>
         /// Категория на документа
         /// </summary>
-        public string? DocumentCategoryCode { get; set; } 
+        public string? DocumentCategoryCode { get; set; }
 
         /// <summary>
         /// Категория на документа
@@ -96,9 +96,14 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         public int MaxFileSize { get; set; }
 
         /// <summary>
+        /// Допустими типове файлове
+        /// </summary>
+        public string? FileFormats { get; set; }
+
+        /// <summary>
         /// Съдържание на файла
         /// </summary>
-        public string? FileContent { get; set; } 
+        public string? FileContent { get; set; }
 
         /// <summary>
         /// Mime type
@@ -130,8 +135,17 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// </summary>
         [Display(Name = "DocumentTitle")]
         public string? Title { get; set; }
-        
-        public string ForeignerLabel { get; set; } = string.Empty;
+
+        public string? FileHash { get; set; }
+        public string? ForeignerLabel { get; set; }
         public Guid? ForeignerSmallId { get; set; }
+        [Display(Name = "FileName")]
+        public string FileNameLabel
+        {
+            get
+            {
+                return DocumentType != Title && !string.IsNullOrEmpty(Title) ? $"{Title}{Environment.NewLine}{FileName}" : FileName;
+            }
+        }
     }
 }

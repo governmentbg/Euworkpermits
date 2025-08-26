@@ -1,0 +1,32 @@
+﻿@using BlueCardPortal.Infrastructure.Model.Complaint
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@model ComplaintFilterVM
+
+<div class="details__body offcanvas-body">
+    <div class="form-container">
+        <button type="button" class="btn u-btn u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas">@Localizer["CloseFilter"]</button>
+        <h3 class="section-title">@Localizer["SearchComplaintTitle"]</h3>
+        <form id="formApplicationFilter" class="search-form" action="POST">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group col-12 mb-2">
+                    @Html.EditorFor(x => x.ComplaintNumber, "StringNullable")
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 mb-2">
+                    @Html.EditorFor(x => x.FromDate, "DateTimeNull")
+                </div>
+                <div class="form-group col-md-6 mb-2">
+                    @Html.EditorFor(x => x.ToDate, "DateTimeNull")
+                </div>
+            </div>
+
+            <button type="button" class="btn u-btn  u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas" onclick="clearComplaintFilter()">@Localizer["ClearFilter"]</button>
+            <br />
+            <button type="button" class="btn u-btn  u-btn--light u-btn--search ms-auto w-100" data-bs-dismiss="offcanvas" onclick="searchComplaint()">Търсене</button>
+        </form>
+
+    </div>
+</div>

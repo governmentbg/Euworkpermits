@@ -44,5 +44,7 @@ namespace BlueCardPortal.Infrastructure.Contracts
         /// Проверка дали потребителят е аутентикиран
         /// </summary>
         bool IsAuthenticated { get; }
+
+        string LoginLabel();
     }
 }

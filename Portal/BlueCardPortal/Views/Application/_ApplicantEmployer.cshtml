@@ -2,7 +2,7 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model EmployerVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
@@ -30,7 +30,7 @@
         </div>
         <div class="row mb-2">
             <div class="col-12">
-                @Html.EditorFor(x => x.LegalForm, "DropDown", new { Ddl = ViewBag.LegalForm_ddl })
+                @Html.EditorFor(x => x.LegalForm, "DropDown", new { Ddl = ViewBag.LegalForm_ddl, @class = "select2-drop-down" })
             </div>
         </div>
     </div>

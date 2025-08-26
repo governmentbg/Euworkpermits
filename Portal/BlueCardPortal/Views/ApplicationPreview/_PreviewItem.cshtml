@@ -16,7 +16,10 @@
         <div class="accordion-body">
             @if (!string.IsNullOrEmpty(Model.ViewName))
             {
-                @await Html.PartialAsync(Model.ViewName, Model.Data)
+                @await Html.PartialAsync(Model.ViewName, Model.Data, new ViewDataDictionary(ViewData){
+                   { "IsTemporary", Model.IsTemporary },
+                   { "PermitType", Model.PermitType }
+                })
             }
         </div>
     </div>

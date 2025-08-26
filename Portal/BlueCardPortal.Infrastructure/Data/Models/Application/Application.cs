@@ -54,5 +54,10 @@ namespace BlueCardPortal.Infrastructure.Data.Models.Application
         /// Раздели
         /// </summary>
         public virtual ICollection<ApplicationItem> ApplicationItems { get; set; } = new List<ApplicationItem>();
+        
+        /// <summary>
+        /// Раздели
+        /// </summary>
+        public virtual ICollection<ApplicationMessage> ApplicationMessages { get; set; } = new List<ApplicationMessage>();
     }
 }

@@ -49,17 +49,17 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// Правна форма
         /// </summary>
         [Display(Name = "LegalForm")]
-        [BCEmployeeCount(ErrorMessage = "EmployeeCountErrorMessage")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
         public string LegalForm { get; set; } = default!;
 
         /// <summary>
         /// Седалище/Адрес на управление
         /// </summary>
-        public AddressVM Address { get; set; } = new AddressVM { Kind = ADDRESSE_TYPE.Head };
+        public AddressVM Address { get; set; } = new AddressVM { Kind = ADDRESSE_TYPE.Head};
 
         /// <summary>
         /// Адрес на месторабота
-        /// Съвпада с адреса на седалището на работодателя
+        /// ContactAddressIsSame Съвпада с адреса на седалището на работодателя
         /// </summary>
         [Display(Name = "ContactAddressIsSame")]
         [Required(ErrorMessage = "RequiredErrorMessage")]
@@ -99,10 +99,17 @@ namespace BlueCardPortal.Infrastructure.Model.Application
                     Apartment = Address.Apartment,
                     Entrance = Address.Entrance,
                     Floor = Address.Floor,  
+                    IsCompanyAddress = Address.IsCompanyAddress,
                 };
                 result.Items.Add(contactAddress);
             }
             return result;
         }
+
+        public void SetIsCompanyAddress(bool isCompanyAddress)
+        {
+            Address.IsCompanyAddress = isCompanyAddress;
+            ContactAddress.IsCompanyAddress= isCompanyAddress;
+        } 
     }
 }

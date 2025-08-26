@@ -1,6 +1,9 @@
-﻿using BlueCardPortal.Infrastructure.Data.Common;
+﻿using BlueCardPortal.Infrastructure.Constants;
+using BlueCardPortal.Infrastructure.Data.Common;
 using BlueCardPortal.Infrastructure.Data.Models.Application;
+using BlueCardPortal.Infrastructure.Data.Models.Common;
 using BlueCardPortal.Infrastructure.Data.Models.Complaint;
+using BlueCardPortal.Infrastructure.Data.Models.Nomenclature;
 using BlueCardPortal.Infrastructure.Data.Models.SelfDenial;
 using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -39,10 +42,17 @@ namespace BlueCardPortal.Infrastructure.Data
         }
         public DbSet<Application> Applications { get; set; }
         public DbSet<ApplicationItem> ApplicationItems { get; set; }
+        public DbSet<ApplicationMessage> ApplicationMessages { get; set; }
         public DbSet<ApplicationItemType> ApplicationItemTypes { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<SelfDenial> SelfDenials { get; set; }
         public DbSet<ApplicationUpdate> ApplicationUpdates { get; set; }
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
+        public DbSet<UpdateMessage> UpdateMessages { get; set; }
+        public DbSet<NomenclatureType> NomenclatureTypes { get; set; }
+        public DbSet<CodeableConcept> CodeableConcepts { get; set; }
+        public DbSet<AdditionalColumn> AdditionalColumns { get; set; }
+
+        public DbSet<EMail> EMails { get; set; }
     }
 }

@@ -18,3 +18,38 @@ $(function () {
         $('#ServerSuccessMessage').val('');
     }
 });
+
+
+$(function () {
+    if ($('#SwalServerErrorMessage').val()) {
+        Swal.fire(
+            "Грешка",
+            $('#SwalServerErrorMessage').val(),
+            'error',
+        )
+        $('#SwalServerErrorMessage').val('');
+    }
+});
+
+$(function () {
+    if ($('#SwalServerWarningMessage').val()) {
+        Swal.fire(
+            "Предупреждение",
+            $('#SwalServerWarningMessage').val(),
+            'warning',
+        )
+        $('#SwalServerWarningMessage').val('');
+    }
+});
+
+$(function () {
+    if ($('#SwalServerSuccessMessage').val()) {
+        Swal.fire({
+            title: 'Резултат',
+            text: $('#SwalServerSuccessMessage').val(),
+            confirmButtonText: "OK",
+        });
+        $('#SwalServerSuccessMessage').val('')
+    }
+});
+

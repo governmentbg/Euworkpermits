@@ -59,5 +59,16 @@ namespace BlueCardPortal.Infrastructure.Model.ApplicationList
         /// Заявлението е за редакция
         /// </summary>
         public bool ForUpdate { get; set; }
+
+        /// <summary>
+        /// Забележка
+        /// </summary>
+        public string? Remark { get; set; }
+        /// <summary>
+        /// Работодател
+        /// </summary>
+        public string EmployerName { get; set; }
+
+        public string? PaymentAccessCode { get; set; }
     }
 }

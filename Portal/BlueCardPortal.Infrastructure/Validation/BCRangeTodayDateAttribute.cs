@@ -15,8 +15,9 @@ namespace BlueCardPortal.Infrastructure.Validation
         public int ToYear { get; set; }
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (validationContext.ObjectInstance == null)
-                return new ValidationResult(ErrorMessage); 
+            if (validationContext.ObjectInstance == null) 
+                return new ValidationResult(ErrorMessage);
+            
             return ValidationResult.Success;
         }
     }

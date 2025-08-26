@@ -1,5 +1,4 @@
 ﻿$.validator.addMethod('bcaddress', function (value, element) {
-    debugger
     const container = $(element).parents('.address-container:first');
     const street = container.find("[id$='Street']").val();
     const streetNo = container.find("[id$='StreetNo']").val();
@@ -9,6 +8,12 @@
         return true;
     if (HaveAddressValue(quarter) && HaveAddressValue(buildingNo))
         return true;
+    if (container.find("[name$='.IsCompanyAddress']").val() == "True") {
+        if (HaveAddressValue(street))
+            return true;
+        if (HaveAddressValue(quarter))
+            return true;
+    }
     return false;
 });
 
@@ -176,9 +181,10 @@ $.validator.addMethod('bc-duration-of-employment', function (value, element) {
         bcDurationOfEmploymentMessage = "Началото на периода трябва да е след " + moment().format('DD.MM.YYYY');
         return false;
     }
-    const days = dateTo.diff(dateFrom, 'days');
+    let days = dateTo.diff(dateFrom, 'days');
+    days = days + 1;
     if (days > period && element.name == "DurationOfEmploymentTo") {
-        bcDurationOfEmploymentMessage = `Периода не може да бъде повече от ${period} дни`;
+        bcDurationOfEmploymentMessage = `Периодът не може да бъде повече от ${period} дни`;
         return false;
     }
     return (value != null && value !== "" && value !== "-1");
@@ -220,3 +226,30 @@ $.validator.unobtrusive.adapters.add('bc-employee-count', function (options) {
     options.rules['bc-employee-count'] = true;
     options.messages['bc-employee-count'] = options.message;
 });
+
+var bcEmploymentDurationMonthMessage;
+var bcEmploymentDurationMonthMessageInit;
+$.validator.addMethod('bc-employment-duration-month', function (value, element) {
+    const permitType = $("[name$='.PermitType']:checked").val();
+    $("[name$='.EmploymentPermitType']").val(permitType);
+    const param = {
+       "1" : {from: 24, to: 60},
+       "2" : {from: 1, to: 36 },
+       "3" : {from: 3, to: 9},
+       "4" : {from: 1, to: 36},
+    }[permitType];
+    let month = parseInt(value)
+    if (param.from > month || month > param.to) {
+        bcEmploymentDurationMonthMessage = bcEmploymentDurationMonthMessageInit.replace("{0}", param.from);
+        bcEmploymentDurationMonthMessage = bcEmploymentDurationMonthMessage.replace("{1}", param.to);
+        return false;
+    }
+    return (value != null && value !== "" && value !== "-1");
+});
+
+$.validator.unobtrusive.adapters.add('bc-employment-duration-month', function (options) {
+    bcEmploymentDurationMonthMessageInit = options.message;
+    options.rules['bc-employment-duration-month'] = true;
+    options.messages['bc-employment-duration-month'] = function () { return bcEmploymentDurationMonthMessage; };
+});
+

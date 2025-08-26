@@ -37,6 +37,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<INomenclatureService, NomenclatureService>();
         services.AddScoped<IApplicationService, ApplicationService>();
+        services.AddScoped<ISignerService, SignerService>();
         services.AddSingleton<IValidationAttributeAdapterProvider, BCAttributeAdapterProvider>();
         //services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureModelBindingLocalization>();
         return services;
@@ -69,23 +70,25 @@ public static class ServiceCollectionExtension
             opt.IdPMetadata = configuration["EAuth:IdPMetadata"] ?? string.Empty;
             opt.SigningCertificateFile = configuration["EAuth:SigningCertificateFile"] ?? string.Empty;
             opt.SigningCertificatePassword = configuration["EAuth:SigningCertificatePassword"] ?? string.Empty;
+            opt.EncriptionCertificateFile = configuration["EAuth:EncryptionCertificateFile"];
+            opt.EncriptionCertificatePassword = configuration["EAuth:EncryptionCertificatePassword"];
             opt.SignatureAlgorithm = configuration["EAuth:SignatureAlgorithm"] ?? string.Empty;
             opt.AdministrativeContact = new EAuthAdministrativeContact()
             {
-                Company = "",
-                GivenName = "",
-                SurName = "",
-                EmailAddress = ""
+                Company = "Ministry of electronic governance",
+                GivenName = "Petya",
+                SurName = "Marinova",
+                EmailAddress = "p.marinova@egov.government.bg"
             };
             opt.CertificateValidationMode = configuration["EAuth:CertificateValidationMode"] ?? string.Empty;
             opt.RevocationMode = configuration["EAuth:RevocationMode"] ?? string.Empty;
             opt.IgnoreCertificateValidity = configuration.GetValue<bool>("EAuth:IgnoreCertificateValidity");
             opt.TechnicalContact = new EAuthTechnicalContact()
             {
-                Company = "",
-                GivenName = "",
-                SurName = "",
-                EmailAddress = ""
+                Company = "Information Services Plc",
+                GivenName = "Stamo",
+                SurName = "Petkov",
+                EmailAddress = "s.g.petkov@is-bg.net"
             };
             opt.RequestedAttributes = new EAuthRequestAttribute[]
             {

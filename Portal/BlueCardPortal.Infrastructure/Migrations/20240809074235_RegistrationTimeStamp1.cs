@@ -1,0 +1,28 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace BlueCardPortal.Infrastructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class RegistrationTimeStamp1 : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "registration_time_stamp",
+                table: "application_messages");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<string>(
+                name: "registration_time_stamp",
+                table: "application_messages",
+                type: "text",
+                nullable: true);
+        }
+    }
+}

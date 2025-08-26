@@ -2,10 +2,11 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model EmployerVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var isTemporary = (bool?)ViewData["IsTemporary"] ?? false;
 }
 <div class="employer-container">
     <div class="row mb-2">
@@ -23,14 +24,17 @@
             @Html.DisplayFor(x => x.LegalForm, "Nomenclature", new { NomenclatureType = NomenclatureTypes.LEGAL_FORM_TYPE })
         </div>
     </div>
-    <div class="row mb-2">
-        <div class="col-6">
-            @Html.DisplayFor(x => x.EmployeeCount, "Int32Nullable")
+    @if (!isTemporary)
+    {
+        <div class="row mb-2">
+            <div class="col-6">
+                @Html.DisplayFor(x => x.EmployeeCount, "Int32Nullable")
+            </div>
+            <div class="col-6">
+                @Html.DisplayFor(x => x.ForeignEmployeeCount, "Int32Nullable")
+            </div>
         </div>
-        <div class="col-6">
-            @Html.DisplayFor(x => x.ForeignEmployeeCount, "Int32Nullable")
-        </div>
-    </div>
+    }
     <h3 class="section-title">@Localizer["EmployerAddresses"]</h3>
     @{
         await Html.RenderPartialAsync("_EmployerAddress", Model);

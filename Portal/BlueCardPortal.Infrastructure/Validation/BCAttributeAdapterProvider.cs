@@ -61,6 +61,10 @@ public class BCAttributeAdapterProvider : IValidationAttributeAdapterProvider
         {
             return new BCEmployeeCountAttributeAdapter(bcEmployeeCountAttribute, stringLocalizer);
         }
+        if (attribute is BCEmploymentDurationMonthAttribute bcEmploymentDurationMonthAttribute)
+        {
+            return new BCEmploymentDurationMonthAttributeAdapter(bcEmploymentDurationMonthAttribute, stringLocalizer);
+        }
         return baseProvider.GetAttributeAdapter(attribute, stringLocalizer);
     }
 }

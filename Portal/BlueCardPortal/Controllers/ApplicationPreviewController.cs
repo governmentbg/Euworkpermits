@@ -23,18 +23,19 @@ namespace BlueCardPortal.Controllers
         }
         public async Task<IActionResult> PreviewLocal(Guid applicationId)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
             var model = await applicationService.GetApplication(applicationId, true);
+            await nomenclatureService.SetViewBagApplication(ViewBag, model.GetApplicationTypeCode());
             var list = model.ApplicationItems.Where(x => !string.IsNullOrEmpty(x.Label)).ToList();
             return PartialView("_Preview", list);
         }
         public async Task<IActionResult> GetApplicationRemote(string applicationId)
         {
-            await nomenclatureService.SetViewBagApplication(ViewBag);
             var model = await applicationService.GetApplicationRemote(applicationId);
+            await nomenclatureService.SetViewBagApplication(ViewBag, model.GetApplicationTypeCode());
             var list = model.ApplicationItems.Where(x => !string.IsNullOrEmpty(x.Label)).ToList();
             return PartialView("_Preview", list);
         }
+   
 
     }
 }

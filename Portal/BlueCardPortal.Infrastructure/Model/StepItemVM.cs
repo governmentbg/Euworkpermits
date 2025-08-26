@@ -58,6 +58,16 @@ namespace BlueCardPortal.Infrastructure.Model
         /// </summary>
         public bool IsHidden { get; set; }
 
+        /// <summary>
+        /// Дали е краткосрочно заявление
+        /// </summary>
+        public bool IsTemporary { get; set; }
+
+        /// <summary>
+        /// Вид разрешително
+        /// </summary>
+        public string? PermitType { get; set; }
+
         public string IsHiddenStyle()
         {
             return IsHidden ? "display:none" : string.Empty;

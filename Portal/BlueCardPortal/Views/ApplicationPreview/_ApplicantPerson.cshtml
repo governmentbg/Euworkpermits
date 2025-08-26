@@ -1,7 +1,8 @@
 ﻿@using BlueCardPortal.Extensions
+@using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicantPersonVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
@@ -14,6 +15,10 @@
         @Html.DisplayFor(x => x.ApplicantRole, "DropDown", new { Ddl = ViewBag.ApplicantRole_ddl })
     </div>
 </div>
+@if (!string.IsNullOrEmpty(Model.Employer?.Identifier))
+{
+    @await Html.PartialAsync("_ApplicantEmployer", Model.Employer)
+}
 <h3 class="section-title">@Localizer["ApplicantPersonAddress"]</h3>
 @await Html.PartialAsync("_Address", Model.Address)
 <h3 class="section-title">@Localizer["Contacts"]</h3>

@@ -14,12 +14,27 @@
             string id = $"{ViewData.TemplateInfo.HtmlFieldPrefix}_{item.Value}";
             <div class="form-check">
                 <label for="@id" class="form-check-label">
-                    @Html.RadioButtonFor(model => model, item.Value, new {
-                        id,
-                        @class = $"form-check-input {class_css}",
-                        @onchange = $"{onchange}",
-                        @checked = $"{checkedValue}"
-                    })
+                    @if (item.Disabled)
+                    {
+                        @Html.RadioButtonFor(model => model, item.Value, new
+                            {
+                                id,
+                                @class = $"form-check-input {class_css}",
+                                @onchange = $"{onchange}",
+                                @checked = $"{checkedValue}",
+                                @disabled = "disabled",
+                            })
+                    } 
+                    else
+                    {
+                        @Html.RadioButtonFor(model => model, item.Value, new
+                            {
+                                id,
+                                @class = $"form-check-input {class_css}",
+                                @onchange = $"{onchange}",
+                                @checked = $"{checkedValue}"
+                            })
+                    }
                     @item.Text
                 </label>
             </div>

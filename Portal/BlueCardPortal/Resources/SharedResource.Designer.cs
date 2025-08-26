@@ -61,6 +61,24 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Декларация за достъпност - ППИР.
+        /// </summary>
+        public static string AccessabilityDeclaration {
+            get {
+                return ResourceManager.GetString("AccessabilityDeclaration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Политика за достъпност.
+        /// </summary>
+        public static string AccessabilityPolicy {
+            get {
+                return ResourceManager.GetString("AccessabilityPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Добави.
         /// </summary>
         public static string Add {
@@ -75,6 +93,15 @@ namespace BlueCardPortal.Resources {
         public static string AddAddress {
             get {
                 return ResourceManager.GetString("AddAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подаване на ново заявление.
+        /// </summary>
+        public static string AddApplication {
+            get {
+                return ResourceManager.GetString("AddApplication", resourceCulture);
             }
         }
         
@@ -133,11 +160,38 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Място на работа - обект.
+        /// </summary>
+        public static string AddressObject {
+            get {
+                return ResourceManager.GetString("AddressObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Апартамент.
         /// </summary>
         public static string Apartment {
             get {
                 return ResourceManager.GetString("Apartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Съвпада с адреса на седалището.
+        /// </summary>
+        public static string AplicantEmployerContactAddressIsSame {
+            get {
+                return ResourceManager.GetString("AplicantEmployerContactAddressIsSame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Съвпада с адреса за контакт на работодателя.
+        /// </summary>
+        public static string ApplicantContactAddressIsSame {
+            get {
+                return ResourceManager.GetString("ApplicantContactAddressIsSame", resourceCulture);
             }
         }
         
@@ -205,6 +259,15 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Вид идентификатор.
+        /// </summary>
+        public static string ApplicantUicType {
+            get {
+                return ResourceManager.GetString("ApplicantUicType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Допълнителна информация, свързана със заявлението.
         /// </summary>
         public static string ApplicationAdditionalInfo {
@@ -214,7 +277,16 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Списък с чернови заявления.
+        ///   Looks up a localized string similar to Заявление № {0}.
+        /// </summary>
+        public static string ApplicationApplyNumber {
+            get {
+                return ResourceManager.GetString("ApplicationApplyNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Продължете попълването на незавършените Ви чернови на заявления.
         /// </summary>
         public static string ApplicationDraftList {
             get {
@@ -225,9 +297,9 @@ namespace BlueCardPortal.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Неподадени Заявления.
         /// </summary>
-        public static string ApplicationDraftListTItle {
+        public static string ApplicationDraftListTitle {
             get {
-                return ResourceManager.GetString("ApplicationDraftListTItle", resourceCulture);
+                return ResourceManager.GetString("ApplicationDraftListTitle", resourceCulture);
             }
         }
         
@@ -277,11 +349,29 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подаване на заявления.
+        /// </summary>
+        public static string ApplicationsText {
+            get {
+                return ResourceManager.GetString("ApplicationsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Заявление.
         /// </summary>
         public static string ApplicationType {
             get {
                 return ResourceManager.GetString("ApplicationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Важно: Mоже да подавате само услуга Краткосрочна заетост до 90 дни - Приложение №5.
+        /// </summary>
+        public static string ApplicationTypeMessage {
+            get {
+                return ResourceManager.GetString("ApplicationTypeMessage", resourceCulture);
             }
         }
         
@@ -300,6 +390,15 @@ namespace BlueCardPortal.Resources {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Към работния плот.
+        /// </summary>
+        public static string BackToWorkPlot {
+            get {
+                return ResourceManager.GetString("BackToWorkPlot", resourceCulture);
             }
         }
         
@@ -336,6 +435,15 @@ namespace BlueCardPortal.Resources {
         public static string BCDocumentsErrorMessage {
             get {
                 return ResourceManager.GetString("BCDocumentsErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Въведете продължителност диапазона от {0} до {1} месеца.
+        /// </summary>
+        public static string BCEmploymentDurationMonthMessage {
+            get {
+                return ResourceManager.GetString("BCEmploymentDurationMonthMessage", resourceCulture);
             }
         }
         
@@ -403,6 +511,51 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to формат.
+        /// </summary>
+        public static string BirthDateTypeInput {
+            get {
+                return ResourceManager.GetString("BirthDateTypeInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дата на раждане.
+        /// </summary>
+        public static string BirthMonth {
+            get {
+                return ResourceManager.GetString("BirthMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Приложение №3а се използва за Синя Карта, ЕРПР, ВКТ и Сезонна заетост от 90 до 180 дни.
+        /// </summary>
+        public static string BlankPdf3a {
+            get {
+                return ResourceManager.GetString("BlankPdf3a", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Приложение №5 се използва за Краткосрочна заетост при сезонни работници до 90 дни.
+        /// </summary>
+        public static string BlankPdf5 {
+            get {
+                return ResourceManager.GetString("BlankPdf5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Образци на документи.
+        /// </summary>
+        public static string Blanks {
+            get {
+                return ResourceManager.GetString("Blanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Сграда №.
         /// </summary>
         public static string BuildingNo {
@@ -412,11 +565,38 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Изтрий.
+        /// </summary>
+        public static string ButtonDeleteHint {
+            get {
+                return ResourceManager.GetString("ButtonDeleteHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Попълването на заявлението ще бъде прекратено и въведените от Вас данни ще бъдат съхранени. Ще можете да продължите от мястото, до където сте стигнали!.
+        /// </summary>
+        public static string ButtonDraftHint {
+            get {
+                return ResourceManager.GetString("ButtonDraftHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Град.
         /// </summary>
         public static string City {
             get {
                 return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Въведете място на раждане на кирилица.
+        /// </summary>
+        public static string CityOfBirthRegularExpression {
+            get {
+                return ResourceManager.GetString("CityOfBirthRegularExpression", resourceCulture);
             }
         }
         
@@ -448,11 +628,47 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Жалба.
+        /// </summary>
+        public static string Complaint {
+            get {
+                return ResourceManager.GetString("Complaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to От дата.
+        /// </summary>
+        public static string ComplaintFilterFromDate {
+            get {
+                return ResourceManager.GetString("ComplaintFilterFromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to до дата.
+        /// </summary>
+        public static string ComplaintFilterToDate {
+            get {
+                return ResourceManager.GetString("ComplaintFilterToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Обоснование.
         /// </summary>
         public static string ComplaintInfo {
             get {
                 return ResourceManager.GetString("ComplaintInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Жалба №.
+        /// </summary>
+        public static string ComplaintNumber {
+            get {
+                return ResourceManager.GetString("ComplaintNumber", resourceCulture);
             }
         }
         
@@ -471,6 +687,15 @@ namespace BlueCardPortal.Resources {
         public static string ComplaintSendList {
             get {
                 return ResourceManager.GetString("ComplaintSendList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подаване на жалби по заявления.
+        /// </summary>
+        public static string ComplaintsText {
+            get {
+                return ResourceManager.GetString("ComplaintsText", resourceCulture);
             }
         }
         
@@ -556,6 +781,69 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Статистически данни издадени по тип разрешения за чужденец.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Статистика.
+        /// </summary>
+        public static string DashboardShort {
+            get {
+                return ResourceManager.GetString("DashboardShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Година.
+        /// </summary>
+        public static string DashboardYear {
+            get {
+                return ResourceManager.GetString("DashboardYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to От година.
+        /// </summary>
+        public static string DashboardYearFrom {
+            get {
+                return ResourceManager.GetString("DashboardYearFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to До година.
+        /// </summary>
+        public static string DashboardYearTo {
+            get {
+                return ResourceManager.GetString("DashboardYearTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Печатна форма на заявление.
+        /// </summary>
+        public static string DocumentPrintForm {
+            get {
+                return ResourceManager.GetString("DocumentPrintForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Заявление_{0}.pdf.
+        /// </summary>
+        public static string DocumentPrintFormFileName {
+            get {
+                return ResourceManager.GetString("DocumentPrintFormFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Описание.
         /// </summary>
         public static string DocumentTitle {
@@ -610,6 +898,33 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ЕГН.
+        /// </summary>
+        public static string EGN {
+            get {
+                return ResourceManager.GetString("EGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ЕИК.
+        /// </summary>
+        public static string EIK {
+            get {
+                return ResourceManager.GetString("EIK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Електронна поща.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Брой служители.
         /// </summary>
         public static string EmployeeCount {
@@ -646,6 +961,15 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Смяна на работодател.
+        /// </summary>
+        public static string EmployerChange {
+            get {
+                return ResourceManager.GetString("EmployerChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Адрес за кореспонденция.
         /// </summary>
         public static string EmployerContactAddress {
@@ -660,6 +984,15 @@ namespace BlueCardPortal.Resources {
         public static string EmployerHeadAddress {
             get {
                 return ResourceManager.GetString("EmployerHeadAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EmployerHeadAddresses.
+        /// </summary>
+        public static string EmployerHeadAddresses {
+            get {
+                return ResourceManager.GetString("EmployerHeadAddresses", resourceCulture);
             }
         }
         
@@ -682,7 +1015,7 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Позиция.
+        ///   Looks up a localized string similar to Длъжност.
         /// </summary>
         public static string EmploymentPosition {
             get {
@@ -745,6 +1078,15 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Невалиден файлов формат.
+        /// </summary>
+        public static string ErrorFileExt {
+            get {
+                return ResourceManager.GetString("ErrorFileExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Файлът е с по-голям размер от допустимият.
         /// </summary>
         public static string ErrorFileMaxSIze {
@@ -768,6 +1110,15 @@ namespace BlueCardPortal.Resources {
         public static string ErrorPhoneMessage {
             get {
                 return ResourceManager.GetString("ErrorPhoneMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Електронни услуги.
+        /// </summary>
+        public static string EService {
+            get {
+                return ResourceManager.GetString("EService", resourceCulture);
             }
         }
         
@@ -813,6 +1164,15 @@ namespace BlueCardPortal.Resources {
         public static string ForeignEmployeeCount {
             get {
                 return ResourceManager.GetString("ForeignEmployeeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Настоящ адрес.
+        /// </summary>
+        public static string ForeignerAddress {
+            get {
+                return ResourceManager.GetString("ForeignerAddress", resourceCulture);
             }
         }
         
@@ -925,6 +1285,15 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подадена жалба.
+        /// </summary>
+        public static string HasActiveComplaint {
+            get {
+                return ResourceManager.GetString("HasActiveComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Оригинал.
         /// </summary>
         public static string IsOriginal {
@@ -963,9 +1332,45 @@ namespace BlueCardPortal.Resources {
         /// <summary>
         ///   Looks up a localized string similar to ЛНЧ.
         /// </summary>
+        public static string LNCH {
+            get {
+                return ResourceManager.GetString("LNCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ЛНЧ.
+        /// </summary>
         public static string LNCHFilter {
             get {
                 return ResourceManager.GetString("LNCHFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вход с еАвтентикация.
+        /// </summary>
+        public static string LoginMethod {
+            get {
+                return ResourceManager.GetString("LoginMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Методът за идентификация се предоставя от Министерството на електронното управление и може да изисква предварителна регистрация.
+        /// </summary>
+        public static string LoginMethodText {
+            get {
+                return ResourceManager.GetString("LoginMethodText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to разрешения за работа.
+        /// </summary>
+        public static string LoginTitle {
+            get {
+                return ResourceManager.GetString("LoginTitle", resourceCulture);
             }
         }
         
@@ -1015,7 +1420,7 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вид разрешително.
+        ///   Looks up a localized string similar to Видове разрешения.
         /// </summary>
         public static string PermitTypeFilter {
             get {
@@ -1065,6 +1470,15 @@ namespace BlueCardPortal.Resources {
         public static string PersonIdDocumentVM {
             get {
                 return ResourceManager.GetString("PersonIdDocumentVM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Моля въведете кирилица без следните символи запетайки,латиница,числа.
+        /// </summary>
+        public static string PositionCyrilicRegularExpression {
+            get {
+                return ResourceManager.GetString("PositionCyrilicRegularExpression", resourceCulture);
             }
         }
         
@@ -1222,6 +1636,33 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Търсене на жалби.
+        /// </summary>
+        public static string SearchComplaint {
+            get {
+                return ResourceManager.GetString("SearchComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Търсене на жалби.
+        /// </summary>
+        public static string SearchComplaintTitle {
+            get {
+                return ResourceManager.GetString("SearchComplaintTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подадено е заявление №.
+        /// </summary>
+        public static string SendApplication {
+            get {
+                return ResourceManager.GetString("SendApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Заетост от дата.
         /// </summary>
         public static string SmallDurationOfEmploymentFrom {
@@ -1258,7 +1699,16 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Професия по НКПД.
+        ///   Looks up a localized string similar to Платформа за издаване на.
+        /// </summary>
+        public static string SmallTitle {
+            get {
+                return ResourceManager.GetString("SmallTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Код по НКПД.
         /// </summary>
         public static string SpecialityCodeVM {
             get {
@@ -1303,6 +1753,60 @@ namespace BlueCardPortal.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Подаване на заявление за разрешение за пребиваване и работа.
+        /// </summary>
+        public static string SubmitApplication {
+            get {
+                return ResourceManager.GetString("SubmitApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подаване на заявление за Краткосрочна заетост до 90 дни.
+        /// </summary>
+        public static string SubmitApplication90days {
+            get {
+                return ResourceManager.GetString("SubmitApplication90days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вход в системата.
+        /// </summary>
+        public static string SystemLogin {
+            get {
+                return ResourceManager.GetString("SystemLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to РАЗРЕШЕНИЯ ЗА РАБОТА.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ръководство на потребителя.
+        /// </summary>
+        public static string UserGuide {
+            get {
+                return ResourceManager.GetString("UserGuide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Помощ за потребителя.
+        /// </summary>
+        public static string UserHelp {
+            get {
+                return ResourceManager.GetString("UserHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дата на валидност на визата.
         /// </summary>
         public static string VisaExpirationDate {
@@ -1326,6 +1830,15 @@ namespace BlueCardPortal.Resources {
         public static string VisaType {
             get {
                 return ResourceManager.GetString("VisaType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Работен плот.
+        /// </summary>
+        public static string WorkPlot {
+            get {
+                return ResourceManager.GetString("WorkPlot", resourceCulture);
             }
         }
         

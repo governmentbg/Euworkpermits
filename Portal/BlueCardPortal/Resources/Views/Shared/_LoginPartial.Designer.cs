@@ -61,7 +61,7 @@ namespace BlueCardPortal.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ВХОД.
+        ///   Looks up a localized string similar to Вход.
         /// </summary>
         public static string Login {
             get {
