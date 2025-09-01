@@ -1,7 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Localization
-@inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var guestMenuItem = @ViewData["GuestMenuItem"]?.ToString();
+    var mainClass = @ViewData["mainClass"]?.ToString() ?? "pb-3";
+
+    var guestMenuItemDashboard = guestMenuItem == "Dashboard" ? "active" : string.Empty;
+    var guestMenuItemEService = guestMenuItem == "EService" ? "active" : string.Empty;
+    var guestMenuItemBlanks = guestMenuItem == "Blanks" ? "active" : string.Empty;
 }
 <!DOCTYPE html>
 <html lang="@requestCulture.RequestCulture.UICulture.Name">
@@ -16,77 +23,55 @@
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
     <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
     <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/secondary.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/secondary.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/colors.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/steps.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/accessibility/accessibility.css" asp-append-version="true" />
+
     @await RenderSectionAsync("Styles", required: false)
 
 </head>
 <body>
-    <nav class="navbar navbar-bluecard">
-        <a class="navbar-brand branding" asp-controller="Home" asp-action="Index">
-            <img class="site-logo" src="~/images/logo.svg" />
-            <div class="site-title">
-                <div class="title-text">@Localizer["Title"]</div>
-                <div class="small-title-text">@Localizer["SmallTitle"]</div>
+    <header class="page-header">
+        <div class="container-fluid">
+            <a class="brand" href="/">
+                <span class="small-title-text">@Localizer["SmallTitle"]</span>
+                <span class="title-text">@Localizer["Title"]</span>
+            </a>
+            <nav class="guest-menu guest-menu--floating">
+                @if (!string.IsNullOrEmpty(guestMenuItem))
+                {
+                    <ul class="guest-menu__list">
+                        <li class="guest-menu__item"><a asp-controller="Home" asp-action="Dashboard" class="guest-menu__link @guestMenuItemDashboard">@Localizer["DashboardShort"]</a></li>
+                        <li class="guest-menu__item"><a asp-controller="Home" asp-action="EService" class="guest-menu__link @guestMenuItemEService">@Localizer["EService"]</a></li>
+                        <li class="guest-menu__item"><a asp-controller="Home" asp-action="Blanks" class="guest-menu__link @guestMenuItemBlanks">@Localizer["Blanks"]</a></li>
+                    </ul>
+                }
+            </nav>
+            <div class="d-flex">
+
+                <partial name="_LoginPartial" />
+                <nav aria-label="избор на език">
+                    <ul class="nav justify-content-end">
+                        <partial name="_LanguagePartial" />
+                    </ul>
+                </nav>
             </div>
-        </a>
-        <ul class="nav justify-content-end">
-            <partial name="_LoginPartial" />
-            <partial name="_LanguagePartial" />
-        </ul>
-    </nav>
+        </div>
+    </header>
     @{
         await Html.RenderPartialAsync("_ModalDialog");
     }
-    <div class="main-container">
-        <main role="main" class="pb-3">
+    <div class="main-container container">
+        <main role="main" class="@mainClass pt-5">
             @RenderBody()
         </main>
     </div>
-    <div class="footer-container">
-        <div class="section-footer-v">
-            <div class="top-row">
-                <div class="support">
-                    <div class="support-title">@Localizer["FooterTitle"]</div>
-                    <div class="data">
-                        <div class="data-item">
-                            <div class="support-label">@Localizer["Phone"]</div>
-                            <div class="support-info">02 9876543</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="support-label">@Localizer["Email"]</div>
-                            <div class="support-info">support@egov.bg</div>
-                        </div>
-                        <div class="data-item">
-                            <div class="support-label">@Localizer["Other"]</div>
-                            <div class="horizontal-menu">
-                                <div class="support-menu-item">@Localizer["Rules"]</div>
-                                <div class="support-menu-item">@Localizer["About"]</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="about">
-                <div class="divider"></div>
-                <div class="frame">
-                    <div class="frame-2">
-                        <p class="copyright">@Localizer["Copyright"]</p>
-                        <p class="about-info">
-                            <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">@Localizer["PrivacyPolicy"]</span></a>
-                            <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">@Localizer["AccessabilityPolicy"]</span></a>
-                            <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
-                            <a href="#" target="_blank" rel="noopener noreferrer"><span class="about-info-text">@Localizer["Feedback"]</span></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @{
+        await Html.RenderPartialAsync("_LayoutFooter");
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
@@ -105,10 +90,12 @@
     <script src="~/js/tempus-dominus.bg.js"></script>
     <script src="~/lib/jquery-form/jquery.form.js"></script>
     <script src="~/lib/moment/moment-with-locales.js"></script>
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/common.js" asp-append-version="true"></script>
     <script src="~/js/uic-validation.js" asp-append-version="true"></script>
+    <script src="~/accessibility/accessibility.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
     @{
         await Html.RenderPartialAsync("_UserMessages");

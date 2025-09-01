@@ -46,3 +46,13 @@ function MakeBigModalDialog(container) {
 function HideModal() {
     $('.master-modal').modal('hide');
 }
+
+function LogOut()
+{
+    $('#formLogOut').submit();
+}
+
+
+function GoHomeIndex() {
+    window.location.href = "/Home/Index"
+}

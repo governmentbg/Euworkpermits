@@ -1,10 +1,10 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Model.Application
 <div class="application-preview">
 
 </div>
 <div class="row mb-2">
-    <button type="button" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow" onclick="SendApplication()">@Localizer["Confirmation"]</button>
+    <button type="button" class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow" onclick="SendApplication(this)">@Localizer["Confirmation"]</button>
 </div>

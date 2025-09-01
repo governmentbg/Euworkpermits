@@ -14,6 +14,8 @@
     @Html.HiddenFor(x => x.IsMandatory)
     @Html.HiddenFor(x => x.HasTitle)
     @Html.HiddenFor(x => x.HasMultipleFile)
+    @Html.HiddenFor(x => x.ForeignerLabel)
+    @Html.HiddenFor(x => x.ForeignerSmallId)
     <div class="row">
         <div class="col-12">
             @Html.DisplayFor(x => x.DocumentType, "StringNullable")
@@ -35,6 +37,9 @@
                 @Html.EditorFor(x => x.Title, "StringNullable")
             </div>
         </div>
+    } else
+    {
+        @Html.HiddenFor(x => x.Title)
     }
     <div class="row mt-2">
         <div class="col-12">
@@ -43,7 +48,7 @@
     </div>
     <div class="row mt-2">
         <div class="col-12">
-            <input type="file" name="files" id="files" />
+            <input type="file" name="files" id="files" accept="@Model.FileFormats" />
         </div>
     </div>
     @if (Model.MaxFileSize > 0)

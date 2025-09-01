@@ -2,10 +2,10 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ContactVM
 @{
-    var favorite = string.IsNullOrEmpty(Model.IsPreferedContract) ? Localizer["Favorite"].ToString() : string.Empty;
+    var favorite = !string.IsNullOrEmpty(Model.IsPreferedContract) ? Localizer["Favorite"]?.Value : string.Empty;
 }
 
 <div class="row mb-2 contact-container item-template">

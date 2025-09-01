@@ -37,19 +37,19 @@ async function StepItemClick(control) {
     var applicationType = $("[name$='.ApplicationTypeCode']:checked").val();
     if (applicationType == "1" && number == 2) {
         $('#step3item').show();
-        $('#step5item').show();
+        //$('#step5item').show();
         $('#step9item').hide();
-        setStepItemText(6, '6');
-        setStepItemText(7, '7');
-        setStepItemText(8, '8');
+        //setStepItemText(6, '6');
+        //setStepItemText(7, '7');
+        //setStepItemText(8, '8');
     }
     if (applicationType == "2" && number == 2) {
         $('#step3item').hide();
-        $('#step5item').hide();
+       // $('#step5item').hide();
         $('#step9item').show();
-        setStepItemText(6, '5');
-        setStepItemText(7, '6');
-        setStepItemText(8, '7');
+        //setStepItemText(6, '5');
+        //setStepItemText(7, '6');
+        //setStepItemText(8, '7');
     }
 
     const containernext = GetNextStep(number, true);
@@ -76,7 +76,7 @@ async function StepItemClick(control) {
                 const permitType = GetPermitType();
                 const applicantType = $(".applicant-container").find("[name$='.ApplicantType']:checked").val();
                 const applicationId = $('#ApplicationId').val();
-                if (documentPermitType.val() !== permitType || documentApplicantType.val() !== applicantType) {
+              //  if (documentPermitType.val() !== permitType || documentApplicantType.val() !== applicantType || permitType == "5") {
                     const data = {
                         applicationId,
                         permitType,
@@ -84,7 +84,7 @@ async function StepItemClick(control) {
                     }
                     const view = await get_string_async('/Application/AddDocuments', data);
                     form.html(view);
-                }
+                //}
             }
         }
     }
@@ -96,6 +96,46 @@ async function StepItemClick(control) {
             const applicationId = $('#ApplicationId').val();
             const view = await get_string_async('/Application/AddForeigner', { applicationId });
             form.html(view);
+            resetValidation(form);
+            InitForm();
+        }
+    }
+    if (step.data("bs-target") == "#step4") {
+        const form = $(step.data("bs-target")).find('#formEmployer');
+        if (form.length == 1) {
+            const applicantType = $(".applicant-container").find("[name$='.ApplicantType']:checked").val();
+            const applicantRole = $(`[name$=".ApplicantRole"]:checked`).val();
+            if (applicantType == 2 && applicantRole == 2) {
+                const applicationId = $('#ApplicationId').val();
+                const view = await get_string_async('/Application/AddEmployer', { applicationId });
+                form.html(view);
+                resetValidation(form);
+                InitForm();
+            }
+
+            var applicationType = $("[name$='.ApplicationTypeCode']:checked").val();
+            if (applicationType == "2") {
+                form.find('.employee-count').hide();
+            } else {
+                form.find('.employee-count').show();
+            }
+        }
+    }
+    if (step.data("bs-target") == "#step5") {
+        const form = $(step.data("bs-target")).find('#formEmployment');
+        if (form.length == 1) {
+            const applicationType = $("[name$='.ApplicationTypeCode']:checked").val();
+            if (applicationType == "2") {
+                $('.employment-info').hide()
+                $('.employment-object').show()
+                form.find("[name$='Employment.Type']").addClass("ignore")
+                form.find("[name$='Employment.EmployerChange']").addClass("ignore")
+            } else {
+                $('.employment-info').show()
+                $('.employment-object').hide()
+                form.find("[name$='Employment.Type']").removeClass("ignore")
+                form.find("[name$='Employment.EmployerChange']").removeClass("ignore")
+            }
         }
     }
     if (step.data("bs-target") == "#step8") {
@@ -135,7 +175,8 @@ function SetStep(number, up) {
 }
 
 
-async function SetNextStep() {
+async function SetNextStep(btn) {
+    StartButtonAction(btn);
     const currStep = $('[aria-expanded="true"]');
     let number = currStep.data('number') || 0;
     let id = currStep.data('step-id');
@@ -145,8 +186,10 @@ async function SetNextStep() {
     form.validate().settings.ignore = ":hidden:not(.bc-radio-button),.ignore";
 
     if (!form.valid()) {
+        EndButtonAction(btn);
         return false;
     }
+
     const data = new FormData(form[0]);
     data.append('applicationId', $('#ApplicationId').val());
     url = form.attr("action");
@@ -157,6 +200,7 @@ async function SetNextStep() {
     if (await ResolveIsOkResponce(responce)) {
         SetStep(number, true);
     }
+    EndButtonAction(btn);
 }
 
 function SetPrevStep() {

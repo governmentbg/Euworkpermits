@@ -237,6 +237,7 @@ ClientBin/
 *.dbproj.schemaview
 *.jfm
 *.pfx
+*.p12
 *.publishsettings
 orleans.codegen.cs
 
@@ -362,3 +363,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /BlueCardPortal/Links.txt
+/BlueCardPortal/Properties/launchSettings.json

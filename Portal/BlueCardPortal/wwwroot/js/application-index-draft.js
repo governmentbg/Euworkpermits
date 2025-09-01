@@ -32,20 +32,20 @@ function initGridView(){
                {
                     name: 'foreignerName',
                     title: 'Име на чужденец',
-                    cssClass: 'col-md-3'
+                    cssClass: 'col-md-4'
                 },
                 {
                     name: 'entryDate',
                     title: 'От дата',
                     cssClass: 'col-md-2',
                     render: function (el) {
-                        return JsonBGdate(el);
+                        return JsonBGDateTime(el);
                     }
                 },
                 {
                     name: 'permitType',
                     title: 'Разрешение',
-                    cssClass:'col-md-5',
+                    cssClass:'col-md-3',
                     //render:function(el,row){
                     //    return `${el}, rendered No=${row.incommingNumber}`
                     //}
@@ -53,9 +53,12 @@ function initGridView(){
                 {
                     name: 'applicationId',
                     title: '',
-                    cssClass: 'col-md-2',
+                    cssClass: 'col-md-3',
                     render:function(el,row){
-                        return `<button class="btn u-btn u-bg--c6 u-btn--right u-btn--arrow btn-next-step" onclick="EditApplication('${el}')">Продължи</button>`
+                        return `<div class="form__footer">` +
+                            `<button type="button" class="btn u-btn u-btn--close u-btn--right" data-toggle="tooltip" title="Изтриване" onclick="SetStatusNone('${el}')" ></button>` +
+                            `<button class="btn u-btn u-bg--c6 u-btn--arrow u-btn--right" onclick="EditApplication('${el}')">Продължи</button>` +
+                            `</div>`;
                     }
                 }
 
@@ -67,6 +70,14 @@ function initGridView(){
 function EditApplication(el) {
     window.location.href = `/Application/Edit?applicationId=${el}`;
 }
+
+async function SetStatusNone(applicationId) {
+    const responce = await fetch('/Application/SetStatusNone?' + new URLSearchParams({ applicationId }));
+    if (await ResolveIsOkResponce(responce)) {
+        gridViewLoadData('#dvMain');
+    }
+}
+
 
 $(() => {
     initGridView();

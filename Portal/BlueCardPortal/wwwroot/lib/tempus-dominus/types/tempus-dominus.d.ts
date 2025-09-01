@@ -12,7 +12,6 @@ declare class TempusDominus {
         [key: string]: ((event: any) => Record<string, unknown>)[];
     };
     private _isDisabled;
-    private _toggle;
     private _currentPromptTimeTimeout;
     private actions;
     private optionsStore;
@@ -131,6 +130,7 @@ declare class TempusDominus {
      * @private
      */
     private _toggleClickEvent;
+    private _handleToggleKeydown;
     /**
      * Event for when the toggle is clicked. This is a class level method so there's
      * something for the remove listener function.
@@ -194,6 +194,7 @@ declare const extend: (plugin: any, option?: any) => {
         startOfTheWeek?: number;
         today?: string;
         toggleMeridiem?: string;
+        toggleAriaLabel?: string;
         dateFormats?: {
             L?: string;
             LL?: string;

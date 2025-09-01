@@ -1,6 +1,9 @@
-﻿using System;
+﻿using BlueCardPortal.Infrastructure.Data.Models.Complaint;
+using BlueCardPortal.Infrastructure.Data.Models.SelfDenial;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +34,23 @@ namespace BlueCardPortal.Infrastructure.Constants
         public const string BIRTH_DATE_TYPE_INPUT = nameof(BIRTH_DATE_TYPE_INPUT);
 
     }
+
+    public static class NomenclatureTypesCodeable
+    {
+        public const string YesNo = "YesNo";
+        public const string FeedBackType = "FeedBackType";
+        public const string ParamType = "Param";
+    }
+    public static class ParamTypes
+    {
+        public const string UploadFileFormats = "UploadFileFormats";
+        public const string UploadFileSize = "UploadFileSize";
+        public const string StatusForSelfDenail = "StatusForSelfDenail";
+        public const string StatusForComplaint = "StatusForComplaint";
+        public const string StatusForUpdate = "StatusForUpdate";
+        public const string StatusForPay = "StatusForPay";
+        public const string InternalStatusHasComplaint = "HasComplaint";
+    }
     public static class APPLICATION_TYPE
     {
         public const string Permanent = "1";
@@ -38,6 +58,25 @@ namespace BlueCardPortal.Infrastructure.Constants
     }
     public static class PERMIT_TYPE
     {
+        /// <summary>
+        /// Разрешение за пребиваване и работа тип "Синя карта на Европейския съюз"
+        /// </summary>
+        public const string BlueCard = "1";
+        /// <summary>
+        /// Единно разрешение за пребиваване и работа
+        /// </summary>
+        public const string UnifiedWorkPermit = "2";
+        /// <summary>
+        /// Разрешение за сезонен работник
+        /// </summary>
+        public const string SeasonalWorkerPermit = "3";
+        /// <summary>
+        /// Разрешение на лице, преместено при вътрешнокорпоративен трансфер
+        /// </summary>
+        public const string IntracorporateTransfer = "4";
+        /// <summary>
+        /// Краткосрочна заетост до 90 дни - Приложение №5
+        /// </summary>
         public const string Temporary = "5";
     }
     public static class ENTITY_TYPE
@@ -120,6 +159,7 @@ namespace BlueCardPortal.Infrastructure.Constants
     public static class BIRTH_DATE_TYPE_INPUT
     {
         public const string YYYYMMDD = "1";
+        public const string YYYYMM = "2";
     }
 
     public static class UicTypes
@@ -138,7 +178,6 @@ namespace BlueCardPortal.Infrastructure.Constants
         public const string Denial = "6";
         public const string Termination = "7";
         public const string Withdrawal = "8";
-        public static string[] ForComplaint = new []{ Denial, Termination, Withdrawal};
     }
     public class INTERNAL_STATUS
     {
@@ -148,18 +187,17 @@ namespace BlueCardPortal.Infrastructure.Constants
         public const string AwaitingVisa = "12";
         public const string IssuanceVisa = "13";
         public const string PermitIssued = "14";
+        public const string ActiveComplaint = "25";
         // "Самоотказ",
         public const string SelfDenial = "50";
-        public static string[] NoSelfDenial = new[] {
-            DenialIssued, 
-            TerminationIssued,
-            WithdrawalIssued, 
-            AwaitingVisa,
-            IssuanceVisa,
-            PermitIssued
-        };
     }
 
+    public class SourceType
+    {
+        public const int SelfDenial = 1;
+        public const int Complaint = 2;
+        public const int ApplicationUpdate = 3;
+    }
     public static class DocumentType
     {
         public const string Other = "99";
@@ -172,33 +210,41 @@ namespace BlueCardPortal.Infrastructure.Constants
 
 
     /*    
-        1 Регистрирано 
-        2 В обработка от ДМ
-        3 В обработка от АЗ
-        4 В обработка от АЗ/ДАНС
-        5 Очаква допълнителни документи от заявител
-        6 Отказ
-        7 Прекратено производство
-        8 Отнемане 
-        9 Кандидатстване за виза
-        10 Предоставяне на виза и заплащане
-        11 Издадено разрешение
-        12 Информиран жалбоподател за издадено становище
+        1 Регистрирано
+2 В обработка от ДМ
+3 В обработка от АЗ
+4 В обработка от АЗ/ДАНС
+5 Очаква допълнителни документи от заявител
+6 Отказ
+7 Прекратено производство
+8 Отнемане
+9 Кандидатстване за виза
+10 Предоставяне на виза и заплащане
+11 Издадено разрешение
+12 Самоотказ
+13 Очаква плащане
+14 Регистрация
 
-    1 Регистрирано
-    2 В обработка от ДМ
-    3 В обработка от АЗ
-    4 В обработка от АЗ/ДАНС
-    5 Издадено становище АЗ
-    6 Издадено становище АЗ/ДАНС
-    7 Върнат с указания от  ДМ
-    8 Върнат с указания от  АЗ
-    9 Издаден отказ
-    10 Издадено прекратяване
-    11 Издадено отнемане
-    12 Очаква предоставяне на виза на гише
-    13 Предоставяне на виза в ДМ
-    14 Издадено разрешение
-    15 Информиран жалбоподател */
+ Изберете
+1 Регистрирано
+2 В обработка от ДМ
+3 В обработка от АЗ
+4 В обработка от АЗ/ДАНС
+5 Издадено становище АЗ
+6 Издадено становище АЗ/ДАНС
+7 Върнат с указания от  ДМ
+8 Върнат с указания от  АЗ
+9 Издаден отказ
+10 Издадено прекратяване
+11 Издадено отнемане
+12 Очаква предоставяне на виза на гише
+13 Предоставяне на виза в ДМ
+14 Издадено разрешение
+15 Самоотказ
+16 Очаква плащане
+17 Регистрация
+25 Обработка на жалба
+30 Очаква становище по жалба
+40 Отказана жалба */
 
 }

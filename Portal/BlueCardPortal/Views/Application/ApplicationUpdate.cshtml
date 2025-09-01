@@ -1,15 +1,17 @@
 ﻿@using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Model.Complaint
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicationUpdateVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
-    ViewData["Title"] = "Жалби";
+    ViewData["Title"] = "Промяна";
+
 }
 <form id="frmComplaintEdit" name="frmComplaintEdit" method="post" action="@Url.Action("SaveApplicationUpdate", "Application")">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ApplicationId)
     @Html.HiddenFor(x => x.ApplicationNumber)
     @{
         ViewData.TemplateInfo.HtmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix.CombineTemplatePrefix("Applicant");

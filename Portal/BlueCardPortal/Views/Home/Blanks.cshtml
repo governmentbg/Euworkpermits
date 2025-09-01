@@ -1,0 +1,19 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@{
+    ViewData["Title"] = Localizer["Blanks"];
+    ViewData["GuestMenuItem"] = "Blanks";
+}
+<div class="page-title__header"><h1 class="page-title">@Localizer["Blanks"]</h1></div>
+<ul class="doc-template__list">
+    <li>
+        <a target="_blank" href="/blanks/заявление-за-продължително-пребиваване-по-чл-24и-24к-33к-33л-33п-33т-зчрб.pdf" data-type="pdf" class="doc-template">
+            @Localizer["BlankPdf3a"]
+        </a>
+    </li>
+    <li>
+        <a target="_blank" href="/blanks/deklaracija-za-osyshtestvjavane-na-kratkosrochna-zaetost-bez-razreshenie-za-rabota-chrez-registracija-prilojenie-5.pdf" data-type="pdf" class="doc-template">
+            @Localizer["BlankPdf5"]
+        </a>
+    </li>
+</ul>

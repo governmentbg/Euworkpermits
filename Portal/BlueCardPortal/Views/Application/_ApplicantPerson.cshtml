@@ -2,13 +2,15 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicantPersonVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
     var applicantType = ViewData["ApplicantType"]?.ToString();
     var ignoreValidation = (applicantType != ENTITY_TYPE.AuthorizedPerson && applicantType != ENTITY_TYPE.Representative);
     var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+    var displayAddr = Model.ApplicantRole == ApplicationRole.Representative && Model.ApplicantContactAddressIsSame == YESNO_TYPE.Yes ? "display:none" : string.Empty;
+    var displayIsSameAddr = Model.ApplicantRole != ApplicationRole.Representative ? "display:none" : string.Empty;
 }
 <div class="row mb-2">
     <div class="col-6">
@@ -19,21 +21,33 @@
     </div>
 </div>
 <div>
-@{
-    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Employer");
-    @await Html.PartialAsync("_ApplicantEmployer", Model.Employer, new ViewDataDictionary(ViewData) {{ "ApplicantRole", Model.ApplicantRole }})
-}
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Employer");
+        @await Html.PartialAsync("_ApplicantEmployer", Model.Employer, new ViewDataDictionary(ViewData) { { "ApplicantRole", Model.ApplicantRole } })
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
 </div>
 <h3 class="section-title">@Localizer["ApplicantPersonAddress"]</h3>
-@{
-    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
-    @await Html.PartialAsync("_Address", Model.Address, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
-}
+<div class="row mb-2 applicant-contact-address-is-same" style="@displayIsSameAddr">
+    <div class="col-6">
+        @Html.EditorFor(x => x.ApplicantContactAddressIsSame, "RadioButtonList", new
+            {
+                Ddl = ViewBag.AddressIsSame_ddl,
+                onchange = "ApplicantAddressIsSameChangeRadio(this)",
+                @class = ignoreCss
+            })
+    </div>
+</div>
+<div class="applicant-address-can-be-same" style="@displayAddr">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
+        @await Html.PartialAsync("_Address", Model.Address, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
 <h3 class="section-title">@Localizer["Contacts"]</h3>
 @{
     ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");
     @await Html.PartialAsync("_Contacts", Model.Contacts, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
-}
-@{
     ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
 }

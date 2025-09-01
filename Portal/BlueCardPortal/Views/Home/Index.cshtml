@@ -1,39 +1,43 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
-    ViewData["Title"] = Localizer["Applications"];
+    ViewData["Title"] = Localizer["WorkPlot"];
 }
-
-<div class="row cp-row">
-    <div class="col-lg-4">
-        <a href="@Url.Action("Index", "Application")">
-            <div class="cp-cell workspace-item">
-                <div class="img-container application-list-img"></div>
-                <h3 class="page-title__cp">@Localizer["Applications"]</h3>
-                <p class="page-title__cp--desc">@Localizer["ApplicationSendList"]</p>
-            </div>
-        </a>
-    </div>
-    <div class="col-lg-4">
-        <a href="@Url.Action("IndexDraft", "Application")">
-            <div class="cp-cell workspace-item">
-                <div class="img-container play-circle"></div>
-                <h3 class="page-title__cp">@Localizer["ApplicationDraftListTItle"]</h3>
-                <p class="page-title__cp--desc">@Localizer["ApplicationDraftList"]</p>
-            </div>
-        </a>
-    </div>
-     <div class="col-lg-4">
-        <a href="@Url.Action("Index", "Report")">
-            <div class="cp-cell workspace-item">
-                <div class="img-container queries-home"></div>
-                <h3 class="page-title__cp">@Localizer["Report"]</h3>
-                <p class="page-title__cp--desc">@Localizer["ReportText"]</p>
-            </div>
-        </a>
+<div class="page-title__header"><h1 class="page-title">@Localizer["WorkPlot"]</h1></div>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <a asp-controller="Application" asp-action="Add" class="btn u-btn u-btn--person fw-bold">@Localizer["AddApplication"]</a>
     </div>
 </div>
 
+<nav class="dashboard mt-4" aria-label="dashboard navigation">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Application")" class="dashboard-card">
+                <div class="dashboard-card__icon dashboard-card__icon--type1">
+                </div>
+                <h2 class="dashboard-card__title">@Localizer["Applications"]</h2>
+                <p class="dasboard-card__description">@Localizer["ApplicationSendList"]</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("IndexDraft", "Application")" class="dashboard-card">
+                <div class="dashboard-card__icon dashboard-card__icon--type2">
+                </div>
+                <h2 class="dashboard-card__title">@Localizer["ApplicationDraftListTitle"]</h2>
+                <p class="dasboard-card__description">@Localizer["ApplicationDraftList"]</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Index", "Report")" class="dashboard-card">
+                <div class="dashboard-card__icon dashboard-card__icon--type3">
+                </div>
+                <h2 class="dashboard-card__title">@Localizer["Report"]</h2>
+                <p class="dasboard-card__description">@Localizer["ReportText"]</p>
+            </a>
+        </div>
+    </div>
+</nav>
 @section Styles {
     <link href="~/css/home.css" rel="stylesheet" />
 }

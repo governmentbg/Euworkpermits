@@ -1,14 +1,24 @@
-﻿@using BlueCardPortal.Infrastructure.Model.Application
+﻿@using BlueCardPortal.Infrastructure.Constants
+@using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicationVM
 @{
     ViewData["Title"] = Localizer["Applications"];
+    var applicationNumber = string.Format(Localizer["ApplicationApplyNumber"]?.Value, Model.ApplyNumber);
 }
 
 <div class="accordion steps-container" id="stepsContainer">
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.ApplicationId)
+    @if (Model.Status == ApplicationStatus.Send)
+    {
+        <div class="row">
+            <div class="col-12">
+                <h2>@applicationNumber</h2>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-12">
             <div class="steps">

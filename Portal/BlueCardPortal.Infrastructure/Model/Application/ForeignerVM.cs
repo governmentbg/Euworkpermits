@@ -1,4 +1,5 @@
-﻿using BlueCardPortal.Infrastructure.Validation;
+﻿using BlueCardPortal.Infrastructure.Constants;
+using BlueCardPortal.Infrastructure.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -49,20 +50,41 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         [Display(Name = "ForeignerTypeIdentifier")]
         [Required(ErrorMessage = "RequiredErrorMessage")] 
         public string TypeIdentifier { get; set; } = default!;
-        
+
         /// <summary>
         /// Адрес на чужденеца в Република България
         /// Адрес в Република България
         /// </summary>
-        public AddressListVM Addresses { get; set; } =new ();
-        
+        //public AddressListVM Addresses { get; set; } =new ();
+
+        /// <summary>
+        /// Настоящ адрес
+        /// </summary>
+        public AddressVM Address { get; set; } = new AddressVM { Kind = ADDRESSE_TYPE.Current };
+
         /// <summary>
         /// Дата на раждане
         /// </summary>
         [Display(Name = "BirthDate")]
-        [Required(ErrorMessage = "RequiredErrorMessage")] 
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [BCRangeTodayDate(FromYear = -100, ToYear = -10, ErrorMessage = "BCRangeDateErrorMessage")]
         public DateTime BirthDate { get; set; } = default!;
-        
+
+        /// <summary>
+        /// Формат дата на раждане
+        /// </summary>
+        [Display(Name = "BirthDateTypeInput")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        public string BirthDateTypeInput { get; set; } = default!;
+
+        /// <summary>
+        /// Дата на раждане
+        /// </summary>
+        [Display(Name = "BirthMonth")]
+        [Required(ErrorMessage = "RequiredErrorMessage")]
+        [BCRangeTodayDate(FromYear = -100, ToYear = -10, ErrorMessage = "BCRangeDateErrorMessage")]
+        public DateTime BirthMonth { get; set; } 
+
         /// <summary>
         /// Гражданство
         /// </summary>
@@ -90,6 +112,7 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// </summary>
         [Display(Name = "CityОfBirth")]
         [Required(ErrorMessage = "RequiredErrorMessage")] 
+        [RegularExpression(@"^[А-Яа-я](?:[А-Яа-я' -]*[А-Яа-я])$", ErrorMessage = "CityOfBirthRegularExpression")]
         public string CityОfBirth { get; set; } = default!;
         
         /// <summary>
@@ -149,12 +172,21 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// <summary>
         /// Данни за контакт със заявител
         /// </summary>
-         public ContactListVM Contacts { get; set; } = new ();
+         public ContactListVM Contacts { get; set; } = new();
 
         /// <summary>
         /// Документи за идентификация
         /// </summary>
         public PersonIdDocumentListVM PersonIdDocuments { get; set; } = new ();
-
+        public AddressListVM GetAddresses()
+        {
+            return new AddressListVM
+            {
+                Items = new List<AddressVM>
+                {
+                    Address
+                }
+            };
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         /// </summary>
         public Guid ApplicationId { get; set; } = Guid.NewGuid();
 
+        public int Status { get; set; }
+        public string? ApplyNumber { get; set; }
         /// <summary>
         /// Данни 
         /// </summary>
@@ -81,6 +83,13 @@ namespace BlueCardPortal.Infrastructure.Model.Application
             {
                 item.Data = data;
             }
+        }
+
+        public string? GetApplicationTypeCode()
+        {
+            return ApplicationItems.Where(x => x.Data is ApplicationTypeVM)
+                                   .Select(x => x.Data as ApplicationTypeVM)
+                                   .FirstOrDefault()?.ApplicationTypeCode;
         }
     }
 }

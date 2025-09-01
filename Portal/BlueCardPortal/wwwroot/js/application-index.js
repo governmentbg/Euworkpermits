@@ -25,23 +25,28 @@ function initGridView() {
 
                 {
                     name: 'applicationNumber',
-                    title: 'Номер на заявление',
-                    cssClass: 'col-md-2'
+                    title: '№ заявление',
+                    cssClass: 'col'
+                },
+                {
+                    name: 'employerName',
+                    title: 'Работодател',
+                    cssClass: 'col'
                 },
                 {
                     name: 'foreignerName',
                     title: 'Име на чужденец',
-                    cssClass: 'col-md-2'
+                    cssClass: 'col'
                 },
                 {
                     name: 'status',
                     title: 'Статус',
-                    cssClass:'col-md-2'
+                    cssClass:'col'
                 },
                 {
                     name: 'entryDate',
                     title: 'Дата на входиране',
-                    cssClass: 'col-md-2',
+                    cssClass: 'col',
                     render: function (el) {
                         return JsonBGdate(el);
                     }
@@ -49,23 +54,27 @@ function initGridView() {
                 {
                     name: 'permitType',
                     title: 'Разрешение',
-                    cssClass:'col-md-2',
+                    cssClass:'col-2 text-wrap',
                 },
                 {
                     name: 'applicationNumber',
                     title: '',
-                    cssClass: 'col-md-2',
+                    cssClass: 'col',
                     render: function (el, row) {
+                        let btn = row.remark ? `<p>${row.remark}</p>`: "";
+                        if (row.paymentAccessCode && row.paymentAccessCode.length > 0) {
+                            btn += `<button onclick="toPayment('${row.paymentAccessCode}')" target="_blank" type="button" class="btn u-btn u-btn--sm app-list-btn u-btn--right u-btn--arrow" >Плащане</button>`
+                        }
                         if (row.forComplaint) {
-                            return `<button type="button" class="btn u-btn u-bg-sm u-btn--right u-btn--arrow"  onClick="AddComplaint('${el}')">Подаване <br>на жалба</button>`
+                            btn += `<button type="button" class="btn u-btn u-btn--sm  app-list-btn u-btn--right u-btn--arrow"  onClick="AddComplaint('${el}')">Подаване <br>на жалба</button>`
                         }
                         if (row.forUpdate) {
-                            return `<button type="button" class="btn u-btn u-bg-sm u-btn--right u-btn--arrow"  onClick="ApplicationUpdate('${el}')">Промяна</button>`
+                            btn +=  `<button type="button" class="btn u-btn u-btn--sm  app-list-btn u-btn--right u-btn--arrow"  onClick="ApplicationUpdate('${el}')">Промяна</button>`
                         }
                         if (row.forSelfDenial) {
-                            return `<button type="button" class="btn u-btn u-bg-sm u-btn--right u-btn--arrow"  onClick="AddSelfDenial('${el}')">Самоотказ</button>`
+                            btn +=  `<button type="button" class="btn u-btn u-btn--sm  app-list-btn u-btn--right u-btn--arrow"  onClick="AddSelfDenial('${el}')">Самоотказ</button>`
                         }
-                        return "";
+                        return btn;
                     }
                 }
             ]
@@ -74,18 +83,22 @@ function initGridView() {
 }
 function AddComplaint(el) {
     event.stopImmediatePropagation();
-    window.location.href = `/Application/AddComplaint?applicationNumber=${el}`;;
+    window.location.href = `/Application/AddComplaint?applicationNumber=${el}`;
 }
 
 function AddSelfDenial(el) {
     event.stopImmediatePropagation();
-    window.location.href = `/Application/AddSelfDenial?applicationNumber=${el}`;;
+    window.location.href = `/Application/AddSelfDenial?applicationNumber=${el}`;
 }
 function ApplicationUpdate(el) {
     event.stopImmediatePropagation();
-    window.location.href = `/Application/ApplicationUpdate?applicationNumber=${el}`;;
+    window.location.href = `/Application/ApplicationUpdate?applicationNumber=${el}`;
 }
 
+function toPayment(url) {
+    event.stopImmediatePropagation();
+    window.open(url, "_blank");
+}
 $(() => {
     initGridView();
 })

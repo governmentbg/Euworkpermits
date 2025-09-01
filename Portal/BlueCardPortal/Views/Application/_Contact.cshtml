@@ -8,9 +8,9 @@
 <div class="row mb-2 contact-container item-template">
     <input type="hidden" name="@indexPath" value="@Model.Index" />
     <div class="col-4">
-        @Html.EditorFor(x => x.Type, "DropDown", new { Ddl = ViewBag.ContactType_ddl})
+        @Html.EditorFor(x => x.Type, "DropDown", new {@class = "contact-type", Ddl = ViewBag.ContactType_ddl, onchange = "ContactTypeChange(this)" })
     </div>
-    <div class="col-5">
+    <div class="col-5 contact-description">
         @Html.EditorFor(x => x.Description, "StringNullable")
     </div>
     <div class="col-3">

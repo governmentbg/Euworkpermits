@@ -1,7 +1,7 @@
 ﻿@using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Model.SelfDenial
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model SelfDenialVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;

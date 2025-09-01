@@ -1,12 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Жалби";
+﻿@using BlueCardPortal.Infrastructure.Model.Complaint
+@using Microsoft.Extensions.Localization
+@model ComplaintFilterVM
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@{
+    string title = Localizer["Complaints"].Value;
+
+    ViewData["Title"] = title;
+    await Html.RenderPartialAsync("_TitleWithBack", title);
 }
 @section Styles {
     <link href="~/css/gridview.css" rel="stylesheet" />
     <link href="~/css/theme.css" rel="stylesheet" />
 }
 <div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-4">
+        <a class="u-btn u-btn--search u-bg--c5" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas" aria-controls="searchOffcanvas">
+            @Localizer["SearchComplaint"]
+        </a>
+    </div>
+</div>
 <div id="dvMain" data-url="@Url.Action("ListComplaint", "Report")"></div>
+<div class="details offcanvas offcanvas-end" tabindex="-1" id="searchOffcanvas" aria-labelledby="searchOffcanvasLabel">
+    @{
+        await Html.RenderPartialAsync("_ComplaintFilter", Model);
+    }
+</div>
+
 @section Scripts {
     <script src="~/js/gridview.columns.js"></script>
     <script src="~/js/gridview.js"></script>

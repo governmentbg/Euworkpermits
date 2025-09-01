@@ -12,5 +12,11 @@ namespace BlueCardPortal.Infrastructure.Model.Application
         public List<ContactVM> Items { get; set; } = new();
         [BCContactList(ErrorMessage = "ContactListErrorMessage", ErrorMessagePrefered = "ContactListPreferedErrorMessage")]
         public string Validation {  get; set; } = "ContactListValidation";
+
+        public void AddNewIfEmpty()
+        {
+            if (Items.Count == 0)
+                Items.Add(new ContactVM());
+        }
     }
 }

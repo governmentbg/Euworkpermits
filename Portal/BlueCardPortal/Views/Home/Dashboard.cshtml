@@ -1,0 +1,105 @@
+﻿@using BlueCardPortal.Infrastructure.Model.Statistics
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+@model DashboardFilter
+@{
+    ViewData["Title"] = Localizer["DashboardShort"];
+    ViewData["GuestMenuItem"] = "Dashboard";
+}
+<form id="formDashboard" name="frmDashboard" method="post" action="@Url.Action("Dashboard", "Home")">
+    @Html.AntiForgeryToken()
+
+    <div class=""><h3 class="">@Localizer["Dashboard"]</h3></div>
+    <div class="statistics accordion" style="min-height: 50vh;" id="accordionStatistics">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="statistics-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statistics-collapseOne" aria-expanded="true" aria-controls="statistics-collapseOne">
+                    Издадени по тип разрешения за работа в Република България
+                </button>
+            </h2>
+            <div id="statistics-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-6 col-lg-4">
+                            @Html.EditorFor(x => x.Year, "DropDown", new { Ddl = ViewBag.Year_ddl })
+                        </div>
+                    </div>
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="statistics-headingTwo">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statistics-collapseTwo" aria-expanded="true" aria-controls="statistics-collapseTwo">
+                    Първите 10 държави извън ЕС, чиито граждани са получили разрешение
+                </button>
+            </h2>
+            <div id="statistics-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-6 col-lg-4">
+                            @Html.EditorFor(x => x.YearCountryTop10, "DropDown", new { Ddl = ViewBag.Year_ddl })
+                        </div>
+                    </div>
+                    <figure class="highcharts-figure highcharts-on-country-top10">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="statistics-headingThree">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statistics-collapseThree" aria-expanded="true" aria-controls="statistics-collapseThree">
+                    Издадени разрешения по тип и години
+                </button>
+            </h2>
+            <div id="statistics-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-6 col-lg-4">
+                            @Html.EditorFor(x => x.recapFromYear, "DropDown", new { Ddl = ViewBag.Year_ddl })
+                        </div>
+                        <div class="col-6 col-lg-4">
+                            @Html.EditorFor(x => x.recapToYear, "DropDown", new { Ddl = ViewBag.Year_ddl })
+                        </div>
+                    </div>
+                    <figure class="highcharts-figure highcharts-on-year">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="statistics-headingFour">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#statistics-collapseFour" aria-expanded="true" aria-controls="statistics-collapseFour">
+                    Издадени разрешения по тип и национална идентичност
+                </button>
+            </h2>
+            <div id="statistics-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+                <div class="row">
+                    <div class="col-6 col-lg-4">
+                        @Html.EditorFor(x => x.YearCountry, "DropDown", new { Ddl = ViewBag.Year_ddl })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        @Html.EditorFor(x => x.Countries, "DropDownMultiple", new { Ddl = ViewBag.Countries_ddl })
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <figure class="highcharts-figure highcharts-on-country">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script src="~/lib/highcharts/highcharts.js"></script>
+<script src="~/lib/highcharts/modules/exporting.js"></script>
+<script src="~/lib/highcharts/modules/export-data.js"></script>
+<script src="~/lib/highcharts/modules/accessibility.js"></script>
+@section scripts
+{
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+}

@@ -1,11 +1,11 @@
 ﻿@using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Model.Complaint
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ComplaintVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
-    ViewData["Title"] = "Жалби";
+    ViewData["Title"] = @Localizer["Complaint"];
 }
 <form id="frmComplaintEdit" name="frmComplaintEdit" method="post" action="@Url.Action("SaveComplaint", "Application")">
     @Html.AntiForgeryToken()

@@ -44,5 +44,18 @@ namespace BlueCardPortal.Infrastructure.Model.ApplicationList
         /// Дата на подаване
         /// </summary>
         public DateTime? ComplaintDate { get; set; }
+
+        /// <summary>
+        /// Име чужденец
+        /// </summary>
+        public string? ForeignerName { get; set; } = default!;
+        /// <summary>
+        /// ЛНЧ чужденец
+        /// </summary>
+        public string? ForeignerLNCH { get; set; }
+        /// <summary>
+        /// Дата на раждане чужденец
+        /// </summary>
+        public string? ForeignerBirthDate { get; set; }
     }
 }

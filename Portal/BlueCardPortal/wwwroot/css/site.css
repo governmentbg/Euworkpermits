@@ -130,7 +130,7 @@ body {
     margin-left: 6px;
 }
 
-.navbar .language {
+.navbar .language-dropdown {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -303,7 +303,6 @@ body {
         font-size: 12px;
         letter-spacing: 0;
         line-height: 16px;
-        white-space: nowrap;
     }
 
     .section-footer-v .about-info {
@@ -535,4 +534,23 @@ body {
 
 .foreigner-small-data-container > div > .form-group > .form-label {
     min-height: 2.75rem;
+}
+.foreigner-small-item-preview > .form-label {
+    min-height: 2.75rem;
+}
+
+.app-list-btn{
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+@media screen and (max-width:767.5px) {
+    .section-footer-v .copyright {
+        white-space: unset;
+    }
+}
+@media screen and (max-width:992px){
+    .filter-separator {
+        display: none;
+    }
 }

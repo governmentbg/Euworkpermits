@@ -7,17 +7,38 @@ namespace BlueCardPortal.Controllers
     [Authorize]
     public class BaseController : Controller
     {
-        public void SetSuccessMessage(string message)
+        public void SetSuccessMessage(string message, bool swal = false)
         {
-            TempData[MessageConstant.SuccessMessage] = message;
+            if (swal)
+            {
+                TempData[MessageConstant.SwalSuccessMessage] = message;
+            }
+            else
+            {
+                TempData[MessageConstant.SuccessMessage] = message;
+            }
         }
-        public void SetErrorMessage(string message)
+        public void SetErrorMessage(string message, bool swal = false)
         {
-            TempData[MessageConstant.ErrorMessage] = message;
+            if (swal)
+            {
+                TempData[MessageConstant.SwalErrorMessage] = message;
+            }
+            else
+            {
+                TempData[MessageConstant.ErrorMessage] = message;
+            }
         }
-        public void SetWarningMessage(string message)
+        public void SetWarningMessage(string message, bool swal = false)
         {
-            TempData[MessageConstant.WarningMessage] = message;
+            if (swal)
+            {
+                TempData[MessageConstant.SwalWarningMessage] = message;
+            }
+            else
+            {
+                TempData[MessageConstant.WarningMessage] = message;
+            }
         }
     }
 }

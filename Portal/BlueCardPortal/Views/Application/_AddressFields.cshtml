@@ -7,6 +7,7 @@
     var region = region_ddl.Where(x => x.Value == Model.Region).Select(x => x.Text).FirstOrDefault();
     var city_ddl = await nomenclatureService.GetRegionCities(region ?? string.Empty);
 }
+@Html.HiddenFor(x => x.IsCompanyAddress)
 <div class="row mb-2">
     <div class="col-3">
         @Html.EditorFor(x => x.Street, "StringNullable")

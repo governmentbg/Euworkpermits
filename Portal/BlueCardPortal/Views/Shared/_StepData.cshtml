@@ -17,7 +17,7 @@
     </div>
     @if (!string.IsNullOrEmpty(Model.ViewName))
     {
-        <form id="@id" method="post" action="@Url.Action($"Save{Model.HtmlPrefix}", "Application")">
+        <form id="@id" method="post" action="@Url.Action($"Save{Model.HtmlPrefix}", "Application")" enctype="multipart/form-data">
             @await Html.PartialAsync(Model.ViewName, Model.Data)
         </form>
     }

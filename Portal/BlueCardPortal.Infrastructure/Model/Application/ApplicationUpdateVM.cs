@@ -14,5 +14,8 @@ namespace BlueCardPortal.Infrastructure.Model.Complaint
         public string ApplicationNumber { get; set; } = default!;
         public ApplicantVM Applicant { get; set; } = new();
         public DocumentsVM Documents { get; set; } = new();
+
+        public Guid ApplicationId { get { return Id; } }
+
     }
 }

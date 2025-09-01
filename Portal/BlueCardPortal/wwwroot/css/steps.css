@@ -99,13 +99,13 @@
     width: 15rem;
 }
 .button-close {
-    background: url(../images/button_close.svg);
+    background: url(../assets/images/button_close.svg);
 }
 .button-reload {
-    background: url(../images/button_reload.svg);
+    background: url(../assets/images/button_reload.svg);
 }
 .button-back {
-    background: url(../images/button_back.svg);
+    background: url(../assets/images/button_back.svg);
 }
 
 .step-data-container {

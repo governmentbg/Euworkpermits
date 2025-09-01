@@ -2,7 +2,7 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ForeignerVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
@@ -71,6 +71,6 @@
 <h3 class="section-title">@Localizer["PersonIdDocuments"]</h3>
  @await Html.PartialAsync("_PersonIdDocuments", Model.PersonIdDocuments)
 <h3 class="section-title">@Localizer["ForeignerAddresses"]</h3>
-@await Html.PartialAsync("_Addresses", Model.Addresses)
+@await Html.PartialAsync("_Addresses", Model.GetAddresses())
 <h3 class="section-title">@Localizer["Contacts"]</h3>
 @await Html.PartialAsync("_Contacts", Model.Contacts)

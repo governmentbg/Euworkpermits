@@ -1,10 +1,13 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
-@{
-    ViewData["Title"] = Localizer["ReportOnStatus"];
-}
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @using BlueCardPortal.Infrastructure.Model.ApplicationList
 @model ApplicationFilterVM;
+@{
+    string title = Localizer["ReportOnForeigner"].Value;
+
+    ViewData["Title"] = title;
+    await Html.RenderPartialAsync("_TitleWithBack", title);
+}
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-md-4">

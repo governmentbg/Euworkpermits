@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer Localizer
+<footer class="footer-container container">
+    <div class="section-footer-v">
+        <div class="top-row">
+            <div class="support">
+                <div class="support-title">@Localizer["FooterTitle"]</div>
+                <div class="data row">
+                    @* <div class="data-item">
+                        <div class="support-label">@Localizer["Phone"]</div>
+                        <div class="support-info">02 9876543</div>
+                    </div> *@
+                    <div class="col-md-auto">
+                        <div class="data-item">
+                            <div class="support-label">@Localizer["Email"]</div>
+                            <div class="support-info">SupportEUPermit@egov.bg</div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto">
+                        <div class="data-item">
+                            <div class="support-label">@Localizer["Other"]</div>
+                            <div class="horizontal-menu">
+                                @*  <div class="support-menu-item">@Localizer["Rules"]</div> *@
+                                <div class="support-menu-item"><a href="@Url.Action("UserHelp", "Home")" target="_blank">@Localizer["UserHelp"]</a></div>
+                                @* <div class="support-menu-item">@Localizer["About"]</div> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about">
+            <div class="divider"></div>
+            <div class="frame">
+                <div class="frame-2">
+                    <p class="copyright">@Localizer["Copyright"]</p>
+                    <p class="about-info">
+                        <a href="#"@*  target="_blank" *@ rel="noopener noreferrer"><span class="about-info-text">@Localizer["PrivacyPolicy"]</span></a>
+                        <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <a href="@Url.Action("AccessabilityPolicy", "Home")" target="_blank" rel="noopener noreferrer"><span class="about-info-text">@Localizer["AccessabilityPolicy"]</span></a>
+                        <span class="about-text-divider">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        @* <a href="@Url.Action("FeedBack", "Home")" rel="noopener noreferrer"><span class="about-info-text">@Localizer["Feedback"]</span></a> *@
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+

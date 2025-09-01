@@ -2,7 +2,7 @@
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ForeignerVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
@@ -14,6 +14,8 @@
         applicantType = ENTITY_TYPE.Foreigner;
     var ignoreValidation = applicantType != ENTITY_TYPE.Foreigner;
     var ignoreCss = ignoreValidation ? "ignore" : string.Empty;
+    var displayBirthDate = Model.BirthDateTypeInput == BIRTH_DATE_TYPE_INPUT.YYYYMMDD || string.IsNullOrEmpty(Model.BirthDateTypeInput) ? string.Empty : "display:none";
+    var displayBirthMonth = Model.BirthDateTypeInput == BIRTH_DATE_TYPE_INPUT.YYYYMM ? string.Empty : "display:none";
 }
 @if (!hideID)
 {
@@ -45,14 +47,21 @@
     </div>
 </div>
 <div class="row mb-2">
-    <div class="col-3">
+    <div class="col-2">
         @Html.EditorFor(x => x.Nationality, "DropDown", new { @class = "select2-drop-down", Ddl = ViewBag.Countries_ddl })
     </div>
-    <div class="col-3">
+    <div class="col-2">
         @Html.EditorFor(x => x.CityОfBirth, "StringNullable")
     </div>
+    
     <div class="col-2">
+        @Html.EditorFor(x => x.BirthDateTypeInput, "DropDown", new { onchange = "birthDateTypeInputChange(this)", Ddl = ViewBag.BirthDateTypeInput_ddl })
+    </div>
+    <div class="col-2 birth-date" style="@displayBirthDate">
         @Html.EditorFor(x => x.BirthDate, "DateTime")
+    </div>
+    <div class="col-2 birth-month" style="@displayBirthMonth">
+        @Html.EditorFor(x => x.BirthMonth, "Month")
     </div>
     <div class="col-2">
         @Html.EditorFor(x => x.Gender, "DropDown", new { Ddl = ViewBag.Gender_ddl })
@@ -78,11 +87,22 @@
     ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("PersonIdDocuments");
     @await Html.PartialAsync("_PersonIdDocuments", Model.PersonIdDocuments, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
 }
-<h3 class="section-title">@Localizer["ForeignerAddresses"]</h3>
-@{
-    ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Addresses");
-    @await Html.PartialAsync("_Addresses", Model.Addresses, new ViewDataDictionary(ViewData) { { "IgnoreValidation", ignoreValidation } })
+@if (!hideID)
+{
+    <h3 class="section-title">@Localizer["ForeignerAddress"]</h3>
+} 
+else 
+{
+<h3 class="section-title">@Localizer["EmployerContactAddress"]</h3>
 }
+<div class="address-container current-address">
+    @{
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Address");
+        await Html.RenderPartialAsync("_AddressFields", Model.Address);
+        ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix;
+    }
+</div>
+
 <h3 class="section-title">@Localizer["Contacts"]</h3>
 @{
     ViewData.TemplateInfo.HtmlFieldPrefix = htmlFieldPrefix.CombineTemplatePrefix("Contacts");

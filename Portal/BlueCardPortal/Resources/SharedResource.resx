@@ -256,7 +256,7 @@
     <value>Наименование на юридическото лице</value>
   </data>
   <data name="EmploymentPosition" xml:space="preserve">
-    <value>Позиция</value>
+    <value>Длъжност</value>
   </data>
   <data name="EmploymentReason" xml:space="preserve">
     <value>Цел на наемане</value>
@@ -358,7 +358,7 @@
     <value>Разрешение</value>
   </data>
   <data name="PermitTypeFilter" xml:space="preserve">
-    <value>Вид разрешително</value>
+    <value>Видове разрешения</value>
   </data>
   <data name="PersonIdDocumentIdentifier" xml:space="preserve">
     <value>Номер на документ</value>
@@ -410,7 +410,7 @@
     <value>Длъжност / работа</value>
   </data>
   <data name="SpecialityCodeVM" xml:space="preserve">
-    <value>Професия по НКПД</value>
+    <value>Код по НКПД</value>
   </data>
   <data name="SpecialityVM" xml:space="preserve">
     <value>Специалност</value>
@@ -485,9 +485,9 @@
     <value>Списък подадени заявления</value>
   </data>
   <data name="ApplicationDraftList" xml:space="preserve">
-    <value>Списък с чернови заявления</value>
+    <value>Продължете попълването на незавършените Ви чернови на заявления</value>
   </data>
-  <data name="ApplicationDraftListTItle" xml:space="preserve">
+  <data name="ApplicationDraftListTitle" xml:space="preserve">
     <value>Неподадени Заявления</value>
   </data>
   <data name="Complaints" xml:space="preserve">
@@ -543,5 +543,176 @@
   </data>
   <data name="BCRangeDateErrorMessage" xml:space="preserve">
     <value>Въведете валидна дата</value>
+  </data>
+  <data name="ApplicationTypeMessage" xml:space="preserve">
+    <value>Важно: Mоже да подавате само услуга Краткосрочна заетост до 90 дни - Приложение №5</value>
+  </data>
+  <data name="EGN" xml:space="preserve">
+    <value>ЕГН</value>
+  </data>
+  <data name="LNCH" xml:space="preserve">
+    <value>ЛНЧ</value>
+  </data>
+  <data name="ApplicantUicType" xml:space="preserve">
+    <value>Вид идентификатор</value>
+  </data>
+  <data name="ApplicantContactAddressIsSame" xml:space="preserve">
+    <value>Съвпада с адреса за контакт на работодателя</value>
+  </data>
+  <data name="ButtonDraftHint" xml:space="preserve">
+    <value>Попълването на заявлението ще бъде прекратено и въведените от Вас данни ще бъдат съхранени. Ще можете да продължите от мястото, до където сте стигнали!</value>
+  </data>
+  <data name="ButtonDeleteHint" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="EmployerHeadAddresses" xml:space="preserve">
+    <value>EmployerHeadAddresses</value>
+  </data>
+  <data name="WorkPlot" xml:space="preserve">
+    <value>Работен плот</value>
+  </data>
+  <data name="AddApplication" xml:space="preserve">
+    <value>Подаване на ново заявление</value>
+  </data>
+  <data name="BackToWorkPlot" xml:space="preserve">
+    <value>Към работния плот</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Електронна поща</value>
+  </data>
+  <data name="Blanks" xml:space="preserve">
+    <value>Образци на документи</value>
+  </data>
+  <data name="BlankPdf3a" xml:space="preserve">
+    <value>Приложение №3а се използва за Синя Карта, ЕРПР, ВКТ и Сезонна заетост от 90 до 180 дни</value>
+  </data>
+  <data name="BlankPdf5" xml:space="preserve">
+    <value>Приложение №5 се използва за Краткосрочна заетост при сезонни работници до 90 дни</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Статистически данни издадени по тип разрешения за чужденец</value>
+  </data>
+  <data name="SystemLogin" xml:space="preserve">
+    <value>Вход в системата</value>
+  </data>
+  <data name="LoginMethodText" xml:space="preserve">
+    <value>Методът за идентификация се предоставя от Министерството на електронното управление и може да изисква предварителна регистрация</value>
+  </data>
+  <data name="LoginMethod" xml:space="preserve">
+    <value>Вход с еАвтентикация</value>
+  </data>
+  <data name="SmallTitle" xml:space="preserve">
+    <value>Платформа за издаване на</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>разрешения за работа</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>РАЗРЕШЕНИЯ ЗА РАБОТА</value>
+  </data>
+  <data name="Complaint" xml:space="preserve">
+    <value>Жалба</value>
+  </data>
+  <data name="EService" xml:space="preserve">
+    <value>Електронни услуги</value>
+  </data>
+  <data name="ComplaintsText" xml:space="preserve">
+    <value>Подаване на жалби по заявления</value>
+  </data>
+  <data name="ApplicationsText" xml:space="preserve">
+    <value>Подаване на заявления</value>
+  </data>
+  <data name="SendApplication" xml:space="preserve">
+    <value>Подадено е заявление №</value>
+  </data>
+  <data name="DocumentPrintFormFileName" xml:space="preserve">
+    <value>Заявление_{0}.pdf</value>
+  </data>
+  <data name="DocumentPrintForm" xml:space="preserve">
+    <value>Печатна форма на заявление</value>
+  </data>
+  <data name="EIK" xml:space="preserve">
+    <value>ЕИК</value>
+  </data>
+  <data name="DashboardYear" xml:space="preserve">
+    <value>Година</value>
+  </data>
+  <data name="ErrorFileExt" xml:space="preserve">
+    <value>Невалиден файлов формат</value>
+  </data>
+  <data name="AddressObject" xml:space="preserve">
+    <value>Място на работа - обект</value>
+  </data>
+  <data name="ApplicationApplyNumber" xml:space="preserve">
+    <value>Заявление № {0}</value>
+  </data>
+  <data name="ForeignerAddress" xml:space="preserve">
+    <value>Настоящ адрес</value>
+  </data>
+  <data name="BirthDateTypeInput" xml:space="preserve">
+    <value>формат</value>
+  </data>
+  <data name="BirthMonth" xml:space="preserve">
+    <value>Дата на раждане</value>
+  </data>
+  <data name="HasActiveComplaint" xml:space="preserve">
+    <value>Подадена жалба</value>
+  </data>
+  <data name="SearchComplaintTitle" xml:space="preserve">
+    <value>Търсене на жалби</value>
+  </data>
+  <data name="ComplaintFilterFromDate" xml:space="preserve">
+    <value>От дата</value>
+  </data>
+  <data name="ComplaintFilterToDate" xml:space="preserve">
+    <value>до дата</value>
+  </data>
+  <data name="ComplaintNumber" xml:space="preserve">
+    <value>Жалба №</value>
+  </data>
+  <data name="SearchComplaint" xml:space="preserve">
+    <value>Търсене на жалби</value>
+  </data>
+  <data name="BCEmploymentDurationMonthMessage" xml:space="preserve">
+    <value>Въведете продължителност диапазона от {0} до {1} месеца</value>
+  </data>
+  <data name="AplicantEmployerContactAddressIsSame" xml:space="preserve">
+    <value>Съвпада с адреса на седалището</value>
+  </data>
+  <data name="AccessabilityPolicy" xml:space="preserve">
+    <value>Политика за достъпност</value>
+  </data>
+  <data name="AccessabilityDeclaration" xml:space="preserve">
+    <value>Декларация за достъпност - ППИР</value>
+  </data>
+  <data name="UserHelp" xml:space="preserve">
+    <value>Помощ за потребителя</value>
+  </data>
+  <data name="UserGuide" xml:space="preserve">
+    <value>Ръководство на потребителя</value>
+  </data>
+  <data name="SubmitApplication" xml:space="preserve">
+    <value>Подаване на заявление за разрешение за пребиваване и работа</value>
+  </data>
+  <data name="SubmitApplication90days" xml:space="preserve">
+    <value>Подаване на заявление за Краткосрочна заетост до 90 дни</value>
+  </data>
+  <data name="PositionCyrilicRegularExpression" xml:space="preserve">
+    <value>Моля въведете кирилица без следните символи запетайки,латиница,числа</value>
+  </data>
+  <data name="DashboardYearFrom" xml:space="preserve">
+    <value>От година</value>
+  </data>
+  <data name="DashboardYearTo" xml:space="preserve">
+    <value>До година</value>
+  </data>
+  <data name="CityOfBirthRegularExpression" xml:space="preserve">
+    <value>Въведете място на раждане на кирилица</value>
+  </data>
+  <data name="DashboardShort" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
+  <data name="EmployerChange" xml:space="preserve">
+    <value>Смяна на работодател</value>
   </data>
 </root>

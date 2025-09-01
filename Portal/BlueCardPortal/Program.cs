@@ -1,23 +1,45 @@
 using BlueCardPortal.Infrastructure.Data;
 using BlueCardPortal.ModelBinders;
 using BlueCardPortal.Resources;
+using IO.SignTools.Extensions;
+using IO.SignTools.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Localization;
 using System.Globalization;
 using System.Reflection;
 using static BlueCardPortal.Infrastructure.Constants.FormattingConstant;
-using Microsoft.Extensions.Localization;
-using BlueCardPortal.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 builder.Services.AddApplicationIdentity(builder.Configuration);
+
+
+TimestampClientOptions tsOptions = new TimestampClientOptions()
+{
+    Token = builder.Configuration.GetValue<string>("Authentication:StampIT:Timestamp:Token"),
+    TimestampEndpoint = builder.Configuration.GetValue<string>("Authentication:StampIT:Timestamp:TimestampEndpoint"),
+    ValidateEndpoint = builder.Configuration.GetValue<string>("Authentication:StampIT:Timestamp:ValidateEndpoint")
+};
+
+
+VerificationServiceOptions vsOptions = new VerificationServiceOptions()
+{
+    Token = builder.Configuration.GetValue<string>("Authentication:StampIT:VerificationService:Token"),
+    VerificationServiceEndpoint = builder.Configuration.GetValue<string>("Authentication:StampIT:VerificationService:VerificationServiceEndpoint"),
+    ClientId = builder.Configuration.GetValue<string>("Authentication:StampIT:VerificationService:ClientId")
+};
+
+builder.Services.AddIOSignTools(options =>
+{
+    options.TempDir = builder.Configuration.GetValue<string>("TempPdfDir");
+    options.HashAlgorithm = System.Security.Cryptography.HashAlgorithmName.SHA256.Name;
+    options.TimestampOptions = tsOptions;
+    options.VerificationServiceOptions = vsOptions;
+});
 builder.Services.AddApplicationServices();
 
 builder.Services.Configure<KestrelServerOptions>(builder.Configuration.GetSection("Kestrel"));
@@ -65,6 +87,7 @@ builder.Services.AddControllersWithViews()
     })
     .AddMvcOptions(config =>
     {
+        config.MaxModelBindingCollectionSize = 50000;
         config.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
         config.ModelBinderProviders.Insert(1, new DoubleModelBinderProvider());
         config.ModelBinderProviders.Insert(2, new DateTimeModelBinderProvider(NormalDateFormat));

@@ -1,7 +1,7 @@
 ﻿@using BlueCardPortal.Core.Helper
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
     var currentHtmlPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
     var indexPath = Utils.GetIndexPath(currentHtmlPrefix);
@@ -17,7 +17,6 @@
     @Html.HiddenFor(x => x.IsMandatory)
     @Html.HiddenFor(x => x.Id)
     @Html.HiddenFor(x => x.CmisId)
-    @Html.HiddenFor(x => x.IsMandatory)
     @Html.HiddenFor(x => x.DocumentTypeCode)
     @Html.HiddenFor(x => x.DocumentType)
     @Html.HiddenFor(x => x.DocumentCategoryCode)
@@ -28,6 +27,10 @@
     @Html.HiddenFor(x => x.HasTitle)
     @Html.HiddenFor(x => x.Title)
     @Html.HiddenFor(x => x.MimeType)
+    @Html.HiddenFor(x => x.FileHash)
+    @Html.HiddenFor(x => x.ApplicationId)
+    @Html.HiddenFor(x => x.ForeignerLabel)
+    @Html.HiddenFor(x => x.ForeignerSmallId)
     <div class="col-1">
         @if (Model.IsMandatory)
         {

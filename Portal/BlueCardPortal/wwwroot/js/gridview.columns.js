@@ -68,7 +68,7 @@ function gridViewGenerateHtmlForColumns(state, data) {
                         if (rowValue == null) {
                             rowValue = '';
                         }
-                        htmlColumn += `<div class="list__output">${rowValue}</div>`;
+                        htmlColumn += `<div class="list__output text-wrap">${rowValue}</div>`;
                     }
                     htmlColumn += '</div>'
                     return accumulatorColumn + htmlColumn;

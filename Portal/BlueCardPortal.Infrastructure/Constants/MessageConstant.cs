@@ -3,19 +3,35 @@
     public static class MessageConstant
     {
         /// <summary>
-        /// Грешка
+        /// tostr Грешка
         /// </summary>
         public const string ErrorMessage = "ErrorMessage";
 
         /// <summary>
-        /// Внимание
+        /// tostr Внимание
         /// </summary>
         public const string WarningMessage = "WarningMessage";
 
         /// <summary>
-        /// Успех
+        /// tostr Успех
         /// </summary>
         public const string SuccessMessage = "SuccessMessage";
+
+        /// <summary>
+        /// swal Грешка
+        /// </summary>
+        public const string SwalErrorMessage = "SwalErrorMessage";
+
+        /// <summary>
+        /// swal Внимание
+        /// </summary>
+        public const string SwalWarningMessage = "SwalWarningMessage";
+
+        /// <summary>
+        /// swal Успех
+        /// </summary>
+        public const string SwalSuccessMessage = "SwalSuccessMessage";
+
 
         /// <summary>
         /// Не е избран (за Display Template-ите)

@@ -1,7 +1,7 @@
 ﻿@using BlueCardPortal.Core.Helper
 @using BlueCardPortal.Infrastructure.Model.Application
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
     var currentHtmlPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
     var indexPath = Utils.GetIndexPath(currentHtmlPrefix);

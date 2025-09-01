@@ -1,0 +1,26 @@
+﻿@using BlueCardPortal
+@using Microsoft.Extensions.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = @Localizer["UserHelp"];
+    ViewData["MainClass"] = "page-content";
+}
+<h1 class="page-title">@ViewData["Title"]</h1>
+<br>
+<ul class="doc-template__list">
+    <li>
+        <a target="_blank" href="/documents/rakovodstvo-na-potrebitelia.pdf" data-type="pdf" class="doc-template">
+            @Localizer["UserGuide"]
+        </a>
+    </li>
+    <li>
+        <a target="_blank" href="https://youtu.be/xXbuqnvebxI" data-type="video" class="doc-template">
+            @Localizer["SubmitApplication"]
+        </a>
+    </li>
+    <li>
+        <a target="_blank" href="https://youtu.be/Vv0U6sIaKnw" data-type="video" class="doc-template">
+            @Localizer["SubmitApplication90days"]
+        </a>
+    </li>
+</ul>

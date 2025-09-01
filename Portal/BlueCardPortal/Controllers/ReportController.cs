@@ -41,7 +41,7 @@ namespace BlueCardPortal.Controllers
         }
         public async Task<IActionResult> ListComplaint([FromBody] GridRequestModel request)
         {
-            var model = await applicationService.GetComplaintList(request.page, request.size);
+            var model = await applicationService.GetComplaintList(request.data, request.page, request.size);
             return new JsonResult(model);
         }
 

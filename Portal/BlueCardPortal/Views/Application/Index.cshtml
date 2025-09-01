@@ -1,18 +1,22 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
-@{
-    ViewData["Title"] = Localizer["Applications"];
-}
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
+
 @using BlueCardPortal.Infrastructure.Model.ApplicationList
 @model ApplicationFilterVM;
+@{
+    string title = Localizer["Applications"].Value;
+
+    ViewData["Title"] = title;
+    await Html.RenderPartialAsync("_TitleWithBack", title);
+}
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-md-4">
-        <a class="u-btn u-btn--search u-bg--c5" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas" aria-controls="searchOffcanvas">Търсене на заявление</a>
+        <a class="u-btn u-btn--search u-bg--c5" data-bs-toggle="offcanvas" data-bs-target="#searchOffcanvas" aria-controls="searchOffcanvas">@Localizer["SearchApplication"]</a>
     </div>
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <a asp-controller="Application" asp-action="Add" class="u-btn u-btn--person">Подаване на ново заявление</a>
+        <a asp-controller="Application" asp-action="Add" class="btn u-btn u-btn--person fw-bold">@Localizer["AddApplication"]</a>
     </div>
 </div>
 
@@ -28,8 +32,8 @@
 }
 
 @section Scripts {
-    <script src="~/js/gridview.columns.js"></script>
-    <script src="~/js/gridview.js"></script>
-    <script src="~/js/application-index-all.js"></script>
-    <script src="~/js/application-index.js"></script>
+    <script src="~/js/gridview.columns.js" asp-append-version="true"></script>
+    <script src="~/js/gridview.js" asp-append-version="true"></script>
+    <script src="~/js/application-index-all.js" asp-append-version="true"></script>
+    <script src="~/js/application-index.js" asp-append-version="true"></script>
 }

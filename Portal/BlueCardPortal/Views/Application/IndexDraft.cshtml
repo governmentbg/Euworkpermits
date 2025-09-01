@@ -1,7 +1,10 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @{
-    ViewData["Title"] = Localizer["ApplicationDraftListTItle"];
+    string title = Localizer["ApplicationDraftListTitle"].Value;
+
+    ViewData["Title"] = title;
+    await Html.RenderPartialAsync("_TitleWithBack", title);
 }
 @section Styles {
     <link href="~/css/gridview.css" rel="stylesheet" />

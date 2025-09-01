@@ -1,32 +1,39 @@
-﻿@using BlueCardPortal.Extensions
+﻿@using BlueCardPortal.Core.Contracts
+@using BlueCardPortal.Extensions
 @using BlueCardPortal.Infrastructure.Constants
 @using BlueCardPortal.Infrastructure.Contracts
 @using BlueCardPortal.Infrastructure.Model.Application
 @using EAuthIntegration.Models
 @inject IUserContext userContext
+@inject INomenclatureService nomenclatureService
 @model ApplicantVM
 @{
     var htmlFieldPrefix = ViewData.TemplateInfo.HtmlFieldPrefix;
     var displayForeigner = Model.ApplicantType == ENTITY_TYPE.Foreigner ? string.Empty : "display:none";
     var displayPerson = (Model.ApplicantType == ENTITY_TYPE.AuthorizedPerson || Model.ApplicantType == ENTITY_TYPE.Representative) ? string.Empty : "display:none";
-    var applicantType_ddl = (List<SelectListItem>)ViewBag.ApplicantType_ddl;
-    // if (userContext.PidType == EAuthIntegrationDefaults.IdentifierTypes.Egn)
-    // {
-    //     var lnchType = applicantType_ddl.Where(x => x.Value == ENTITY_TYPE.Foreigner).FirstOrDefault();
-    //     if (lnchType != null)
-    //     {
-    //         lnchType.Disabled = true;
-    //     }
-    // }
+    var displayPersonEgn = (Model.ApplicantType == ENTITY_TYPE.AuthorizedPerson || Model.ApplicantType == ENTITY_TYPE.Representative || Model.UicType == "EGN") ? string.Empty : "display:none";
+    var displayPersonLnch = (Model.ApplicantType == ENTITY_TYPE.Foreigner || Model.UicType == "LNCH") ? string.Empty : "display:none";
+    var applicantDisableOnPid = nomenclatureService.ApplicantDisableOnPid();
+    var colCss = applicantDisableOnPid ? "col-6" : "col-3";
 }
 <div class="row mb-2 applicant-container">
     <div class="col-6">
-        @Html.EditorFor(x => x.ApplicantType, "RadioButtonList", new { Ddl = applicantType_ddl, onchange = "ApplicantTypeChangeRadio(this)" })
+        @Html.EditorFor(x => x.ApplicantType, "RadioButtonList", new { Ddl = ViewBag.ApplicantType_ddl, onchange = "ApplicantTypeChangeRadio(this)" })
     </div>
-    <div class="col-6 applicant-person-container" style="@displayPerson">
+    @if (!applicantDisableOnPid)
+    {
+        <div class="col-3">
+            @Html.EditorFor(x => x.UicType, "RadioButtonList", new { Ddl = ViewBag.UicType_ddl, onchange = "UicTypeChangeRadio(this)" })
+        </div>
+    }
+    else
+    {
+         @Html.HiddenFor(x => x.UicType)
+    }
+    <div class="@colCss applicant-person-container applicant-egn-container" style="@displayPersonEgn">
         @Html.EditorFor(x => x.Egn, "StringNullable")
     </div>
-    <div class="col-6 applicant-foreigner-container" style="@displayForeigner">
+    <div class="@colCss applicant-foreigner-container applicant-lnch-container" style="@displayPersonLnch">
         @Html.EditorFor(x => x.Lnch, "StringNullable")
     </div>
 </div>

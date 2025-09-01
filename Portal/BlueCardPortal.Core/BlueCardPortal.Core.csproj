@@ -14,4 +14,8 @@
     <Folder Include="JsonConverters\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IO.SignTools" Version="8.0.1" />
+  </ItemGroup>
+
 </Project>

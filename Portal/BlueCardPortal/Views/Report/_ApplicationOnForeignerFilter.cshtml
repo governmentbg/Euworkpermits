@@ -1,16 +1,8 @@
 ﻿@using BlueCardPortal.Infrastructure.Model.ApplicationList
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer Localizer
+@inject IHtmlLocalizer<BlueCardPortal.SharedResource> Localizer
 @model ApplicationFilterVM;
 
-/*
--ЛНЧ
--Дата на раждане
--Национална идентичност
--Наименование на чужденец
--От дата
--До дата
-*/
 <div class="details__body offcanvas-body">
     <div class="form-container">
         <button type="button" class="btn u-btn u-btn--light u-btn--clear-search ms-auto w-100" data-bs-dismiss="offcanvas">@Localizer["CloseFilter"]</button>
